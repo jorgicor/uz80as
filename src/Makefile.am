@@ -1,4 +1,6 @@
+AM_CFLAGS = $(WARN_CFLAGS)
 bin_PROGRAMS = uz80as
+uz80as_CFLAGS = $(AM_CFLAGS)
 uz80as_SOURCES = \
 	ngetopt.c ngetopt.h \
 	main.c \
