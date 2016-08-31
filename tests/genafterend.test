@@ -1,0 +1,3 @@
+#!/bin/sh
+nom=genafterend
+. ./chkep0.inc

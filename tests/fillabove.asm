@@ -1,0 +1,4 @@
+	.ORG 0
+	.FILL 65536
+	.FILL 1
+	.END

@@ -1,0 +1,3 @@
+#!/bin/sh
+nom=longlabel
+. ./chkep0.inc

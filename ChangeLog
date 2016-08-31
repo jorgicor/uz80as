@@ -1,0 +1,8 @@
+2016-08-10
+
+	* configure.ac: Version 1.01 .
+
+	* configure and Makefiles: Generated from autoconf 2.69 and automake
+	1.15.
+
+	* mkwin: Script to build on Windows under Cygwin.

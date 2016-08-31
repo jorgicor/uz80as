@@ -1,0 +1,3 @@
+fillneg.asm:2: number of positions to fill is negative (-1)
+  .FILL -1
+        ^

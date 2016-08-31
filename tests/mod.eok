@@ -1,0 +1,2 @@
+mod.asm:2: undefined label (ZEROA)
+mod.asm:3: modulo by zero

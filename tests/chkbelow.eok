@@ -1,0 +1,3 @@
+chkbelow.asm:2: .CHK address (-1) is not in range [0, 0[
+  .CHK -1
+       ^

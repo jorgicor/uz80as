@@ -1,0 +1,3 @@
+#!/bin/sh
+nom=strseq
+. ./chkep0.inc

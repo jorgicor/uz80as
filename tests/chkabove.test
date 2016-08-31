@@ -1,0 +1,3 @@
+#!/bin/sh
+nom=chkabove
+. ./chkep1.inc

@@ -1,0 +1,3 @@
+#!/bin/sh
+nom=pcmul
+. ./chkall.inc

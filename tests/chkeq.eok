@@ -1,0 +1,3 @@
+chkeq.asm:3: .CHK address (2) is not in range [0, 2[
+ NEXT .CHK NEXT
+           ^

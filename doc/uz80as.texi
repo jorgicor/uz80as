@@ -1,0 +1,1403 @@
+\input texinfo
+@c %**start of header
+@setfilename uz80as.info
+
+@c To get @value{VERSION}.
+@include version.texi
+
+@settitle uz80as - Micro Z80 assembler @value{VERSION}
+@c %**end of header
+
+@dircategory Software development
+@direntry
+* uz80as: (uz80as)Invoking uz80as.
+@end direntry
+
+@copying
+This manual is for uz80as (Micro Z80 assembler) version @value{VERSION}
+(updated @value{UPDATED}).
+
+Copyright @copyright{} 2016 Jorge Giner Cordero
+
+@quotation
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+@end quotation
+@end copying
+
+@titlepage
+@title uz80as
+@subtitle Micro Z80 assembler
+@subtitle version @value{VERSION}, updated @value{UPDATED}
+@author Jorge Giner Cordero
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@contents
+
+@ifnottex
+@node Top
+@top Micro Z80 assembler
+
+This manual is for @command{uz80as} (Micro Z80 assembler) version
+@value{VERSION} (updated @value{UPDATED}).
+@end ifnottex
+
+@menu
+* About::		About @command{uz80as}.
+* Source syntax::	Source format accepted by @command{uz80as}.
+* Reference::		@command{uz80as} reference manual.
+* Source guide::	How the program works.
+* Copyright::		Copyright and license.
+@end menu
+
+@node About
+@chapter About
+
+@command{uz80as} is a cross assembler for the Zilog Z80 microprocessor.
+It accepts source files with the same syntax accepted by the Telemark Cross Assembler (TASM), with only minor differences.
+
+@command{uz80as} is free software.
+
+The latest version of the program, source code and documentation can be found at @uref{http://jorgicor.sdfeu.org/uz80as}.
+
+For bug reports and suggestions, you can write to Jorge Giner at @email{jorge.giner@@hotmail.com} .
+
+@node Source syntax
+@chapter Source syntax
+
+Each line of the source file must be a an assembler statement or a preprocessor directive.
+Mathematical expressions can be used where a number is expected.
+
+@menu
+* Statements::			Format of a statement.
+* Expressions::			Expression format.
+* Assembler directives::	To control the assembler process.
+* Preprocessor directives::	How the preprocessor works.
+@end menu
+
+@node Statements
+@section Statements
+
+Each assembler statement must follow this format:
+
+@example
+label operation operands comment
+@end example
+
+For example:
+
+@example
+START	LD	A,5	; Load 5 into A
+@end example
+
+Everything that starts with an alphabetic character at the first column is considered a label.
+
+A label must be separated by the rest of fields on the line by a space, tab or a colon @samp{:}.
+
+The operation can be a Z80 instruction or an assembler directive (assembler directives start with a dot @samp{.}).
+
+Assembler directives can start at column 1, as they start with a dot @samp{.} and cannot be taken for a label.
+But a Z80 instruction cannot start at column 1, or it would be taken as a label.
+
+The operation must be separated by the operands (if any) with a space.
+
+The rest of the line is the operands field until we reach the end of line or a semicolon @samp{;}.
+
+If we find a semicolon @samp{;} character at any position, the rest of the line is ignored.
+
+All of these fields are optional except the operands field which, if present, must be preceded always by an operation field.
+
+These are examples of statements:
+
+@example
+; Program version 3
+        .ORG 4000
+LABEL   LD A,5
+        ADD 6          ; Add 6
+MEM     .FILL 2
+.END    ; End of program
+@end example
+
+A backslash character @samp{\} can be used to simulate a new line.
+Then it is possible to put one or more statements on the same line:
+
+@example
+	LD A,B\ LD B,C\ LD C,A
+@end example
+
+Remember that, as the backslash character simulates a new line, if the first character after it is alphabetic, it will be considered as a label.
+That is why we leave a space after the backslash in the example above.
+
+@menu
+* Label field::			Format of the label field.
+* Operation field::		Format of the operation field.
+* Operands field::		Format of the operand field.
+* Comment field::		Format of the comment field.
+@end menu
+
+@node Label field
+@subsection Label field
+
+The label field must start with an character from @samp{A} to @samp{Z}.
+The next characters, if any, must be letters, numbers, underscores @samp{_} or periods @samp{.}.
+Any other character terminates the label, and it must be a space, a tab or a colon @samp{:}.
+
+A label with more than 31 characters will issue an error.
+
+Labels are case sensitive, so @samp{START} is different from @samp{start}.
+
+Each label has a value, which is:
+
+@itemize @minus
+@item
+If an @code{.EQU} directive follows the label, the label takes the value of the expression introduced by the @code{.EQU}.
+@item
+If an @code{.ORG} directive follows the label, the label takes the address that the @code{.ORG} directive is setting.
+@item
+Otherwise, the value of the label is the current program counter.
+@end itemize
+
+@node Operation field
+@subsection Operation field
+
+The operation field is a Z80 instruction opcode (like @code{ADD}, @code{SUB}, @code{CALL}, etc) or an assembler directive (like @code{.ORG}, @code{.EQU}, etc).
+If it is a Z80 instruction, it cannot start at the first column of the line, because in that case it would be considered a label.
+Assembler directives can start at any column as they start with a dot @samp{.}.
+
+@node Operands field
+@subsection Operands field
+
+The operands field contains the operands for the instruction or the arguments of assembler directives. They can involve expressions, addressing modes, etc.
+
+@node Comment field
+@subsection Comment field
+
+A comment starts with a semicolon @samp{;} character and extends to the end of the line.
+It can be the only field on a line.
+
+@node Expressions
+@section Expressions
+
+Wherever a number is accepted in the operands of an instruction or directive, you can use an expression instead.
+An expression is formed using labels, constants, the program counter symbol, operators and parenthesis.
+
+@menu
+* Numeric constants::		Syntax of a number.
+* Character constants::		Syntax of a character.
+* String constants::		Syntax of a character string.
+* Program counter::		Specifying the current address.
+* Operators::			Operators to build expressions.
+@end menu
+
+@node Numeric constants
+@subsection Numeric constants
+
+A decimal numeric constant is expressed normally by the decimal number, optionally followed by the @samp{D} suffix.
+
+An hexadecimal constant is expressed by using the @samp{$} prefix or by using the @samp{H} suffix.
+It can be formed by the digits from @samp{0} to @samp{9} and the letters from @samp{A} to @samp{F}.
+Note that an hexadecimal constant that uses the suffix form and starts with a letter must be prefixed with a @samp{0} digit or it will be taken as a label.
+
+An octal constant is expressed by using the @samp{@@} prefix or by using the @samp{O} suffix.
+It can be formed by the digits from @samp{0} to @samp{7}.
+
+Binary constants are expressed using the @samp{%} prefix or by using the @samp{B} suffix.
+
+All the letters for hexadecimal constants or suffixes can be in lower case as well.
+
+For example, all these values represent the decimal number 255, using different notations:
+
+@example
+Decimal         255 or 255D
+Hexadecimal     $FF or 0FFH
+Octal           @@377 or 377O
+Binary          %11111111 or 11111111B
+@end example
+
+@node Character constants
+@subsection Character constants
+
+Character constants are single characters enclosed in single quotes, for example: 'c'.
+The ASCII code of the character is used as the value.
+Non-printable characters cannot be expressed this way, but you can use the @code{.TEXT} directive instead.
+
+@node String constants
+@subsection String constants
+
+String constants are one or more characters enclosed in double quotes, for example: "This is a string." .
+String constants are not allowed in expressions but can be used with certain directives, like @code{.TITLE}, @code{.TEXT}, @code{.BYTE}, @code{.DB}, @code{.WORD} and @code{.DW}.
+String constants can contain escape sequences to represent non-printable characters.
+An escape sequence starts with the backslash @samp{\} character:
+
+@table @code
+@item \n
+Line feed.
+@item \r
+Carriage return.
+@item \b
+Backspace.
+@item \t
+Tab.
+@item \f
+Form feed.
+@item \\
+Backslash.
+@item \"
+Double quote.
+@end table
+
+You can express any other character by using the backslash @samp{\} followed by an octal constant using exactly 3 digits.
+For example, @code{\377} represents the character value 255, and is the maximum octal value representable using a backslash.
+
+Examples:
+
+@example
+"This ends with a newline.\n"
+"\tThe name is \"Bye Bug\"."
+@end example
+
+@node Program counter
+@subsection Program counter
+
+In an expression you can use the value of the current program counter which is the Z80 address that will be assigned to the line we are assembling.
+You can use the dollar character @samp{$} or the asterisk @samp{*} to represent the current program counter.
+
+For example:
+
+@example
+START  LD HL,START
+@end example
+
+is equivalent to
+
+@example
+START  LD HL,$
+@end example
+
+@node Operators
+@subsection Operators
+
+All operations are done using at least 32 bit signed precision.
+An expression is evaluated left to right and there is no operator precedence.
+Use parenthesis if you want to change the precedence.
+For example:
+
+@example
+1 + 2*3 + 4
+@end example
+
+will be evaluated as:
+
+@example
+((1 + 2) * 3) + 4
+@end example
+
+Use parenthesis to indicate the desired order of evaluation:
+
+@example
+1 + (2*3) + 4
+@end example
+
+Summary of operators:
+
+@table @code
+@item +
+Addition.
+@item -
+Subtraction or negation.
+@item *
+Multiplication.
+@item /
+Integer division.
+@item %
+Modulo.
+@item <<
+Logical left shift.
+@item >>
+Arithmetic right shift (the sign bit fills new positions).
+@item ~
+One's complement (invert all bits).
+@item = or ==
+Equal. The result is 1 if equal, 0 if not.
+@item !=
+Not equal. The result is 1 if not equal, 0 if equal.
+@item <
+Less than. The result is 1 if a < b, 0 otherwise.
+@item <=
+Less than or equal. The result is 1 if a <= b, 0 otherwise.
+@item <
+Greater than. The result is 1 if a > b, 0 otherwise.
+@item <=
+Greater than or equal. The result is 1 if a >= b, 0 otherwise.
+@item &
+Binary @samp{AND}.
+@item |
+Binary @samp{OR}.
+@item ^
+Binary @samp{XOR}.
+@end table
+
+For the shift operators @code{>>} and @code{<<}, the second operand specifies the number of bits to shift the first operand.
+
+@node Assembler directives
+@section Assembler directives
+
+The assembler directives are distinguished from the Z80 instructions because they begin with a dot character @samp{.}.
+They are commands to control the assembly process.
+
+@menu
+* BLOCK::	.BLOCK directive.
+* BYTE::	.BYTE directive.
+* CHK::		.CHK directive.
+* CODES::	.CODES directive.
+* DB::		.DB directive.
+* DW::		.DW directive.
+* ECHO::	.ECHO directive.
+* EJECT::	.EJECT directive.
+* END::		.END directive.
+* EQU::		.EQU directive.
+* EXPORT::	.EXPORT directive.
+* FILL::	.FILL directive.
+* LIST::	.LIST directive.
+* LSFIRST::	.LSFIRST directive.
+* MSFIRST::	.MSFIRST directive.
+* NOCODES::	.NOCODES directive.
+* NOLIST::	.NOLIST directive.
+* NOPAGE::	.NOPAGE directive.
+* ORG::		.ORG directive.
+* PAGE::	.PAGE directive.
+* TEXT::	.TEXT directive.
+* TITLE::	.TITLE directive.
+* WORD::	.WORD directive.
+@end menu
+
+@node BLOCK
+@subsection BLOCK
+
+@example
+[label] .BLOCK expr
+@end example
+
+@code{expr} is evaluated and its value added to the current program counter.
+Thus @code{.BLOCK n} is equivalent to @code{.ORG $+n}.
+
+@node BYTE
+@subsection BYTE
+
+@example
+[label] .BYTE expr [, expr ...]
+@end example
+
+The @code{.BYTE} directive is supplied with one or more expressions separated
+by commas.
+Each @code{expr} can be a numeric expression or a string constant.
+If the expression is numeric, the lower eight bits of the result are output to the object file.
+If the expression is a string, for each character its @samp{ASCII} value is output to the object file.
+
+@example
+START .BYTE 'a', "hello", 5 - START
+@end example
+
+Note that the program counter symbol used in any of the expressions refers to the value the program counter had at the beginning of the line, and not at the start of each expression.
+
+You can use @code{.DB} as an alternative name for @code{.BYTE}.
+
+@node CHK
+@subsection CHK
+
+@example
+[label] .CHK expr
+@end example
+
+The checksum directive, takes all the bytes from the address @code{expr} up to the current address, and adds them.
+The least significant byte of the result is output to the object file.
+The address defined by @code{expr} must be in the range @code{[0, current program counter[}.
+
+For example, this will output in the object file the bytes 1, 2, 3, 4 and 10:
+
+@example
+START   .DB 1, 2, 3, 4
+        .CHK START
+@end example
+
+@node CODES
+@subsection CODES
+
+Enables the generation of line numbers, opcodes, etc. in the listing file.
+This is enabled by default, but can be disabled using the @code{.NOCODES} directive.
+
+@node DB
+@subsection DB
+
+@code{.DB} is an alternate name for @code{.BYTE}.
+
+@node DW
+@subsection DW
+
+@code{.DW} is an alternate name for @code{.WORD}.
+
+@node ECHO
+@subsection ECHO
+
+@example
+[label] .ECHO expr
+[label] .ECHO string
+@end example
+
+Outputs to the console (stderr) an expression value or a string.
+
+For example,
+
+@example
+.ECHO "The code size is "
+.ECHO PRG_END - PRG_START
+.ECHO " bytes long.\n"
+@end example
+
+may result in:
+
+@example
+The program size is 237 bytes long.
+@end example
+
+@node EJECT
+@subsection EJECT
+
+The @code{.EJECT} directive is accepted but not implemented.
+In @code{TASM}, forces a new page in the listing file.
+
+@node END
+@subsection END
+
+@example
+[label]	.END [addr]
+@end example
+
+The @code{.END} directive should be the last one in the program.
+It is accepted only for compatibility with @command{TASM} but, if not used, we will only issue a warning.
+If it is present, it is an error to use any directive or instruction that generates code after it.
+It is an error to have more than one @code{.END} directive.
+
+@node EQU
+@subsection EQU
+
+@example
+label .EQU expr
+@end example
+
+Normally, a label takes the value of the current program counter, but you can assign the result of an expression to a label.
+The label is mandatory in this case.
+
+An alternative syntax uses the equal sign @samp{=} instead of @code{.EQU}:
+
+@example
+label = 25
+@end example
+
+@node EXPORT
+@subsection EXPORT
+
+@example
+[label] .EXPORT label [,label ...]
+@end example
+
+The @code{.EXPORT} directive is accepted but not implemented.
+
+@node FILL
+@subsection FILL
+
+@example
+[label] .FILL number_of_bytes [, fill_value]
+@end example
+
+Outputs @code{number_of_bytes} bytes to the output file.
+The value output to each byte is the least significant byte of @code{fill_value}.
+If no @code{fill_value} is supplied, the value 255 is used.
+It is an error to supply a negative @code{number_of_bytes}.
+
+@c TODO: by default the memory is filled with 0 at start.
+
+@node LIST
+@subsection LIST
+
+Turns on the output to the listing file.
+This is the default.
+Use @code{.NOLIST} to disable it.
+
+@node LSFIRST
+@subsection LSFIRST
+
+Turns on little endian mode.
+When a @code{.WORD} directive is found, it will take the 16 lower significant bits of the value, and from these the least significant byte will be output first to the object file, then the most significant byte.
+This is the default.
+Use @code{.MSFIRST} to change this behavior.
+
+This example will output the byte @samp{$34} and then @samp{$12} to the output file.
+
+@example
+        .LSFIRST
+        .WORD $1234
+@end example
+
+@node MSFIRST
+@subsection MSFIRST
+
+Turns on big endian mode.
+When a @code{.WORD} directive is found, it will take the 16 lower significant bits of the value, and from these the most significant byte will be output first to the object file, then the least significant byte.
+Use @code{.LSFIRST} to change this behavior.
+
+This example output the byte @samp{$12} and then @samp{$34} to the output file.
+
+@example
+        .MSFIRST
+        .WORD $1234
+@end example
+
+@node NOCODES
+@subsection NOCODES
+
+Disables the generation of line numbers, opcodes, etc. in the listing file.
+Use @code{.CODES} to enable it again.
+
+@node NOLIST
+@subsection NOLIST
+
+Turns off the output to the listing file.
+Use @code{.LIST} to enable it again.
+
+@node NOPAGE
+@subsection NOPAGE
+
+Accepted but currently ignored.
+See the @ref{PAGE} directive as well.
+
+@node ORG
+@subsection ORG
+
+@example
+[label] .ORG expr
+[label] *=expr
+[label] $=expr
+@end example
+
+Sets the program counter to the value of @code{expr}, which must be in the range @code{[0, 65536]}.
+@code{expr} can have references to the current program counter.
+For example, to advance the program counter to the next 256 boundary, we can use:
+
+@example
+        .ORG ($ + 0FFH) & 0FF00H
+@end example
+
+Note that a label that is used with an @code{.ORG} directive will take the value of the program counter set by the @code{.ORG}.
+
+You can use @code{.ORG} or the alternative forms @code{*=} and @code{$=}.
+
+@node PAGE
+@subsection PAGE
+
+Accepted but currently ignored.
+See the @ref{NOPAGE} directive as well.
+
+@node TEXT
+@subsection TEXT
+
+@example
+[label] .TEXT string
+@end example
+
+Outputs the @code{ASCII} value of each character of the supplied string to the object file as a byte.
+Special characters can be embedded in the string using escape sequences.
+@xref{String constants}.
+
+@example
+msg1    .TEXT "Enter the file name\n"
+msg2    .TEXT "Say \"YES\" or \"NO\""
+@end example
+
+@c TODO: accepts strings without double quotes?
+
+@node TITLE
+@subsection TITLE
+
+Accepted but currently ignored.
+
+@example
+        .TITLE "Program version 1.2"
+        .TITLE "Subtitle"
+@end example
+
+@node WORD
+@subsection WORD
+
+@example
+[label] .WORD expr [, expr ...]
+@end example
+
+The @code{.WORD} directive accepts an expression or a list of expressions, and outputs the 16 bit value of each expression as two bytes.
+The default is to output the least significant byte first.
+You can change this behavior with the @code{.MSFIRST} and @code{.LSFIRST} directives.
+
+Note that if you use the program counter symbol (@samp{$}) in any expression in a @code{.WORD} directive, it takes the value of the program counter at the beginning of the line, and not its value at the start of each expression.
+For example:
+
+@example
+START   .EQU  0
+        .WORD $1234, $
+@end example
+
+will output:
+
+@example
+$34 $12 $00
+@end example
+
+and not:
+
+@example
+$32 $12 $02
+@end example
+
+@node Preprocessor directives
+@section Preprocessor directives
+
+The preprocessor directives can be used to assemble or not some parts of the source, to include text from other files to assemble, and to define macros that can cause text substitution.
+
+@menu
+* DEFINE::	#DEFINE directive.
+* DEFCONT::	#DEFCONT directive.
+* INCLUDE::	#INCLUDE directive.
+* IF::		#IF directive.
+* IFDEF::	#IFDEF directive.
+* IFNDEF::	#IFNDEF directive.
+* ELSE::	#ELSE directive.
+* ENDIF::	#ENDIF directive.
+@end menu
+
+@node DEFINE
+@subsection DEFINE
+
+@example
+#DEFINE macro_name[(arg_label [, arg_label ...])] [macro_definition]
+@end example
+
+The @code{#DEFINE} directive is used to define a macro name.
+Macro names can be used for text substitution.
+For example, you can define a label to be expanded to arbitrary text prior compilation:
+
+@example
+#DEFINE STARTLO (START & 255)
+
+        .DB STARTLO+1
+@end example
+
+When the assembler finds @code{STARTLO}, it will substitute it by the text @code{(START & 255)}, so it will finally assemble this text:
+
+@example
+        .DB (START & 255)+1
+@end example
+
+The substitution is recursive.
+For example:
+
+@example
+#DEFINE STARTLO (START & 255)
+#DEFINE STARTLO_PLUS_1 (STARTLO+1)
+
+        .DB STARTLO_PLUS_1
+@end example
+
+This will expand first to:
+
+@example
+        .DB (STARTLO+1)
+@end example
+
+And then to:
+
+@example
+        .DB ((START & 255)+1)
+@end example
+
+Note that you can define a macro label that expands to no text:
+
+@example
+#DEFINE VOID
+
+        .DB 5
+        VOID
+        .DB 6
+@end example
+
+And you can make synonyms for directives to, for example, allow to compile the syntax from other assemblers.
+For example, imagine an assembler which does not use directives that begin with a dot as we do.
+To assemble a source that was written for that assembler with @code{uz80as}, you can use a set of defines at the beginning of your source file, and use them later:
+
+@example
+#DEFINE DB .DB
+#DEFINE DW .DW
+
+        ...
+
+        DB 5, 6, 7
+@end example
+
+You can define macros with arguments, for example:
+
+@example
+#DEFINE ADDMAC(x,y) ((x)+(y))
+
+        .DB ADDMAC(5,6)
+@end example
+
+This works first by taking the text of the @code{ADDMAC} macro:
+
+@example
+((x)+(y))
+@end example
+
+and then searches for @code{x} in this text and substitutes it by @code{5}.
+Next, finds @code{y} and substitutes it by @code{6}.
+
+@example
+((5)+(6))
+@end example
+
+Finally, the resulting text is substituted in the original location:
+
+@example
+        .DB ((5)+(6))
+@end example
+
+Note that if you do not supply a parameter, nothing will be substituted:
+
+@example
+        .DB ADDMAC(5)
+@end example
+
+will expand into:
+
+@example
+        .DB ((5)+(y))
+@end example
+
+@c TODO: maximum number of characters per argument.
+@c In TASM 16, we have unlimited.
+
+@node DEFCONT
+@subsection DEFCONT
+
+@code{#DEFCONT} can be used to add more text to the previous defined macro.
+The macro text will always form an unique line, so remember to use the backslash character if you are forming multiline statements:
+
+@example
+#DEFINE ADDMAC(x,y)     LD A,x
+#DEFCONT                \ LD B,y
+#DEFCONT                \ ADD B
+@end example
+
+@node INCLUDE
+@subsection INCLUDE
+
+@example
+#INCLUDE "filename"
+@end example
+
+The @code{#INCLUDE} directive is used to include the text of another file
+to be assembled.
+
+For example, if the file @samp{common.h} is:
+
+@example
+        .DB 5
+@end example
+
+and the file @samp{prg.asm} is:
+
+@example
+#include "common.h"
+        .DB 6
+@end example
+
+the assembler will compile
+
+@example
+        .DB 5
+        .DB 6
+@end example
+
+@node IF
+@subsection IF
+
+@example
+#IF expr
+@end example
+
+The @code{#IF} directive evaluates the supplied expression.
+If the value of the expression is zero, the next lines are ignored by the assembler, until an @code{#ENDIF} or an @code{#ELSE} directive is found.
+
+If the value of the expression is not zero, the next lines are assembled normally, until an @code{#ENDIF} or @code{#ELSE} directive is found.
+In this case, if we find an @code{#ELSE} directive, the next lines after the @code{#ELSE} will be ignored.
+
+In this example, as the expression evaluates to something different than zero, the line @code{LD A,1} will be assembled and @code{LD A,0} ignored:
+
+@example
+ASSEMLE .EQU 1
+
+#IF ASSEMBLE
+        LD A,1
+#ELSE
+        LD A,0
+#ENDIF
+@end example
+
+On the other hand, here the opposite will happen:
+
+@example
+ASSEMLE .EQU 1
+
+#IF !ASSEMBLE
+        LD A,1
+#ELSE
+        LD A,0
+#ENDIF
+@end example
+
+Note that @code{#IF} directives can be nested:
+
+@example
+TRUE  .EQU 1
+FALSE .EQU 0
+
+#IF TRUE
+        #IF FALSE
+                LD A,0
+        #ELSE
+                LD A,1
+        #ENDIF
+#ELSE
+        #IF TRUE
+                LD A,2
+        #ELSE
+                LD A,3
+        #ENDIF
+#ENDIF
+@end example
+
+In this example, this code will be assembled:
+
+@example
+        LD A,1
+@end example
+
+@node IFDEF
+@subsection IFDEF
+
+@example
+#IFDEF macro_name
+@end example
+
+@code{#IFDEF} is like @code{#IF}, but tests if a macro name has been defined.
+
+@example
+#DEFINE SPECTRUM
+
+#IFDEF SPECTRUM
+        CALL spectrum_fun
+#ELSE
+        CALL amstrad_fun
+#ENDIF
+@end example
+
+will assemble:
+
+@example
+        CALL spectrum_fun
+@end example
+
+@node IFNDEF
+@subsection IFNDEF
+
+@code{#IFNDEF} is like @code{#IFDEF}, but tests if a macro name has not been defined.
+
+@node ELSE
+@subsection ELSE
+
+Used to end a section that began with an @code{#IF}, @code{#IFDEF} or @code{IFNDEF} directive.
+
+@node ENDIF
+@subsection ENDIF
+
+Used to end a section that began with an @code{#IF}, @code{#IFDEF}, @code{IFNDEF} or @code{#ELSE} directive.
+
+@node Reference
+@chapter Reference
+
+@menu
+* Invoking uz80as::			How to invoke @command{uz80as}.
+* Z80 instruction set::			Format of the instructions accepted.
+* Implementation-defined features::	Features specific to @command{uz80as}.
+* Differences with TASM::		How we differ from TASM.
+@end menu
+
+@node Invoking uz80as
+@section Invoking uz80as
+
+@example
+uz80as [OPTION]... ASM_FILE [OBJ_FILE [LST_FILE]]
+@end example
+
+To assemble @file{program.asm} you can use:
+
+@example
+uz80as program.asm
+@end example
+
+If there are no errors, this will generate the file @file{program.obj} with the binary machine code of the program.
+Also, the file @file{program.lst} will be generated with the listing of the source program, plus more info like line numbers, the value of the program counter at each line, the generated machine code in hexadecimal, etc.
+
+You can give another names to the object and listing files by specifying their names after the name of the source file. For example, this will generate the object file with the name @file{program.bin} and the listing file with the name @file{list.txt}:
+
+@example
+uz80as program.asm program.bin list.txt
+@end example
+
+Additional command line options can be used before the these arguments. They are:
+
+@table @code
+@item -h, --help
+Display usage information and exit.
+
+@item -v, --version
+Display version information and exit.
+
+@item -f nn, --fill n
+By default, the entire memory addressable by the Z80 (64K) is filled by zero.
+You can specify a different value to fill the memory.
+@code{'nn'} must be formed by two hexadecimal digits.
+For example, to fill the memory with the value 255 decimal, use @code{'-f FF'}.
+
+@item -dmacro, --define macro
+Define a macro.
+If the macro is simply a label, you can use @code{-dLABEL}.
+If it is a macro for text substitution, you have to enclose the macro definition in double quotes. For example: @code{-d"MUL(a,b) (a*b)"}.
+
+@item -q, --quiet
+Disables the generation of the listing file.
+
+@item -x, --extended
+Enables an extended instruction set.
+Unofficial instructions will be accepted.
+@xref{Z80 instruction set}.
+@end table
+
+@node Z80 instruction set
+@section Z80 instruction set
+
+@itemize @bullet
+@item LD b,b
+@item LD b,(HL)
+@item LD b,(ca)
+@item LD A,I
+@item LD A,R
+@item LD A,(BC)
+@item LD A,(DE)
+@item LD A,(a)
+@item LD b,a
+@item LD I,A
+@item LD R,A
+@item LD SP,HL
+@item LD SP,e
+@item LD HL,(a)
+@item LD d,(a)
+@item LD d,a
+@item LD e,(a)
+@item LD e,a
+@item LD (HL),b
+@item LD (HL),a
+@item LD (BC),A
+@item LD (DE),A
+@item LD (ca),b
+@item LD (ca),a
+@item LD (a),A
+@item LD (a),HL
+@item LD (a),d
+@item LD (a),e
+@item PUSH f
+@item PUSH e
+@item POP f
+@item POP e
+@item EX DE,HL
+@item EX AF,AF'
+@item EX (SP),HL
+@item EX (SP),e
+@item EXX
+@item LDI
+@item LDIR
+@item LDD
+@item LDDR
+@item CPI
+@item CPIR
+@item CPD
+@item CPDR
+@item ADD HL,d
+@item ADD IX,i
+@item ADD IY,j
+@item ADC HL,d
+@item SBC HL,d
+@item g A,b
+@item g A,(HL)
+@item g A,(ca)
+@item g A,a
+@item g b
+@item g (HL)
+@item g (ca)
+@item g a
+@item h b
+@item h (HL)
+@item h (ca)
+@item INC d
+@item INC e
+@item DEC d
+@item DEC e
+@item DAA
+@item CPL
+@item NEG
+@item CCF
+@item SCF
+@item NOP
+@item HALT
+@item DI
+@item EI
+@item IM a
+@item RLCA
+@item RLA
+@item RRCA
+@item RRA
+@item k b
+@item k (HL)
+@item k (ca)
+@item RLD
+@item RRD
+@item l a,b
+@item l a,(HL)
+@item l a,(ca)
+@item JP (HL)
+@item JP (e)
+@item JP m,a
+@item JP a
+@item JR n,a
+@item JR a
+@item DJNZ a
+@item CALL m,a
+@item CALL a
+@item RETI
+@item RETN
+@item RET m
+@item RET
+@item RST
+@item IN b,(C)
+@item IN A,(a)
+@item IN F,(a)
+@item INI
+@item INIR
+@item IND
+@item INDR
+@item OUT (C),0
+@item OUT (C),b
+@item OUT (a),A
+@item OUTI
+@item OTIR
+@item OUTD
+@item OTDR
+@end itemize
+
+Where:
+
+@itemize @bullet
+@item a: expr
+@item b: B,C,D,E,H,L,A
+@item c: IX,IY (must be followed by + or -)
+@item d: BC,DE,HL,SP
+@item e: IX,IY
+@item f: BC,DE,HL,AF
+@item g: ADD,ADC,SUB,SBC,AND,XOR,OR,CP
+@item h: INC,DEC
+@item i: BC,DE,IX,SP
+@item j: BC,DE,IY,SP
+@item k: RLC,RRC,RL,RR,SLA,SRA,SLL,SRL
+@item l: BIT,RES,SET
+@item m: NZ,Z,NC,C,PO,PE,P,M
+@item n: NZ,Z,NC,C
+@end itemize
+
+Note that in the official Zilog syntax, some of the arithmetic group of instructions take the @code{A} register as first argument: @code{ADD}, @code{ADC} and @code{SBC}.
+Others do not: @code{SUB}, @code{AND}, @code{OR}, @code{XOR} and @code{CP}.
+So you write:
+
+@example
+	ADD A,B
+@end example
+
+and do not write
+
+@example
+	ADD B
+@end example
+
+And you write:
+
+@example
+	SUB B
+@end example
+
+but do not write
+
+@example
+	SUB A,B
+@end example
+
+By default, it is an error to use the unofficial forms of these instructions, but you can enable them by specifying the @code{-x} option at the command line.
+With this option enabled, you can write this:
+
+@example
+	ADD A,B
+	ADD B
+	SUB A,B
+	SUB B
+@end example
+
+For compatibility with other assemblers, it is better to keep the official syntax.
+
+@node Implementation-defined features
+@section Implementation-defined features
+
+Limits:
+
+@itemize @minus
+
+@item
+Maximum number of labels: 15000.
+@item
+Maximum source line length: 511 characters.
+@item
+Maximum line length after macro expansion: 511.
+@item
+Number of significant characters in labels: 31.
+@item
+Maximum number of nested include files: 127.
+@item
+Maximum number of macros: 1000.
+@item
+Maximum number of macro arguments: 10.
+
+@end itemize
+
+In the places where we can specify an expression, sometimes we require that the labels referenced in the expression have already a well defined value in the first pass of the assembler.
+The following directives do not allow to specify a label not already defined at the point where the directive appears in the first pass: @code{#IF}, @code{.BLOCK}, @code{.END}, @code{.EQU}, @code{.FILL} (number of positions), @code{.ORG}.
+
+@node Differences with TASM
+@section Differences with TASM
+
+@itemize @minus
+
+@item
+@command{uz80as} only generates binary object files.
+
+@item
+The places in where @command{uz80as} allows for forward references of labels in the first pass of the assembler can differ from @command{TASM}. @xref{Implementation-defined features}.
+
+@item
+@command{TASM} always needs a space or a colon @samp{:} character after a label. Anything else is considered an error. So this does not compile in @command{TASM} but it is accepted by @command{uz80as}:
+
+@example
+label;comment
+LABEL=5
+@end example
+
+@item
+@command{TASM}, for some reason, ignores the @samp{2} in the following expression and treats it as @samp{*-3}, that is, the current program counter minus 3. We correctly parse it as @samp{2*(-3)}.
+
+@example
+        .DB 2*-3
+@end example
+
+Something similar happens with the symbol @code{*} used for the current program counter with the multiplication operator.
+These:
+
+@example
+	.DB ***, **2
+@end example
+
+are incorrectly parsed by @command{TASM}.
+We correctly parse them as @code{$*$} and @code{$*2}, that is, the current program counter multiplied by itself or by 2.
+
+@item
+We allow this while @command{TASM} does not:
+
+@example
+        .DB -+1
+@end example
+
+@item
+@command{TASM} says that it uses logical right shifts (inserting zeros) for the right shift operator, but it is actually using arithmetic right shift (the sign bit is extended) at least on x86 machines. We use arithmetic shift as well. So this results in @code{$FF} in @command{TASM} and @command{uz80as}, instead of @code{$0F} :
+
+@example
+	.DB -1>>28
+@end example
+
+Moreover, in @command{uz80as} only the least @code{N} bits of the second operand are used in the shifting operation, where @code{N} is the number of bits used by an integer on this machine, minus one.
+For a system where an integer is 32 bits, @code{N} is 31.  
+This seems compatible with @command{TASM}.
+
+@item
+We allow the program counter to reach the address 65536 which is outside the address range of the Z80 ([0, 65535]). But if some object is generated after that address, we will issue an error and terminate.
+
+@command{TASM}, on the other hand, shows a strange behavior. For example, this generates an object code of 256 bytes (?) without error:
+
+@example
+	.ORG 65536
+	.DB 1
+	.END
+@end example
+
+@command{TASM} accepts this as well without error:
+
+@example
+	.ORG -1
+	.DB 1
+	.END
+@end example
+
+@item
+We don't accept any negative value to @code{.FILL}.
+Starting at @code{.ORG 0}, using @code{.FILL -1} in @command{TASM} generates a 65535 length object file;
+@code{.FILL 65536} generates a zero length object file.
+
+In @command{uz80as}, @code{.FILL -1} issues an error;
+@code{.FILL 65536} correctly generates a 65536 length object file.
+
+@item
+The @code{.MODULE} and @code{.LOCALLABELCHAR} are not accepted at this moment by @command{uz80as}, but they are planned.
+
+@item
+It seems that @command{TASM} accepts multiple @code{.END} directives and assembles code after it, at least in binary mode. We don't accept that, but we accept programs without an @code{.END} directive.
+
+@item
+I completely don't understand how the @code{.CHK} directive works in @command{TASM}.
+Given the description in the manual, this should generate the byte 37H by the @code{.CHK} directive, but generates 0BH.
+
+@example
+START   .DB 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+        .CHK START
+@end example
+
+So our @code{.CHK} directive can generate a value completely different than @command{TASM}, but should correctly implement what this manual says.
+
+@item
+We allow to write the instructions @code{ADD}, @code{ADC}, @code{SUB}, @code{SBC}, @code{AND}, @code{OR}, @code{XOR} and @code{CP} with the @code{A} register as first argument or without it (if the @code{-x} option is specified).
+@command{TASM} sticks to the official Zilog syntax. @xref{Z80 instruction set}.
+
+@item
+@command{TASM} accepts including files without enclosing them in double quotes:
+
+@example
+#include file.asm
+@end example
+
+We always require the double quotes:
+
+@example
+#include "file.asm"
+@end example
+
+@item
+@command{TASM} allows a trailing comma in @code{.BYTE} directives:
+
+@example
+.BYTE   1, 2, 3,
+@end example
+
+We do not allow for trailing commas, you should write:
+
+@example
+.BYTE   1, 2, 3
+@end example
+
+@end itemize
+
+@node Source guide
+@chapter Source guide
+
+@menu
+* Modules::		Source code as layers of dependencies.
+@end menu
+
+@node Modules
+@section Modules
+
+@itemize @bullet
+
+@item Layer 0: Base modules
+@itemize @minus
+@item
+@file{utils.c}: generic functions.
+@item
+@file{ngetopt.c}: command line argument parsing.
+@end itemize
+
+@item Layer 1: Including files and error reporting.
+@itemize @minus
+@item 
+@file{err.c}: error reporting functions, error text, memory allocations.
+@item
+@file{incl.c}: file inclusion stack.
+@item
+@file{options.c}: program options and file names from the command line.
+@end itemize
+
+@item Layer 2: Assembly support.
+@itemize @minus
+@item
+@file{sym.c}: symbol table (table of labels and values).
+@item
+@file{expr.c}: expression parsing.
+@item
+@file{pp.c}: preprocessor, macro table.
+@item
+@file{list.c}: listing generation.
+@end itemize
+
+@item Layer 3: Assembler
+@itemize @minus
+@item
+@file{uz80as.c}: the assembler program.
+@item
+@file{main.c}: the entry point.
+@end itemize
+
+@end itemize
+
+@node Copyright
+@chapter Copyright
+@insertcopying
+
+@bye

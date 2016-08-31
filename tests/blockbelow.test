@@ -1,0 +1,3 @@
+#!/bin/sh
+nom=blockbelow
+. ./chkep0.inc

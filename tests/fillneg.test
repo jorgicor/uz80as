@@ -1,0 +1,3 @@
+#!/bin/sh
+nom=fillneg
+. ./chkep0.inc

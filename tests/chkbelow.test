@@ -1,0 +1,3 @@
+#!/bin/sh
+nom=chkbelow
+. ./chkep1.inc

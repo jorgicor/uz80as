@@ -1,0 +1,75 @@
+	.ORG 0
+
+	ADD A,A
+	ADD A,1
+	ADD A,(HL)
+	ADD A,(IX+1)
+	ADD A
+	ADD 1
+	ADD (HL)
+	ADD (IX+1)
+
+	ADC A,A
+	ADC A,1
+	ADC A,(HL)
+	ADC A,(IX+1)
+	ADC A
+	ADC 1
+	ADC (HL)
+	ADC (IX+1)
+
+	SUB A,A
+	SUB A,1
+	SUB A,(HL)
+	SUB A,(IX+1)
+	SUB A
+	SUB 1
+	SUB (HL)
+	SUB (IX+1)
+
+	SBC A,A
+	SBC A,1
+	SBC A,(HL)
+	SBC A,(IX+1)
+	SBC A
+	SBC 1
+	SBC (HL)
+	SBC (IX+1)
+
+	AND A,A
+	AND A,1
+	AND A,(HL)
+	AND A,(IX+1)
+	AND A
+	AND 1
+	AND (HL)
+	AND (IX+1)
+
+	OR A,A
+	OR A,1
+	OR A,(HL)
+	OR A,(IX+1)
+	OR A
+	OR 1
+	OR (HL)
+	OR (IX+1)
+
+	XOR A,A
+	XOR A,1
+	XOR A,(HL)
+	XOR A,(IX+1)
+	XOR A
+	XOR 1
+	XOR (HL)
+	XOR (IX+1)
+
+	CP A,A
+	CP A,1
+	CP A,(HL)
+	CP A,(IX+1)
+	CP A
+	CP 1
+	CP (HL)
+	CP (IX+1)
+
+	.END

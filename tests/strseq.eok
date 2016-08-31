@@ -1,0 +1,9 @@
+strseq.asm:2: bad character escape sequence
+  .TEXT "\378\.\1"
+         ^
+strseq.asm:2: bad character escape sequence
+  .TEXT "\378\.\1"
+             ^
+strseq.asm:2: bad character escape sequence
+  .TEXT "\378\.\1"
+               ^

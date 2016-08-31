@@ -1,0 +1,6 @@
+multiend.asm:4: duplicate .END
+  .END
+  ^
+multiend.asm:5: duplicate .END
+  .END
+  ^

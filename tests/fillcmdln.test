@@ -1,0 +1,12 @@
+#!/bin/sh
+nom=fillcmdln
+uz80as=$top_builddir/src/uz80as
+asm=$nom.asm
+bin=$nom.bin
+lst=$nom.lst
+eok=$nom.eok
+err=$nom.err
+bok=$nom.bok
+lok=$nom.lok
+$uz80as -fAB $asm $bin 2>$err
+cmp $bin $bok && diff --strip-trailing-cr $lst $lok && diff --strip-trailing-cr $eok $err && rm -f $bin $lst $err

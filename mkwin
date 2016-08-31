@@ -1,0 +1,101 @@
+#!/bin/sh
+
+# This script is used by the author to make the Windows version.
+
+case $# in
+	2) uz80as_vmaj=$1; uz80as_vmin=$2 ;;
+	*) echo "$0 major_version minor_version"; exit 0 ;;
+esac
+
+uz80as_xver=$uz80as_vmaj.$uz80as_vmin
+uz80as_wver=$uz80as_vmaj$uz80as_vmin
+uz80as_xname=uz80as-$uz80as_xver
+uz80as_wname=uz80asv$uz80as_wver
+uz80as_targz=$uz80as_xname.tar.gz
+sedmask='s/$//'
+
+show_menu () {
+	echo "*********"
+	echo " M E N U "
+	echo "*********"
+	echo "1. Download $uz80as_targz"
+	echo "2. Compile $uz80as_xname"
+	echo "3. Make $uz80as_wname.zip"
+	echo "4. Clean all"
+	echo "5. Remove $uz80as_targz"
+	echo "6. Exit"
+}
+
+download_src () {
+	if [ ! -f $uz80as_targz ]
+	then
+		wget -c http://jorgicor.sdfeu.org/uz80as/$uz80as_targz
+		if [ $? -ne 0 ]
+		then
+			echo "Error downloading $uz80as_targz"
+		else
+			echo "Ok"
+		fi
+	else
+		echo "Ok"
+	fi
+}
+
+compile_src () {
+	tar -xvzf $uz80as_targz
+	cd $uz80as_xname
+#	./configure CC=i686-w64-mingw32-gcc --target=i686-w64-mingw32
+	./configure --host=i686-w64-mingw32
+	make
+	make html
+	cd ..
+}
+
+make_zip () {
+	mkdir $uz80as_wname
+	cd $uz80as_wname
+	cp ../$uz80as_xname/src/uz80as.exe .
+	cp ../$uz80as_xname/doc/uz80as.html .
+	cp ../$uz80as_xname/COPYING copying.txt
+	cp ../$uz80as_xname/README readme.txt
+	cp ../$uz80as_xname/NEWS news.txt
+	for i in *.txt
+	do
+		sed $sedmask $i > tmp.txt
+		rm $i
+		mv tmp.txt $i
+	done
+	i686-w64-mingw32-strip uz80as.exe
+	cd ..
+	zip -r $uz80as_wname.zip $uz80as_wname
+}
+
+clean_all () {
+	rm -r $uz80as_xname
+	rm -r $uz80as_wname
+}
+
+remove_src () {
+	rm $uz80as_targz
+}
+
+read_option () {
+	local choice
+	echo -n "Select option: "
+	read choice
+	case $choice in
+		1) download_src ;;
+		2) compile_src ;;
+		3) make_zip ;;
+		4) clean_all ;;
+		5) remove_src ;;
+		6) exit 0 ;;
+		*) echo "Wrong option" ;;
+	esac
+}
+
+while true
+do
+	show_menu
+	read_option
+done

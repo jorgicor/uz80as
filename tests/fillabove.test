@@ -1,0 +1,3 @@
+#!/bin/sh
+nom=fillabove
+. ./chkep0.inc

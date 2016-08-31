@@ -1,0 +1,5 @@
+	.ORG 0
+START	.DB 1, 2
+NEXT	.CHK NEXT
+	.DB 3, 4
+	.END

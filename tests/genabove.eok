@@ -1,0 +1,3 @@
+genabove.asm:2: generating code beyond address 65535
+  .DB 1, 2
+         ^

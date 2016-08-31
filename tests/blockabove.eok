@@ -1,0 +1,3 @@
+blockabove.asm:2: address (65537) set by .BLOCK is not in range [0, 65536]
+  .BLOCK 65537
+         ^

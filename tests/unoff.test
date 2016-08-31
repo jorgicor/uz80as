@@ -1,0 +1,3 @@
+#!/bin/sh
+nom=unoff
+. ./chkep0.inc

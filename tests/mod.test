@@ -1,0 +1,3 @@
+#!/bin/sh
+nom=mod
+. ./chkep1.inc

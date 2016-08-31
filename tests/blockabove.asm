@@ -1,0 +1,3 @@
+	.ORG 0
+	.BLOCK 65537
+	.END

@@ -1,0 +1,3 @@
+genafterend.asm:4: generating code after .END
+  .DB 2
+      ^

@@ -1,0 +1,75 @@
+0001   0000             	.ORG 0
+0002   0000             
+0003   0000 87          	ADD A,A
+0004   0001 C6 01       	ADD A,1
+0005   0003 86          	ADD A,(HL)
+0006   0004 DD 86 01    	ADD A,(IX+1)
+0007   0007 87          	ADD A
+0008   0008 C6 01       	ADD 1
+0009   000A 86          	ADD (HL)
+0010   000B DD 86 01    	ADD (IX+1)
+0011   000E             
+0012   000E 8F          	ADC A,A
+0013   000F CE 01       	ADC A,1
+0014   0011 8E          	ADC A,(HL)
+0015   0012 DD 8E 01    	ADC A,(IX+1)
+0016   0015 8F          	ADC A
+0017   0016 CE 01       	ADC 1
+0018   0018 8E          	ADC (HL)
+0019   0019 DD 8E 01    	ADC (IX+1)
+0020   001C             
+0021   001C 97          	SUB A,A
+0022   001D D6 01       	SUB A,1
+0023   001F 96          	SUB A,(HL)
+0024   0020 DD 96 01    	SUB A,(IX+1)
+0025   0023 97          	SUB A
+0026   0024 D6 01       	SUB 1
+0027   0026 96          	SUB (HL)
+0028   0027 DD 96 01    	SUB (IX+1)
+0029   002A             
+0030   002A 9F          	SBC A,A
+0031   002B DE 01       	SBC A,1
+0032   002D 9E          	SBC A,(HL)
+0033   002E DD 9E 01    	SBC A,(IX+1)
+0034   0031 9F          	SBC A
+0035   0032 DE 01       	SBC 1
+0036   0034 9E          	SBC (HL)
+0037   0035 DD 9E 01    	SBC (IX+1)
+0038   0038             
+0039   0038 A7          	AND A,A
+0040   0039 E6 01       	AND A,1
+0041   003B A6          	AND A,(HL)
+0042   003C DD A6 01    	AND A,(IX+1)
+0043   003F A7          	AND A
+0044   0040 E6 01       	AND 1
+0045   0042 A6          	AND (HL)
+0046   0043 DD A6 01    	AND (IX+1)
+0047   0046             
+0048   0046 B7          	OR A,A
+0049   0047 F6 01       	OR A,1
+0050   0049 B6          	OR A,(HL)
+0051   004A DD B6 01    	OR A,(IX+1)
+0052   004D B7          	OR A
+0053   004E F6 01       	OR 1
+0054   0050 B6          	OR (HL)
+0055   0051 DD B6 01    	OR (IX+1)
+0056   0054             
+0057   0054 AF          	XOR A,A
+0058   0055 EE 01       	XOR A,1
+0059   0057 AE          	XOR A,(HL)
+0060   0058 DD AE 01    	XOR A,(IX+1)
+0061   005B AF          	XOR A
+0062   005C EE 01       	XOR 1
+0063   005E AE          	XOR (HL)
+0064   005F DD AE 01    	XOR (IX+1)
+0065   0062             
+0066   0062 BF          	CP A,A
+0067   0063 FE 01       	CP A,1
+0068   0065 BE          	CP A,(HL)
+0069   0066 DD BE 01    	CP A,(IX+1)
+0070   0069 BF          	CP A
+0071   006A FE 01       	CP 1
+0072   006C BE          	CP (HL)
+0073   006D DD BE 01    	CP (IX+1)
+0074   0070             
+0075   0070             	.END

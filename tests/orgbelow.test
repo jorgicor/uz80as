@@ -1,0 +1,3 @@
+#!/bin/sh
+nom=orgbelow
+. ./chkep0.inc

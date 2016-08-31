@@ -1,0 +1,3 @@
+#!/bin/sh
+nom=orgabove
+. ./chkep0.inc
