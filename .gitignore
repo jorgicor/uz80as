@@ -1,6 +1,7 @@
 *~
 *.log
 *.o
+*.obj
 *.trs
 Makefile.in
 Makefile
