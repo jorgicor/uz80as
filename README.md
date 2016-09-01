@@ -24,7 +24,7 @@ uz80as.exe      The program.
 uz80as.html     The manual.
 readme.txt      This file.
 copying.txt     License.
-news.txt        What's new in this version.
+changelog.txt   What's new in this version.
 ~~~
 
 Compiling
@@ -62,7 +62,7 @@ Normally, after installing from source, you can find this on your system:
 /usr/local/share/info/uz80as.info        The info manual.
 /usr/local/share/doc/uz80as/COPYING      License.
 /usr/local/share/doc/uz80as/README.md    This file.
-/usr/local/share/doc/uz80as/NEWS         What's new in this version.
+/usr/local/share/doc/uz80as/CHANGELOG.md What's new in this version.
 ~~~
 
 If you are installing uz80as using your OS distribution package system, these

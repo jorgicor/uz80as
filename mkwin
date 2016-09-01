@@ -57,8 +57,8 @@ make_zip () {
 	cp ../$uz80as_xname/src/uz80as.exe .
 	cp ../$uz80as_xname/doc/uz80as.html .
 	cp ../$uz80as_xname/COPYING copying.txt
-	cp ../$uz80as_xname/README readme.txt
-	cp ../$uz80as_xname/NEWS news.txt
+	cp ../$uz80as_xname/README.md readme.txt
+	cp ../$uz80as_xname/CHANGELOG.md changelog.txt
 	for i in *.txt
 	do
 		sed $sedmask $i > tmp.txt
