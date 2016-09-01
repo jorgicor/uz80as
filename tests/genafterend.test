@@ -1,3 +1,3 @@
 #!/bin/sh
 nom=genafterend
-. ./chkep0.inc
+. "$srcdir"/chkep0.inc

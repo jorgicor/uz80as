@@ -1,4 +1,6 @@
-TESTS_ENVIRONMENT = top_builddir=$(top_builddir) srcdir=$(srcdir)
+TESTS_ENVIRONMENT = uz80as=$(top_builddir)/src/uz80as$(EXEEXT) \
+		    srcdir=$(srcdir) \
+		    builddir=$(builddir)
 
 dist_check_SCRIPTS = tasm.test \
 		     longlabel.test \

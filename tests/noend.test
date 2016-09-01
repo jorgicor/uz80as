@@ -1,3 +1,3 @@
 #!/bin/sh
 nom=noend
-. ./chkall.inc
+. "$srcdir"/chkall.inc

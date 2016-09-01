@@ -1,8 +1,14 @@
-uz80as=$top_builddir/src/uz80as
-asm=$nom.asm
-obj=$nom.obj
-lst=$nom.lst
-bok=$nom.bok
-lok=$nom.lok
+asm="$srcdir"/$nom.asm
+bok="$srcdir"/$nom.bok
+lok="$srcdir"/$nom.lok
+obj="$builddir"/$nom.obj
+lst="$builddir"/$nom.lst
+ltp="$builddir"/$nom.ltp
+
 $uz80as $asm
-cmp $obj $bok && diff --strip-trailing-cr $lst $lok && rm -f $obj $lst
+
+tr -d '\r' <$lst >$ltp
+mv -f $ltp $lst
+rm -f $ltp
+
+cmp $obj $bok && diff $lst $lok && rm -f $obj $lst

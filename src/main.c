@@ -83,29 +83,41 @@ static void print_help(const char *argv0)
 }
 
 /*
- * Allocate a new string which is 'fname' with its extension substituted
- * by 'ext'.
- * If 'fname' has no extension, a dot and 'ext' are appended.
+ * Get the filename part of fname (that is, for ../../fname.abc, get
+ * fname.abc).
+ * Then substitute the extension .abd by .ext or append .ext.
  */
 static char *mkfname(const char *fname, const char *ext)
 {
 	size_t alen, elen;
-	const char *q;
+	const char *p, *q;
 	char *s;
 
 	alen = strlen(fname);
 	elen = strlen(ext);
+
+	/* Find start of filename in path string */
+	p = fname + alen;
+	while (p > fname && *p != '/' && *p != '\\')
+		p--;
+
+	if (*p == '/' || *p == '\\')
+		p++;
+	
+	/* Find the extension */
 	q = fname + alen;
-	while (q > fname && *q != '.')
+	while (q > p && *q != '.')
 		q--;
 
-	if (q != fname)
-		alen = q - fname;
+	if (*q != '.')
+		q = fname + alen;
 
-	s = emalloc(alen + 1 + elen + 1);
-	strcpy(s, fname);
-	s[alen] = '.';
-	strcpy(s + alen + 1, ext);
+	s = emalloc((q - p) + 1 + elen + 1);
+	if (q > p)
+		memmove(s, p, (q - p));
+	s[q - p] = '\0';
+	strcat(s, ".");
+	strcat(s, ext);
 	return s;
 }
 

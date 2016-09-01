@@ -16,6 +16,14 @@ only the binary distribution.
 
 - This file now documents the latest changes in the program. It combines the
   `NEWS` and `ChangeLog` files that we were using before.
+- Bud fixed: the object and listing files, when they are not specified at the
+  command line, were generated in the same directory of the source. Now they
+  are generated in the current working directory.
+
+### Source changes
+
+- main.c (mkfname): changed to remove the path from the source filename.
+- Changed all tests to allow for VPATH builds.
 
 1.01 - 2016-10-08
 -----------------
