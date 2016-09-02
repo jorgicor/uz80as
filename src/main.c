@@ -24,7 +24,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../config.h"
+#include "config.h"
 #include "ngetopt.h"
 #include "options.h"
 #include "utils.h"
