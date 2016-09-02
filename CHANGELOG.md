@@ -9,7 +9,7 @@ obtaining the source code distribution.
 *What's new* documents the changes that may be of interest for people obtaining
 only the binary distribution.
 
-1.02 - Unreleased
+1.02 - 2016-09-02
 -----------------
 
 ### What's new
@@ -23,9 +23,9 @@ only the binary distribution.
 ### Source changes
 
 - main.c (mkfname): changed to remove the path from the source filename.
-- Changed all tests to allow for VPATH builds.
+- Prepared for VPATH builds. Changed all tests to allow this.
 
-1.01 - 2016-10-08
+1.01 - 2016-08-10
 -----------------
 
 ### Source changes
