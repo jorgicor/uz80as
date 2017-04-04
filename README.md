@@ -1,5 +1,5 @@
-Micro Z80 Assembler
-===================
+uz80as - Micro Z80 Assembler
+============================
 
 `uz80as` is a macro assembler for the Zilog Z80 microprocessor instruction set.
 
