@@ -5,7 +5,7 @@
 @c To get @value{VERSION}.
 @include version.texi
 
-@settitle uz80as - Micro Z80 assembler @value{VERSION}
+@settitle uz80as (Micro Z80 assembler) @value{VERSION}
 @c %**end of header
 
 @dircategory Software development

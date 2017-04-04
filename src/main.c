@@ -36,7 +36,6 @@ static const char *s_version[] =
 PACKAGE_STRING,
 "",
 "Copyright (C) 2016-2017 Jorge Giner Cordero",
-"License MIT: <http://opensource.org/licenses/MIT>",
 "This is free software: you are free to change and redistribute it.",
 "There is NO WARRANTY, to the extent permitted by law."
 };
@@ -57,8 +56,6 @@ static void print_author(void)
 static void print_help(const char *argv0)
 {
 	static const char *help =
-"uz80as is an assembler for the Zilog Z80 microprocessor.\n"
-"\n"
 "Usage: %s [OPTION]... ASM_FILE [OBJ_FILE [LST_FILE]]\n"
 "\n"
 "Options:\n"

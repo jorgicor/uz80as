@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_INIT([uz80as - Micro Z80 assembler],
+AC_INIT([uz80as (Micro Z80 assembler)],
 	[1.03],
 	[jorge.giner@hotmail.com],
 	uz80as,
