@@ -48,11 +48,6 @@ static void print_version(FILE *f)
 		fprintf(f, "%s\n", s_version[i]);
 }
 
-static void print_author(void)
-{
-	printf("\nWritten by Jorge Giner Codero.\n");
-}
-
 static void print_help(const char *argv0)
 {
 	static const char *help =
@@ -162,7 +157,6 @@ int main(int argc, char *argv[])
 		switch (c) {
 		case 'v':
 			print_version(stdout);
-			print_author();
 			exit(EXIT_SUCCESS);
 		case 'h':
 			print_help(argv[0]);
