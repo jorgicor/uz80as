@@ -1,0 +1,37 @@
+1.03	2017-04-04
+
+	* Fixed typo in the --help output (assemle to assemble).
+
+	* Separating a long command line option from its argument using '=' now
+	  is accepted, for example, `--define="MUL(a,b) (a*b)"`.
+
+	* The CHANGELOG.md file is now called NEWS.
+
+1.02	2016-09-02
+
+	* Fixed: the object and listing files, when they were not specified
+	  on the command line, were generated in the same directory of the
+	  source. Now they are generated in the current working directory.
+
+	Source changes
+	--------------
+
+	* main.c (mkfname): changed to remove the path from the source
+	  filename.
+
+	* Prepared for VPATH builds. Changed all tests to allow this.
+
+1.01	2016-08-10
+
+	Source changes
+	--------------
+
+	* The configure script and Makefiles are generated from autoconf 2.69
+	  and automake 1.15.
+
+	* Including mkwin script to build on Windows.
+
+1.00	2016-06-05
+
+	* Initial release.
+

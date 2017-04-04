@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_INIT([uz80as - Micro Z80 assembler],
-	[1.02],
+	[1.03],
 	[jorge.giner@hotmail.com],
 	uz80as,
 	[http://jorgicor.sdfeu.org/uz80as])
@@ -10,7 +10,7 @@ AC_INIT([uz80as - Micro Z80 assembler],
 AC_CONFIG_MACRO_DIR([m4])
 
 AC_CONFIG_AUX_DIR(config)
-AM_INIT_AUTOMAKE(-Wall -Werror -Wportability foreign subdir-objects
+AM_INIT_AUTOMAKE(-Wall -Werror -Wportability subdir-objects
 		 color-tests parallel-tests)
 AC_CONFIG_HEADERS([config.h])
 

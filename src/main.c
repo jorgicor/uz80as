@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2016 Jorge Giner Cordero
+Copyright (c) 2016-2017 Jorge Giner Cordero
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -35,7 +35,7 @@ static const char *s_version[] =
 {
 PACKAGE_STRING,
 "",
-"Copyright (C) 2016 Jorge Giner Cordero",
+"Copyright (C) 2016-2017 Jorge Giner Cordero",
 "License MIT: <http://opensource.org/licenses/MIT>",
 "This is free software: you are free to change and redistribute it.",
 "There is NO WARRANTY, to the extent permitted by law."
@@ -74,7 +74,7 @@ static void print_help(const char *argv0)
 "  " PACKAGE " p.asm\t\tassemble p.asm into p.obj\n"
 "  " PACKAGE " p.asm p.bin\tassemble p.asm into p.bin\n"
 "  " PACKAGE " -d\"MUL(a,b) (a*b)\" p.asm\n"
-"\t\t\t define the macro MUL and assemle p.asm\n"
+"\t\t\t define the macro MUL and assemble p.asm\n"
 "\n"
 "Report bugs to: <" PACKAGE_BUGREPORT ">.\n"
 "Home page: <" PACKAGE_URL ">.\n";
