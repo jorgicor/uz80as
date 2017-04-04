@@ -187,8 +187,12 @@ int main(int argc, char *argv[])
 				ngo.optarg);
 			exit(EXIT_FAILURE);
 		case ':':
-			eprint(_("the -%c option needs an argument\n"),
-				(char) ngo.optopt);
+			eprint(_("%s needs an argument\n"),
+				ngo.optarg);
+			exit(EXIT_FAILURE);
+		case ';':
+			eprint(_("%s does not allow for arguments\n"),
+				ngo.optarg);
 			exit(EXIT_FAILURE);
 		}
 	} while (c != -1);
