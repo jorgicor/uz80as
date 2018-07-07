@@ -43,3 +43,4 @@ ugen unoffok -x
 ugen div
 ugen mod
 ugen fillcmdln -fab
+ugen gbz80 -cgbz80

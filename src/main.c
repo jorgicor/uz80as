@@ -54,19 +54,18 @@ static void print_help(const char *argv0)
 "Usage: %s [OPTION]... ASM_FILE [OBJ_FILE [LST_FILE]]\n"
 "\n"
 "Options:\n"
-"  -h, --help\t\tdisplay this help and exit\n"
-"  -v, --version\t\toutput version information and exit\n"
-"  -dmacro, --define MACRO\n"
-"\t\t\tdefine a macro\n"
-"  -f n, --fill n\tfill memory with value n\n"
-"  -q, --quiet\t\tdisable the listing file\n"
-"  -x, --extended\tenable extended instruction set\n"
+"  -h, --help           Display this help and exit.\n"
+"  -v, --version        Output version information and exit.\n"
+"  -d, --define=MACRO   Define a macro.\n"
+"  -f, --fill=n         Fill memory with value n.\n"
+"  -q, --quiet          Disable the listing file.\n"
+"  -x, --extended       Enable extended instruction set.\n"
+"  -c, --cpu=NAME       Select the cpu: z80, gbz80.\n" 
 "\n"
 "Examples:\n"
-"  " PACKAGE " p.asm\t\tassemble p.asm into p.obj\n"
-"  " PACKAGE " p.asm p.bin\tassemble p.asm into p.bin\n"
-"  " PACKAGE " -d\"MUL(a,b) (a*b)\" p.asm\n"
-"\t\t\t define the macro MUL and assemble p.asm\n"
+"  " PACKAGE " p.asm                     Assemble p.asm into p.obj\n"
+"  " PACKAGE " p.asm p.bin               Assemble p.asm into p.bin\n"
+"  " PACKAGE " -d\"MUL(a,b) (a*b)\" p.asm  Define the macro MUL and assemble p.asm\n"
 "\n"
 "Report bugs to: <" PACKAGE_BUGREPORT ">.\n"
 "Home page: <" PACKAGE_URL ">.\n";
@@ -136,6 +135,19 @@ error:	eprogname();
 	exit(EXIT_FAILURE);
 }
 
+static void parse_cpu_name(const char *optarg)
+{
+	if (strcmp(optarg, "z80") == 0) {
+		s_cpuname = "z80";
+	} else if (strcmp(optarg, "gbz80") == 0) {
+		s_cpuname = "gbz80";
+	} else {
+		eprogname();
+		fprintf(stderr, _("invalid cpu name (%s)\n"), optarg);
+		exit(EXIT_FAILURE);
+	}
+}
+
 int main(int argc, char *argv[])
 {
 	int c;
@@ -148,6 +160,7 @@ int main(int argc, char *argv[])
 		{ "extended", 0, 'x' },
 		{ "fill", 1, 'f' },
 		{ "quiet", 0, 'q' },
+		{ "cpu", 1, 'c' },
 		{ NULL, 0, 0 },
 	};
 
@@ -161,6 +174,9 @@ int main(int argc, char *argv[])
 		case 'h':
 			print_help(argv[0]);
 			exit(EXIT_SUCCESS);
+		case 'c':
+			parse_cpu_name(ngo.optarg);
+			break;
 		case 'd':
 			predefine(ngo.optarg);
 			break;

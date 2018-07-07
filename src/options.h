@@ -33,6 +33,7 @@ struct predef {
 extern const char *s_asmfname;
 extern const char *s_objfname;
 extern const char *s_lstfname;
+extern const char *s_cpuname;
 extern int s_listing;
 extern int s_extended_iset;
 extern int s_mem_fillval;

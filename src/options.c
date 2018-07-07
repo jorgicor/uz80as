@@ -29,6 +29,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 const char *s_asmfname;	/* Name of source file. */
 const char *s_objfname;	/* Name of generated binary file. */
 const char *s_lstfname;	/* Name of listing file. */
+const char *s_cpuname = "z80"; /* Name of cpu */
 int s_listing = 1;	/* If we generate the listing file or not. */
 int s_extended_iset = 0;	/* Allow extended instruction set. */
 int s_mem_fillval = 0;	/* Default value to fill the 64K memory. */

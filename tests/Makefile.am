@@ -25,7 +25,8 @@ dist_check_SCRIPTS = tasm.test \
 		     unoffok.test \
 		     div.test \
 		     mod.test \
-		     fillcmdln.test
+		     fillcmdln.test \
+		     gbz80.test
 
 TESTS = $(dist_check_SCRIPTS)
 
@@ -105,5 +106,9 @@ EXTRA_DIST = igen.sh \
 	     fillcmdln.asm \
 	     fillcmdln.bok \
 	     fillcmdln.lok \
-	     fillcmdln.eok
+	     fillcmdln.eok \
+	     gbz80.asm \
+	     gbz80.bok \
+	     gbz80.lok \
+	     gbz80.eok
 

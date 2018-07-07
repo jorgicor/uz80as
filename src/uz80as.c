@@ -92,6 +92,11 @@ static struct direc {
 	{ "WORD", d_word },
 };
 
+struct matchtab {
+	const char *pat;
+	const char *gen;
+};
+
 /* pat:
  * 	a: expr
  * 	b: B,C,D,E,H,L,A
@@ -107,6 +112,7 @@ static struct direc {
  * 	l: BIT,RES,SET
  * 	m: NZ,Z,NC,C,PO,PE,P,M
  * 	n: NZ,Z,NC,C
+ * 	o: RLC,RRC,RL,RR,SLA,SRA,SWAP,SRL
  *
  * gen:
  * 	.: output lastbyte
@@ -122,11 +128,117 @@ static struct direc {
  * 	k: possible value to IM
  * 	m: check arithmetic used with A register
  * 	n: check arithmetic used without A register
+ * 	o: if op >= FF00 output last byte and then op as 8 bit value;
+ * 	   else output (lastbyte | 0x0A) and output op as word
+ * 	   (no '.' should follow)
  */
-struct {
-	const char *pat;
-	const char *gen;
-} const s_matchtab[] = {
+
+#if 0
+Opcode  Z80             GMB
+ ---------------------------------------
+ 08      EX   AF,AF      LD   (nn),SP
+ 10      DJNZ PC+dd      STOP
+ 22      LD   (nn),HL    LDI  (HL),A
+ 2A      LD   HL,(nn)    LDI  A,(HL)
+ 32      LD   (nn),A     LDD  (HL),A
+ 3A      LD   A,(nn)     LDD  A,(HL)
+ D3      OUT  (n),A      -
+ D9      EXX             RETI
+ DB      IN   A,(n)      -
+ DD      <IX>            -
+ E0      RET  PO         LD   (FF00+n),A
+ E2      JP   PO,nn      LD   (FF00+C),A
+ E3      EX   (SP),HL    -
+ E4      CALL PO,nn      -
+ E8      RET  PE         ADD  SP,dd
+ EA      JP   PE,nn      LD   (nn),A
+ EB      EX   DE,HL      -
+ EC      CALL PE,nn      -
+ ED      <pref>          -
+ F0      RET  P          LD   A,(FF00+n)
+ F2      JP   P,nn       LD   A,(FF00+C)
+ F4      CALL P,nn       -
+ F8      RET  M          LD   HL,SP+dd
+ FA      JP   M,nn       LD   A,(nn)
+ FC      CALL M,nn       -
+ FD      <IY>            -
+ CB3X    SLL  r/(HL)     SWAP r/(HL) 
+#endif
+
+/* The gameboy cpu Sharp LR35902 */
+const struct matchtab s_matchtab_gbz80[] =
+{
+	{ "LD b,b", "40b0c1." },
+	{ "LD b,(HL)", "46b0." },
+	{ "LD A,(C)", "F2." }, // * LD A,(FF00+C)
+	{ "LD A,(BC)", "0A." },
+	{ "LD A,(DE)", "1A." },
+	{ "LD A,(HLI)", "2A." }, // *
+	{ "LD A,(HLD)", "3A." }, // *
+	{ "LD A,(a)", "F0o0" }, // * LD A,(nn) & LD A,(FF00+n)
+	{ "LD b,a", "06b0.d1." },
+	{ "LD SP,HL", "F9." },
+	{ "LDHL SP,a", "F8.d0." }, // * LD HL,SP+n
+	{ "LD d,a", "01f0.e1" },
+	{ "LD (C),A", "E2." }, // * LD (FF00+C),A
+	{ "LD (HL),b", "70c0." },
+	{ "LD (HL),a", "36.d0." },
+	{ "LD (HLI),A", "22." }, // *
+	{ "LD (HLD),A", "32." }, // *
+	{ "LD (BC),A", "02." },
+	{ "LD (DE),A", "12." },
+	{ "LD (a),A", "E0o0" }, // * LD (nn),A & LD (FF00+n),A
+	{ "LD (a),SP", "08.e0" }, // *
+	{ "LDH A,(a)", "F0.d0." }, // * LD A,(FF00+n)
+	{ "LDH (a),A", "E0.d0." }, // * LD (FF00+n),A
+	{ "PUSH f", "C5f0." },
+	{ "POP f", "C1f0." },
+	{ "ADD HL,d", "09f0." },
+	{ "ADD SP,a", "E8.d0." }, // * 
+	{ "g A,b", "m080b0c1." },
+	{ "g A,(HL)", "m086b0." },
+	{ "g A,a", "m0C6b0.d1." },
+	{ "g b", "n080b0c1." },
+	{ "g (HL)", "n086b0." },
+	{ "g a", "n0C6b0.d1." },
+	{ "h b", "04b1c0." },
+	{ "h (HL)", "34c0." },
+	{ "INC d", "03f0." },
+	{ "DEC d", "0Bf0." },
+	{ "DAA", "27." },
+	{ "CPL", "2F." },
+	{ "CCF", "3F." },
+	{ "SCF", "37." },
+	{ "NOP", "00." },
+	{ "HALT", "76." },
+	{ "DI", "F3." },
+	{ "EI", "FB." },
+	{ "RLCA", "07." },
+	{ "RLA", "17." },
+	{ "RRCA", "0F." },
+	{ "RRA", "1F." },
+	{ "o b", "CB.00b0c1." },
+	{ "o (HL)", "CB.06b0." },
+	{ "l a,b", "CB.00g0b1c2." },
+	{ "l a,(HL)", "CB.06g0b1." },
+	{ "JP (HL)", "E9." },
+	{ "JP n,a", "C2b0.e1" }, // *
+	{ "JP a", "C3.e0" },
+	{ "JR n,a", "20h0.i1." },
+	{ "JR a", "18.i0." },
+	{ "STOP", "10.00." }, // *
+	{ "CALL n,a", "C4b0.e1" }, // *
+	{ "CALL a", "CD.e0" },
+	{ "RETI", "D9." }, // *
+	{ "RET n", "C0b0." },
+	{ "RET", "C9." },
+	{ "RST a", "C7j0." },
+	{ NULL, NULL },
+};
+
+/* Original Zilog Z80 */
+const struct matchtab s_matchtab_z80[] =
+{
 	{ "LD b,b", "40b0c1." },
 	{ "LD b,(HL)", "46b0." },
 	{ "LD b,(ca)", "d1.46b0.d2." },
@@ -242,7 +354,10 @@ struct {
 	{ "OTIR", "ED.B3." },
 	{ "OUTD", "ED.AB." },
 	{ "OTDR", "ED.BB." },
+	{ NULL, NULL },
 };
+
+const struct matchtab *s_matchtab = s_matchtab_z80;
 
 const char *const bval[] = { "B", "C", "D", "E", "H", "L", "", "A", NULL };
 const char *const cval[] = { "IX", "IY", NULL };
@@ -259,11 +374,13 @@ const char *const lval[] = { "", "BIT", "RES", "SET", NULL };
 const char *const mval[] = { "NZ", "Z", "NC", "C", "PO",
 			     "PE", "P", "M", NULL };
 const char *const nval[] = { "NZ", "Z", "NC", "C", NULL };
+const char *const oval[] = { "RLC", "RRC", "RL", "RR", "SLA",
+			     "SRA", "SWAP", "SRL", NULL };
 
 const char *const *const valtab[] = { 
 	bval, cval, dval, dval, fval,
        	gval, hval, ival, jval, kval,
-       	lval, mval, nval 
+       	lval, mval, nval, oval
 };
 
 /* The z80 addressable memory. The object code. */
@@ -350,7 +467,7 @@ static void genw(int n, const char *ep)
  */
 static void gen(const char *p, const int *vs)
 {
-	int b, i, savepc;
+	int w, b, i, savepc;
 
 	savepc = s_pc;
 	b = 0;
@@ -411,6 +528,19 @@ loop:
 					eprcol(s_pline, s_pline_ep);
 					newerr();
 				  }
+			  }
+			  break;
+		case 'o': w = vs[i] & 0xffff;
+			  if (w >= 0xff00) {
+				genb(b, s_pline_ep);
+				b = 0;
+			  	genb(w & 0xff, s_pline_ep);
+			  } else {
+				b |= 0x0A; 
+				genb(b, s_pline_ep);
+				b = 0;
+			  	genb(w & 0xff, s_pline_ep);
+			  	genb(w >> 8, s_pline_ep);
 			  }
 			  break;
 		}
@@ -558,10 +688,11 @@ static const char *match(const char *p)
 	n = -1;
 next:
 	n++;
-	if (n == NELEMS(s_matchtab))
-		return NULL;
-	p = pp;
 	s = s_matchtab[n].pat;
+	if (s == NULL) {
+		return NULL;
+	}
+	p = pp;
 	vi = 0;
 loop:
 	if (*s == '\0') {
@@ -587,7 +718,7 @@ loop:
 	} else if (*s == 'c' || *s == 'e') {
 		v = indval(p, *s == 'c', &q);
 		goto reg;
-	} else if (*s >= 'b' && *s <= 'n') {
+	} else if (*s >= 'b' && *s <= 'o') {
 		v = mreg(p, valtab[(int) (*s - 'b')], &q);
 		goto reg;
 	} else if (*p == *s && *p == ',') {
@@ -1232,6 +1363,10 @@ static void output ()
 /* Start the assembly using the config in options.c. */
 void uz80as(void)
 {
+	if (strcmp(s_cpuname, "gbz80") == 0) {
+		s_matchtab = s_matchtab_gbz80;
+	}
+
 	for (s_pass = 0; s_nerrors == 0 && s_pass < 2; s_pass++) {
 		dopass(s_asmfname);
 		if (s_pass == 0 && !s_end_seen) {
