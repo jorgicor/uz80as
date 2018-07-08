@@ -1,9 +1,17 @@
 \input texinfo
+
+@c ==========================================================================
+@c uz80as, a macro assembler for Z80 based microprocessors.
+@c ==========================================================================
+
 @c %**start of header
 @setfilename uz80as.info
 
 @c To get @value{VERSION}.
 @include version.texi
+
+@c To get the copyright years @value{COPYRIGHT_YEARS}
+@include copyright.texi
 
 @settitle uz80as (Micro Z80 assembler) @value{VERSION}
 @c %**end of header
@@ -17,7 +25,7 @@
 This manual is for uz80as (Micro Z80 assembler) version @value{VERSION}
 (updated @value{UPDATED}).
 
-Copyright @copyright{} 2016 Jorge Giner Cordero
+Copyright @copyright{} @value{COPYRIGHT_YEARS} Jorge Giner Cordero
 
 @quotation
 Permission is hereby granted, free of charge, to any person obtaining

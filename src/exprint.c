@@ -1,3 +1,11 @@
+/* ===========================================================================
+ * uz80as, a macro assembler for Z80 based microprocessors.
+ *
+ * Expression error reporting.
+ * ===========================================================================
+ */
+
+#include <config.h>
 #include "exprint.h"
 #include "err.h"
 

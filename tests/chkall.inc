@@ -12,7 +12,8 @@ $uz80as $asm 2>$etp
 
 # Remove \r and remove leading path in error strings.
 
-tr -d '\r' <$etp | sed 's|'$srcdir'/||' >$err
+s_esc="$(echo "$srcdir"/ | sed 's/[]\\.$*{}|+?()[^-]/\\&/g')"
+tr -d '\r' <$etp | sed 's|^'$s_esc'||' >$err
 rm -f $etp
 
 tr -d '\r' <$lst >$ltp

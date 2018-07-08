@@ -1,0 +1,3 @@
+#!/bin/sh
+nom=main
+. "$srcdir"/tasmchk.inc

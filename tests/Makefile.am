@@ -1,8 +1,15 @@
+# ===========================================================================
+# uz80as, a macro assembler for Z80 based microprocessors.
+# ===========================================================================
+
 TESTS_ENVIRONMENT = uz80as=$(top_builddir)/src/uz80as$(EXEEXT) \
 		    srcdir=$(srcdir) \
 		    builddir=$(builddir)
 
-dist_check_SCRIPTS = tasm.test \
+dist_check_SCRIPTS = main.test \
+		     z80.test \
+		     gbz80.test \
+		     tasmfail.test \
 		     longlabel.test \
 		     orgbelow.test \
 		     orgabove.test \
@@ -25,25 +32,32 @@ dist_check_SCRIPTS = tasm.test \
 		     unoffok.test \
 		     div.test \
 		     mod.test \
-		     fillcmdln.test \
-		     gbz80.test
+		     fillcmdln.test
 
 TESTS = $(dist_check_SCRIPTS)
 
 EXTRA_DIST = igen.sh \
 	     icheck.sh \
-	     Spanish128_ROM0.test \
 	     gen.sh \
 	     tasmchk.inc \
 	     chkall.inc \
 	     chkep0.inc \
 	     chkep1.inc \
-	     tasm.asm \
-	     tasm.bok \
-	     tasm.lok \
 	     main.asm \
 	     main.bok \
 	     main.lok \
+	     z80.asm \
+	     z80.bok \
+	     z80.lok \
+	     z80.eok \
+	     gbz80.asm \
+	     gbz80.bok \
+	     gbz80.lok \
+	     gbz80.eok \
+	     tasmfail.asm \
+	     tasmfail.bok \
+	     tasmfail.lok \
+	     tasmfail.eok \
 	     longlabel.asm \
 	     longlabel.eok \
 	     orgbelow.asm \
@@ -106,9 +120,5 @@ EXTRA_DIST = igen.sh \
 	     fillcmdln.asm \
 	     fillcmdln.bok \
 	     fillcmdln.lok \
-	     fillcmdln.eok \
-	     gbz80.asm \
-	     gbz80.bok \
-	     gbz80.lok \
-	     gbz80.eok
+	     fillcmdln.eok
 

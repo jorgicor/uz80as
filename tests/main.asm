@@ -1,4 +1,8 @@
-; All this file must be correct
+; ===========================================================================
+; uz80as, a macro assembler for Z80 based microprocessors.
+; ===========================================================================
+
+; All this file must equal the TASM output
 
 	.org 0
 
@@ -52,12 +56,28 @@
 
 ; More shifting.
 
+	;       1      30      31      0       1
 	.db -1>>1, -1>>30, -1>>31, -1>>32, -1>>33
+
+	;              1             30             31
 	.db $7FFFFFFF>>1, $7FFFFFFF>>30, $7FFFFFFF>>31
-	.db $7FFFFFFF>>32, $7FFFFFFF>>33
+
+	; These two give $FF for TASM on Linux 64 bits (long is 64 bits)
+	; They must be 0 since we say that we use 32 bit integers.
+        ;              0              1
+	; .db $7FFFFFFF>>32, $7FFFFFFF>>33
+
+	;       31      2        0        0        31
 	.db -1>>-1, -1>>-30, -1>>-31, -1>>-32, -1>>-33
-	.db $7FFFFFFF>>-1, $7FFFFFFF>>-30, $7FFFFFFF>>-31
-	.db $7FFFFFFF>>-32, $7FFFFFFF>>-33
+
+	;              31             31
+	.db $7FFFFFFF>>-1, $7FFFFFFF>>-33
+
+	; These two give $FF for TASM on Linux 64 bits (long is 64 bits)
+	; They must be 0 since we say that we use 32 bit integers.
+	;              2               0                   0
+	; .db $7FFFFFFF>>-30, $7FFFFFFF>>-31, $7FFFFFFF>>-32
+
 	.db -1>>0, -1<<0, 1>>0, 1<<0
 
 ; Prefixes and suffixes

@@ -1,51 +1,71 @@
-/*
-Copyright (c) 2016-2017 Jorge Giner Cordero
+/* ===========================================================================
+ * uz80as, a macro assembler for Z80 based microprocessors.
+ *
+ * main(), handling of command line options.
+ * ===========================================================================
+ */
 
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be included
-in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "config.h"
+#include <config.h>
 #include "ngetopt.h"
 #include "options.h"
 #include "utils.h"
 #include "err.h"
 #include "uz80as.h"
 
-static const char *s_version[] =
+#ifndef STDIO_H
+#include <stdio.h>
+#endif
+
+#ifndef STDLIB_H
+#include <stdlib.h>
+#endif
+
+#ifndef STRING_H
+#include <string.h>
+#endif
+
+void print_copyright(FILE *f)
 {
-PACKAGE_STRING,
+	static const char *copyright =
+"Copyright (C) " COPYRIGHT_YEARS " Jorge Giner Cordero.\n";
+
+	fputs(copyright, f);
+}
+
+static void print_license(FILE *f)
+{
+	static const char *license[] = {
+"Permission is hereby granted, free of charge, to any person obtaining",
+"a copy of this software and associated documentation files (the",
+"\"Software\"), to deal in the Software without restriction, including",
+"without limitation the rights to use, copy, modify, merge, publish,",
+"distribute, sublicense, and/or sell copies of the Software, and to",
+"permit persons to whom the Software is furnished to do so, subject to",
+"the following conditions:",
 "",
-"Copyright (C) 2016-2017 Jorge Giner Cordero",
-"This is free software: you are free to change and redistribute it.",
-"There is NO WARRANTY, to the extent permitted by law."
-};
+"The above copyright notice and this permission notice shall be included",
+"in all copies or substantial portions of the Software.",
+"",
+"THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,",
+"EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF",
+"MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.",
+"IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY",
+"CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,",
+"TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE",
+"SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+       	};
+
+	int i;
+
+	for (i = 0; i < NELEMS(license); i++) {
+		fprintf(f, "%s\n", license[i]);
+	}
+}
 
 static void print_version(FILE *f)
 {
-	int i;
-
-	for (i = 0; i < NELEMS(s_version); i++)
-		fprintf(f, "%s\n", s_version[i]);
+	fputs(PACKAGE_STRING, f);
+	fputs("\n", f);
 }
 
 static void print_help(const char *argv0)
@@ -53,14 +73,19 @@ static void print_help(const char *argv0)
 	static const char *help =
 "Usage: %s [OPTION]... ASM_FILE [OBJ_FILE [LST_FILE]]\n"
 "\n"
+"Assemble ASM_FILE into OBJ_FILE and generate the listing LST_FILE.\n"
+"If not specified, OBJ_FILE is ASM_FILE with the extension changed to .obj.\n"
+"If not specified, LST_FILE is ASM_FILE with the extension changed to .lst.\n"
+"\n"
 "Options:\n"
 "  -h, --help           Display this help and exit.\n"
 "  -v, --version        Output version information and exit.\n"
+"  -l, --license        Display the license text and exit.\n"
 "  -d, --define=MACRO   Define a macro.\n"
 "  -f, --fill=n         Fill memory with value n.\n"
-"  -q, --quiet          Disable the listing file.\n"
-"  -x, --extended       Enable extended instruction set.\n"
-"  -c, --cpu=NAME       Select the cpu: z80, gbz80.\n" 
+"  -q, --quiet          Do not generate the listing file.\n"
+"  -x, --extended       Enable the extended instruction set.\n"
+"  -c, --cpu=NAME       Select the cpu: z80 (default), gbz80.\n" 
 "\n"
 "Examples:\n"
 "  " PACKAGE " p.asm                     Assemble p.asm into p.obj\n"
@@ -156,6 +181,7 @@ int main(int argc, char *argv[])
 	static struct ngetopt_opt ops[] = {
 		{ "version", 0, 'v' },
 		{ "help", 0, 'h' },
+		{ "license", 0, 'l' },
 		{ "define", 1, 'd' },
 		{ "extended", 0, 'x' },
 		{ "fill", 1, 'f' },
@@ -173,6 +199,11 @@ int main(int argc, char *argv[])
 			exit(EXIT_SUCCESS);
 		case 'h':
 			print_help(argv[0]);
+			exit(EXIT_SUCCESS);
+		case 'l':
+			print_copyright(stdout);
+			fputs("\n", stdout);
+			print_license(stdout);
 			exit(EXIT_SUCCESS);
 		case 'c':
 			parse_cpu_name(ngo.optarg);

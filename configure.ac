@@ -1,7 +1,11 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_INIT([uz80as (Micro Z80 assembler)],
+# ===========================================================================
+# uz80as, a macro assembler for Z80 based microprocessors.
+# ===========================================================================
+
+AC_INIT([uz80as],
 	[1.03],
 	[jorge.giner@hotmail.com],
 	uz80as,
@@ -13,6 +17,9 @@ AC_CONFIG_AUX_DIR(config)
 AM_INIT_AUTOMAKE(-Wall -Werror -Wportability subdir-objects
 		 color-tests parallel-tests)
 AC_CONFIG_HEADERS([config.h])
+
+AC_DEFINE([COPYRIGHT_YEARS], ["2018"], [Years of copyright])
+AC_SUBST(COPYRIGHT_YEARS, [2018])
 
 # Checks for programs.
 AC_PROG_CC
@@ -36,5 +43,6 @@ AC_SUBST(WARN_CFLAGS)
 AC_CONFIG_FILES([Makefile
 		 src/Makefile
 		 doc/Makefile
+		 doc/copyright.texi
 		 tests/Makefile])
 AC_OUTPUT

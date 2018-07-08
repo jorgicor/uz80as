@@ -1,624 +1,628 @@
-0001   0000             #define equ .equ
-0002   0000             #define end .end
-0003   0000             
-0004   0000             n:          equ 20h
-0005   0000             nn:         equ 0584h
-0006   0000             dddd:       equ 07h
-0007   0000             a16:        equ $1234
-0008   0000             hi8:	equ $ff11
-0009   0000             port:       equ 3
-0010   0000             imm8:       equ 56h    ;immediate data (8 bits)
-0011   0000             offset:     equ 7
-0012   0000             offset_neg: equ -7
-0013   0000             
-0014   0000             ; 0x
-0015   0000             
-0016   0000 00          	NOP
-0017   0001 01 84 05    	LD BC,nn
-0018   0004 02          	LD (BC),A
-0019   0005 03          	INC BC
-0020   0006 04          	INC B
-0021   0007 05          	DEC B
-0022   0008 06 20       	LD B,n
-0023   000A 07          	RLCA
-0024   000B 08 84 05    	LD (nn),SP
-0025   000E 09          	ADD HL,BC
-0026   000F 0A          	LD A,(BC)
-0027   0010 0B          	DEC BC
-0028   0011 0C          	INC C
-0029   0012 0D          	DEC C
-0030   0013 0E 20       	LD C,n
-0031   0015 0F          	RRCA
-0032   0016             
-0033   0016             ; 1x
-0034   0016             
-0035   0016 10 00       	STOP
-0036   0018 11 84 05    	LD DE,nn
-0037   001B 12          	LD (DE),A
-0038   001C 13          	INC DE
-0039   001D 14          	INC D 
-0040   001E 15          	DEC D
-0041   001F 16 20       	LD D,n
-0042   0021 17          	RLA
-0043   0022 18 FE       loop1:	JR loop1
-0044   0024 19          	ADD HL,DE
-0045   0025 1A          	LD A,(DE)
-0046   0026 1B          	DEC DE
-0047   0027 1C          	INC E
-0048   0028 1D          	DEC E
-0049   0029 1E 20       	LD E,n
-0050   002B 1F          	RRA
-0051   002C             
-0052   002C             ; 2x
-0053   002C             
-0054   002C 20 FE       loop2:	JR NZ,loop2
-0055   002E 21 84 05    	LD HL,nn
-0056   0031 22          	LD (HLI),A
-0057   0032 23          	INC HL
-0058   0033 24          	INC H
-0059   0034 25          	DEC H
-0060   0035 26 20       	LD H,n
-0061   0037 27          	DAA
-0062   0038 28 FE       loop3:	JR Z,loop3
-0063   003A 29          	ADD HL,HL
-0064   003B 2A          	LD A,(HLI)
-0065   003C 2B          	DEC HL
-0066   003D 2C          	INC L
-0067   003E 2D          	DEC L
-0068   003F 2E 20       	LD L,n
-0069   0041 2F          	CPL
-0070   0042             
-0071   0042             ; 3x
-0072   0042             
-0073   0042 30 FE       loop4:	JR NC,loop4
-0074   0044 31 84 05    	LD SP,nn
-0075   0047 32          	LD (HLD),A
-0076   0048 33          	INC SP
-0077   0049 34          	INC (HL)
-0078   004A 35          	DEC (HL)
-0079   004B 36 20       	LD (HL),n
-0080   004D 37          	SCF
-0081   004E 38 FE       loop5:	JR C,loop5
-0082   0050 39          	ADD HL,SP
-0083   0051 3A          	LD A,(HLD)
-0084   0052 3B          	DEC SP
-0085   0053 3C          	INC A
-0086   0054 3D          	DEC A
-0087   0055 3E 20       	LD A,n
-0088   0057 3F          	CCF
-0089   0058             
-0090   0058             ; 4x
-0091   0058             
-0092   0058 40          	LD B,B
-0093   0059 41          	LD B,C
-0094   005A 42          	LD B,D
-0095   005B 43          	LD B,E
-0096   005C 44          	LD B,H
-0097   005D 45          	LD B,L
-0098   005E 46          	LD B,(HL)
-0099   005F 47          	LD B,A
-0100   0060 48          	LD C,B
-0101   0061 49          	LD C,C
-0102   0062 4A          	LD C,D
-0103   0063 4B          	LD C,E
-0104   0064 4C          	LD C,H
-0105   0065 4D          	LD C,L
-0106   0066 4E          	LD C,(HL)
-0107   0067 4F          	LD C,A
-0108   0068             
-0109   0068             ; 5x
-0110   0068             
-0111   0068 50          	LD D,B
-0112   0069 51          	LD D,C
-0113   006A 52          	LD D,D
-0114   006B 53          	LD D,E
-0115   006C 54          	LD D,H
-0116   006D 55          	LD D,L
-0117   006E 56          	LD D,(HL)
-0118   006F 57          	LD D,A
-0119   0070 58          	LD E,B
-0120   0071 59          	LD E,C
-0121   0072 5A          	LD E,D
-0122   0073 5B          	LD E,E
-0123   0074 5C          	LD E,H
-0124   0075 5D          	LD E,L
-0125   0076 5E          	LD E,(HL)
-0126   0077 5F          	LD E,A
-0127   0078             
-0128   0078             ; 6x
-0129   0078             
-0130   0078 60          	LD H,B
-0131   0079 61          	LD H,C
-0132   007A 62          	LD H,D
-0133   007B 63          	LD H,E
-0134   007C 64          	LD H,H
-0135   007D 65          	LD H,L
-0136   007E 66          	LD H,(HL)
-0137   007F 67          	LD H,A
-0138   0080 68          	LD L,B
-0139   0081 69          	LD L,C
-0140   0082 6A          	LD L,D
-0141   0083 6B          	LD L,E
-0142   0084 6C          	LD L,H
-0143   0085 6D          	LD L,L
-0144   0086 6E          	LD L,(HL)
-0145   0087 6F          	LD L,A
-0146   0088             
-0147   0088             ; 7X
-0148   0088             
-0149   0088 70          	LD (HL),B
-0150   0089 71          	LD (HL),C
-0151   008A 72          	LD (HL),D
-0152   008B 73          	LD (HL),E
-0153   008C 74          	LD (HL),H
-0154   008D 75          	LD (HL),L
-0155   008E 76          	HALT
-0156   008F 77          	LD (HL),A
-0157   0090 78          	LD A,B
-0158   0091 79          	LD A,C
-0159   0092 7A          	LD A,D
-0160   0093 7B          	LD A,E
-0161   0094 7C          	LD A,H
-0162   0095 7D          	LD A,L
-0163   0096 7E          	LD A,(HL)
-0164   0097 7F          	LD A,A
-0165   0098             
-0166   0098             ; 8x
-0167   0098             
-0168   0098 80          	ADD A,B
-0169   0099 81          	ADD A,C
-0170   009A 82          	ADD A,D
-0171   009B 83          	ADD A,E
-0172   009C 84          	ADD A,H
-0173   009D 85          	ADD A,L
-0174   009E 86          	ADD A,(HL)
-0175   009F 87          	ADD A,A
-0176   00A0 88          	ADC A,B
-0177   00A1 89          	ADC A,C
-0178   00A2 8A          	ADC A,D
-0179   00A3 8B          	ADC A,E
-0180   00A4 8C          	ADC A,H
-0181   00A5 8D          	ADC A,L
-0182   00A6 8E          	ADC A,(HL)
-0183   00A7 8F          	ADC A,A
-0184   00A8             
-0185   00A8             ; 9x
-0186   00A8             
-0187   00A8 90          	SUB B
-0188   00A9 91          	SUB C
-0189   00AA 92          	SUB D
-0190   00AB 93          	SUB E
-0191   00AC 94          	SUB H
-0192   00AD 95          	SUB L
-0193   00AE 96          	SUB (HL)
-0194   00AF 97          	SUB A
-0195   00B0 98          	SBC A,B
-0196   00B1 99          	SBC A,C
-0197   00B2 9A          	SBC A,D
-0198   00B3 9B          	SBC A,E
-0199   00B4 9C          	SBC A,H
-0200   00B5 9D          	SBC A,L
-0201   00B6 9E          	SBC A,(HL)
-0202   00B7 9F          	SBC A,A
-0203   00B8             
-0204   00B8             ; Ax
-0205   00B8             
-0206   00B8 A0          	AND B
-0207   00B9 A1          	AND C
-0208   00BA A2          	AND D
-0209   00BB A3          	AND E
-0210   00BC A4          	AND H
-0211   00BD A5          	AND L
-0212   00BE A6          	AND (HL)
-0213   00BF A7          	AND A
-0214   00C0 A8          	XOR B
-0215   00C1 A9          	XOR C
-0216   00C2 AA          	XOR D
-0217   00C3 AB          	XOR E
-0218   00C4 AC          	XOR H
-0219   00C5 AD          	XOR L
-0220   00C6 AE          	XOR (HL)
-0221   00C7 AF          	XOR A
-0222   00C8             
-0223   00C8             ; Bx
-0224   00C8             
-0225   00C8 B0          	OR B
-0226   00C9 B1          	OR C
-0227   00CA B2          	OR D
-0228   00CB B3          	OR E
-0229   00CC B4          	OR H
-0230   00CD B5          	OR L
-0231   00CE B6          	OR (HL)
-0232   00CF B7          	OR A
-0233   00D0 B8          	CP B
-0234   00D1 B9          	CP C
-0235   00D2 BA          	CP D
-0236   00D3 BB          	CP E
-0237   00D4 BC          	CP H
-0238   00D5 BD          	CP L
-0239   00D6 BE          	CP (HL)
-0240   00D7 BF          	CP A
-0241   00D8             
-0242   00D8             ; Cx
-0243   00D8             
-0244   00D8 C0          	RET NZ
-0245   00D9 C1          	POP BC
-0246   00DA C2 34 12    	JP NZ,a16
-0247   00DD C3 34 12    	JP a16
-0248   00E0 C4 34 12    	CALL NZ,a16
-0249   00E3 C5          	PUSH BC
-0250   00E4 C6 20       	ADD A,n
-0251   00E6 C7          	RST 00h
-0252   00E7 C8          	RET Z
-0253   00E8 C9          	RET
-0254   00E9 CA 34 12    	JP Z,a16
-0255   00EC             	; CB prefix
-0256   00EC CC 34 12    	CALL Z,a16
-0257   00EF CD 34 12    	CALL a16
-0258   00F2 CE 20       	ADC A,n
-0259   00F4 CF          	RST 08h
-0260   00F5             
-0261   00F5             ; Dx
-0262   00F5             
-0263   00F5 D0          	RET NC
-0264   00F6 D1          	POP DE
-0265   00F7 D2 34 12    	JP NC,a16
-0266   00FA             	;
-0267   00FA D4 34 12    	CALL NC,a16
-0268   00FD D5          	PUSH DE
-0269   00FE D6 20       	SUB n
-0270   0100 D7          	RST 10h
-0271   0101 D8          	RET C
-0272   0102 D9          	RETI
-0273   0103 DA 34 12    	JP C,a16
-0274   0106             	;
-0275   0106 DC 34 12    	CALL C,a16
-0276   0109             	;
-0277   0109 DE 20       	SBC A,n
-0278   010B DF          	RST 18h
-0279   010C             
-0280   010C             ; Ex
-0281   010C             
-0282   010C E0 11       	LD (hi8),A
-0283   010E E1          	POP HL
-0284   010F E2          	LD (C),A
-0285   0110             	;
-0286   0110             	;
-0287   0110 E5          	PUSH HL
-0288   0111 E6 20       	AND n
-0289   0113 E7          	RST 20h
-0290   0114 E8 20       	ADD SP,n
-0291   0116 E9          	JP (HL)
-0292   0117 EA 34 12    	LD (a16),A
-0293   011A             	;
-0294   011A             	;
-0295   011A             	;
-0296   011A EE 20       	XOR n
-0297   011C EF          	RST 28h
-0298   011D             
-0299   011D             ; Fx
-0300   011D             
-0301   011D F0 11       	LD A,(hi8)
-0302   011F F1          	POP AF
-0303   0120 F2          	LD A,(C)
-0304   0121 F3          	DI
-0305   0122             	;
-0306   0122 F5          	PUSH AF
-0307   0123 F6 20       	OR n
-0308   0125 F7          	RST 30h
-0309   0126 F8 20       	LDHL SP,n
-0310   0128 F9          	LD SP,HL
-0311   0129 FA 34 12    	LD A,(a16)
-0312   012C FB          	EI
-0313   012D             	;
-0314   012D             	;
-0315   012D FE 20       	CP n
-0316   012F FF          	RST 38h
-0317   0130             
-0318   0130             ; Prefix CB
-0319   0130             
-0320   0130             ; 0x
+0001   0000             ; ===========================================================================
+0002   0000             ; uz80as, a macro assembler for Z80 based microprocessors.
+0003   0000             ; ===========================================================================
+0004   0000             
+0005   0000             #define equ .equ
+0006   0000             #define end .end
+0007   0000             
+0008   0000             n:          equ 20h
+0009   0000             nn:         equ 0584h
+0010   0000             dddd:       equ 07h
+0011   0000             a16:        equ $1234
+0012   0000             hi8:	equ $ff11
+0013   0000             port:       equ 3
+0014   0000             imm8:       equ 56h    ;immediate data (8 bits)
+0015   0000             offset:     equ 7
+0016   0000             offset_neg: equ -7
+0017   0000             
+0018   0000             ; 0x
+0019   0000             
+0020   0000 00          	NOP
+0021   0001 01 84 05    	LD BC,nn
+0022   0004 02          	LD (BC),A
+0023   0005 03          	INC BC
+0024   0006 04          	INC B
+0025   0007 05          	DEC B
+0026   0008 06 20       	LD B,n
+0027   000A 07          	RLCA
+0028   000B 08 84 05    	LD (nn),SP
+0029   000E 09          	ADD HL,BC
+0030   000F 0A          	LD A,(BC)
+0031   0010 0B          	DEC BC
+0032   0011 0C          	INC C
+0033   0012 0D          	DEC C
+0034   0013 0E 20       	LD C,n
+0035   0015 0F          	RRCA
+0036   0016             
+0037   0016             ; 1x
+0038   0016             
+0039   0016 10 00       	STOP
+0040   0018 11 84 05    	LD DE,nn
+0041   001B 12          	LD (DE),A
+0042   001C 13          	INC DE
+0043   001D 14          	INC D 
+0044   001E 15          	DEC D
+0045   001F 16 20       	LD D,n
+0046   0021 17          	RLA
+0047   0022 18 FE       loop1:	JR loop1
+0048   0024 19          	ADD HL,DE
+0049   0025 1A          	LD A,(DE)
+0050   0026 1B          	DEC DE
+0051   0027 1C          	INC E
+0052   0028 1D          	DEC E
+0053   0029 1E 20       	LD E,n
+0054   002B 1F          	RRA
+0055   002C             
+0056   002C             ; 2x
+0057   002C             
+0058   002C 20 FE       loop2:	JR NZ,loop2
+0059   002E 21 84 05    	LD HL,nn
+0060   0031 22          	LD (HLI),A
+0061   0032 23          	INC HL
+0062   0033 24          	INC H
+0063   0034 25          	DEC H
+0064   0035 26 20       	LD H,n
+0065   0037 27          	DAA
+0066   0038 28 FE       loop3:	JR Z,loop3
+0067   003A 29          	ADD HL,HL
+0068   003B 2A          	LD A,(HLI)
+0069   003C 2B          	DEC HL
+0070   003D 2C          	INC L
+0071   003E 2D          	DEC L
+0072   003F 2E 20       	LD L,n
+0073   0041 2F          	CPL
+0074   0042             
+0075   0042             ; 3x
+0076   0042             
+0077   0042 30 FE       loop4:	JR NC,loop4
+0078   0044 31 84 05    	LD SP,nn
+0079   0047 32          	LD (HLD),A
+0080   0048 33          	INC SP
+0081   0049 34          	INC (HL)
+0082   004A 35          	DEC (HL)
+0083   004B 36 20       	LD (HL),n
+0084   004D 37          	SCF
+0085   004E 38 FE       loop5:	JR C,loop5
+0086   0050 39          	ADD HL,SP
+0087   0051 3A          	LD A,(HLD)
+0088   0052 3B          	DEC SP
+0089   0053 3C          	INC A
+0090   0054 3D          	DEC A
+0091   0055 3E 20       	LD A,n
+0092   0057 3F          	CCF
+0093   0058             
+0094   0058             ; 4x
+0095   0058             
+0096   0058 40          	LD B,B
+0097   0059 41          	LD B,C
+0098   005A 42          	LD B,D
+0099   005B 43          	LD B,E
+0100   005C 44          	LD B,H
+0101   005D 45          	LD B,L
+0102   005E 46          	LD B,(HL)
+0103   005F 47          	LD B,A
+0104   0060 48          	LD C,B
+0105   0061 49          	LD C,C
+0106   0062 4A          	LD C,D
+0107   0063 4B          	LD C,E
+0108   0064 4C          	LD C,H
+0109   0065 4D          	LD C,L
+0110   0066 4E          	LD C,(HL)
+0111   0067 4F          	LD C,A
+0112   0068             
+0113   0068             ; 5x
+0114   0068             
+0115   0068 50          	LD D,B
+0116   0069 51          	LD D,C
+0117   006A 52          	LD D,D
+0118   006B 53          	LD D,E
+0119   006C 54          	LD D,H
+0120   006D 55          	LD D,L
+0121   006E 56          	LD D,(HL)
+0122   006F 57          	LD D,A
+0123   0070 58          	LD E,B
+0124   0071 59          	LD E,C
+0125   0072 5A          	LD E,D
+0126   0073 5B          	LD E,E
+0127   0074 5C          	LD E,H
+0128   0075 5D          	LD E,L
+0129   0076 5E          	LD E,(HL)
+0130   0077 5F          	LD E,A
+0131   0078             
+0132   0078             ; 6x
+0133   0078             
+0134   0078 60          	LD H,B
+0135   0079 61          	LD H,C
+0136   007A 62          	LD H,D
+0137   007B 63          	LD H,E
+0138   007C 64          	LD H,H
+0139   007D 65          	LD H,L
+0140   007E 66          	LD H,(HL)
+0141   007F 67          	LD H,A
+0142   0080 68          	LD L,B
+0143   0081 69          	LD L,C
+0144   0082 6A          	LD L,D
+0145   0083 6B          	LD L,E
+0146   0084 6C          	LD L,H
+0147   0085 6D          	LD L,L
+0148   0086 6E          	LD L,(HL)
+0149   0087 6F          	LD L,A
+0150   0088             
+0151   0088             ; 7X
+0152   0088             
+0153   0088 70          	LD (HL),B
+0154   0089 71          	LD (HL),C
+0155   008A 72          	LD (HL),D
+0156   008B 73          	LD (HL),E
+0157   008C 74          	LD (HL),H
+0158   008D 75          	LD (HL),L
+0159   008E 76          	HALT
+0160   008F 77          	LD (HL),A
+0161   0090 78          	LD A,B
+0162   0091 79          	LD A,C
+0163   0092 7A          	LD A,D
+0164   0093 7B          	LD A,E
+0165   0094 7C          	LD A,H
+0166   0095 7D          	LD A,L
+0167   0096 7E          	LD A,(HL)
+0168   0097 7F          	LD A,A
+0169   0098             
+0170   0098             ; 8x
+0171   0098             
+0172   0098 80          	ADD A,B
+0173   0099 81          	ADD A,C
+0174   009A 82          	ADD A,D
+0175   009B 83          	ADD A,E
+0176   009C 84          	ADD A,H
+0177   009D 85          	ADD A,L
+0178   009E 86          	ADD A,(HL)
+0179   009F 87          	ADD A,A
+0180   00A0 88          	ADC A,B
+0181   00A1 89          	ADC A,C
+0182   00A2 8A          	ADC A,D
+0183   00A3 8B          	ADC A,E
+0184   00A4 8C          	ADC A,H
+0185   00A5 8D          	ADC A,L
+0186   00A6 8E          	ADC A,(HL)
+0187   00A7 8F          	ADC A,A
+0188   00A8             
+0189   00A8             ; 9x
+0190   00A8             
+0191   00A8 90          	SUB B
+0192   00A9 91          	SUB C
+0193   00AA 92          	SUB D
+0194   00AB 93          	SUB E
+0195   00AC 94          	SUB H
+0196   00AD 95          	SUB L
+0197   00AE 96          	SUB (HL)
+0198   00AF 97          	SUB A
+0199   00B0 98          	SBC A,B
+0200   00B1 99          	SBC A,C
+0201   00B2 9A          	SBC A,D
+0202   00B3 9B          	SBC A,E
+0203   00B4 9C          	SBC A,H
+0204   00B5 9D          	SBC A,L
+0205   00B6 9E          	SBC A,(HL)
+0206   00B7 9F          	SBC A,A
+0207   00B8             
+0208   00B8             ; Ax
+0209   00B8             
+0210   00B8 A0          	AND B
+0211   00B9 A1          	AND C
+0212   00BA A2          	AND D
+0213   00BB A3          	AND E
+0214   00BC A4          	AND H
+0215   00BD A5          	AND L
+0216   00BE A6          	AND (HL)
+0217   00BF A7          	AND A
+0218   00C0 A8          	XOR B
+0219   00C1 A9          	XOR C
+0220   00C2 AA          	XOR D
+0221   00C3 AB          	XOR E
+0222   00C4 AC          	XOR H
+0223   00C5 AD          	XOR L
+0224   00C6 AE          	XOR (HL)
+0225   00C7 AF          	XOR A
+0226   00C8             
+0227   00C8             ; Bx
+0228   00C8             
+0229   00C8 B0          	OR B
+0230   00C9 B1          	OR C
+0231   00CA B2          	OR D
+0232   00CB B3          	OR E
+0233   00CC B4          	OR H
+0234   00CD B5          	OR L
+0235   00CE B6          	OR (HL)
+0236   00CF B7          	OR A
+0237   00D0 B8          	CP B
+0238   00D1 B9          	CP C
+0239   00D2 BA          	CP D
+0240   00D3 BB          	CP E
+0241   00D4 BC          	CP H
+0242   00D5 BD          	CP L
+0243   00D6 BE          	CP (HL)
+0244   00D7 BF          	CP A
+0245   00D8             
+0246   00D8             ; Cx
+0247   00D8             
+0248   00D8 C0          	RET NZ
+0249   00D9 C1          	POP BC
+0250   00DA C2 34 12    	JP NZ,a16
+0251   00DD C3 34 12    	JP a16
+0252   00E0 C4 34 12    	CALL NZ,a16
+0253   00E3 C5          	PUSH BC
+0254   00E4 C6 20       	ADD A,n
+0255   00E6 C7          	RST 00h
+0256   00E7 C8          	RET Z
+0257   00E8 C9          	RET
+0258   00E9 CA 34 12    	JP Z,a16
+0259   00EC             	; CB prefix
+0260   00EC CC 34 12    	CALL Z,a16
+0261   00EF CD 34 12    	CALL a16
+0262   00F2 CE 20       	ADC A,n
+0263   00F4 CF          	RST 08h
+0264   00F5             
+0265   00F5             ; Dx
+0266   00F5             
+0267   00F5 D0          	RET NC
+0268   00F6 D1          	POP DE
+0269   00F7 D2 34 12    	JP NC,a16
+0270   00FA             	;
+0271   00FA D4 34 12    	CALL NC,a16
+0272   00FD D5          	PUSH DE
+0273   00FE D6 20       	SUB n
+0274   0100 D7          	RST 10h
+0275   0101 D8          	RET C
+0276   0102 D9          	RETI
+0277   0103 DA 34 12    	JP C,a16
+0278   0106             	;
+0279   0106 DC 34 12    	CALL C,a16
+0280   0109             	;
+0281   0109 DE 20       	SBC A,n
+0282   010B DF          	RST 18h
+0283   010C             
+0284   010C             ; Ex
+0285   010C             
+0286   010C E0 11       	LD (hi8),A
+0287   010E E1          	POP HL
+0288   010F E2          	LD (C),A
+0289   0110             	;
+0290   0110             	;
+0291   0110 E5          	PUSH HL
+0292   0111 E6 20       	AND n
+0293   0113 E7          	RST 20h
+0294   0114 E8 20       	ADD SP,n
+0295   0116 E9          	JP (HL)
+0296   0117 EA 34 12    	LD (a16),A
+0297   011A             	;
+0298   011A             	;
+0299   011A             	;
+0300   011A EE 20       	XOR n
+0301   011C EF          	RST 28h
+0302   011D             
+0303   011D             ; Fx
+0304   011D             
+0305   011D F0 11       	LD A,(hi8)
+0306   011F F1          	POP AF
+0307   0120 F2          	LD A,(C)
+0308   0121 F3          	DI
+0309   0122             	;
+0310   0122 F5          	PUSH AF
+0311   0123 F6 20       	OR n
+0312   0125 F7          	RST 30h
+0313   0126 F8 20       	LDHL SP,n
+0314   0128 F9          	LD SP,HL
+0315   0129 FA 34 12    	LD A,(a16)
+0316   012C FB          	EI
+0317   012D             	;
+0318   012D             	;
+0319   012D FE 20       	CP n
+0320   012F FF          	RST 38h
 0321   0130             
-0322   0130 CB 00       	RLC B
-0323   0132 CB 01       	RLC C
-0324   0134 CB 02       	RLC D
-0325   0136 CB 03       	RLC E
-0326   0138 CB 04       	RLC H
-0327   013A CB 05       	RLC L
-0328   013C CB 06       	RLC (HL)
-0329   013E CB 07       	RLC A
-0330   0140 CB 08       	RRC B
-0331   0142 CB 09       	RRC C
-0332   0144 CB 0A       	RRC D
-0333   0146 CB 0B       	RRC E
-0334   0148 CB 0C       	RRC H
-0335   014A CB 0D       	RRC L
-0336   014C CB 0E       	RRC (HL)
-0337   014E CB 0F       	RRC A
-0338   0150             
-0339   0150             ; 1x
-0340   0150             
-0341   0150 CB 10       	RL B
-0342   0152 CB 11       	RL C
-0343   0154 CB 12       	RL D
-0344   0156 CB 13       	RL E
-0345   0158 CB 14       	RL H
-0346   015A CB 15       	RL L
-0347   015C CB 16       	RL (HL)
-0348   015E CB 17       	RL A
-0349   0160 CB 18       	RR B
-0350   0162 CB 19       	RR C
-0351   0164 CB 1A       	RR D
-0352   0166 CB 1B       	RR E
-0353   0168 CB 1C       	RR H
-0354   016A CB 1D       	RR L
-0355   016C CB 1E       	RR (HL)
-0356   016E CB 1F       	RR A
-0357   0170             
-0358   0170             ; 2x
-0359   0170             
-0360   0170 CB 20       	SLA B
-0361   0172 CB 21       	SLA C
-0362   0174 CB 22       	SLA D
-0363   0176 CB 23       	SLA E
-0364   0178 CB 24       	SLA H
-0365   017A CB 25       	SLA L
-0366   017C CB 26       	SLA (HL)
-0367   017E CB 27       	SLA A
-0368   0180 CB 28       	SRA B
-0369   0182 CB 29       	SRA C
-0370   0184 CB 2A       	SRA D
-0371   0186 CB 2B       	SRA E
-0372   0188 CB 2C       	SRA H
-0373   018A CB 2D       	SRA L
-0374   018C CB 2E       	SRA (HL)
-0375   018E CB 2F       	SRA A
-0376   0190             
-0377   0190             ; 3x
-0378   0190             
-0379   0190 CB 30       	SWAP B
-0380   0192 CB 31       	SWAP C
-0381   0194 CB 32       	SWAP D
-0382   0196 CB 33       	SWAP E
-0383   0198 CB 34       	SWAP H
-0384   019A CB 35       	SWAP L
-0385   019C CB 36       	SWAP (HL)
-0386   019E CB 37       	SWAP A
-0387   01A0 CB 38       	SRL B
-0388   01A2 CB 39       	SRL C
-0389   01A4 CB 3A       	SRL D
-0390   01A6 CB 3B       	SRL E
-0391   01A8 CB 3C       	SRL H
-0392   01AA CB 3D       	SRL L
-0393   01AC CB 3E       	SRL (HL)
-0394   01AE CB 3F       	SRL A
-0395   01B0             
-0396   01B0             ; 4x
-0397   01B0             
-0398   01B0 CB 40       	BIT 0,B
-0399   01B2 CB 41       	BIT 0,C
-0400   01B4 CB 42       	BIT 0,D
-0401   01B6 CB 43       	BIT 0,E
-0402   01B8 CB 44       	BIT 0,H
-0403   01BA CB 45       	BIT 0,L
-0404   01BC CB 46       	BIT 0,(HL)
-0405   01BE CB 47       	BIT 0,A
-0406   01C0 CB 48       	BIT 1,B
-0407   01C2 CB 49       	BIT 1,C
-0408   01C4 CB 4A       	BIT 1,D
-0409   01C6 CB 4B       	BIT 1,E
-0410   01C8 CB 4C       	BIT 1,H
-0411   01CA CB 4D       	BIT 1,L
-0412   01CC CB 4E       	BIT 1,(HL)
-0413   01CE CB 4F       	BIT 1,A
-0414   01D0             
-0415   01D0             ; 5x
-0416   01D0             
-0417   01D0 CB 50       	BIT 2,B
-0418   01D2 CB 51       	BIT 2,C
-0419   01D4 CB 52       	BIT 2,D
-0420   01D6 CB 53       	BIT 2,E
-0421   01D8 CB 54       	BIT 2,H
-0422   01DA CB 55       	BIT 2,L
-0423   01DC CB 56       	BIT 2,(HL)
-0424   01DE CB 57       	BIT 2,A
-0425   01E0 CB 58       	BIT 3,B
-0426   01E2 CB 59       	BIT 3,C
-0427   01E4 CB 5A       	BIT 3,D
-0428   01E6 CB 5B       	BIT 3,E
-0429   01E8 CB 5C       	BIT 3,H
-0430   01EA CB 5D       	BIT 3,L
-0431   01EC CB 5E       	BIT 3,(HL)
-0432   01EE CB 5F       	BIT 3,A
-0433   01F0             
-0434   01F0             ; 6x
-0435   01F0             
-0436   01F0 CB 60       	BIT 4,B
-0437   01F2 CB 61       	BIT 4,C
-0438   01F4 CB 62       	BIT 4,D
-0439   01F6 CB 63       	BIT 4,E
-0440   01F8 CB 64       	BIT 4,H
-0441   01FA CB 65       	BIT 4,L
-0442   01FC CB 66       	BIT 4,(HL)
-0443   01FE CB 67       	BIT 4,A
-0444   0200 CB 68       	BIT 5,B
-0445   0202 CB 69       	BIT 5,C
-0446   0204 CB 6A       	BIT 5,D
-0447   0206 CB 6B       	BIT 5,E
-0448   0208 CB 6C       	BIT 5,H
-0449   020A CB 6D       	BIT 5,L
-0450   020C CB 6E       	BIT 5,(HL)
-0451   020E CB 6F       	BIT 5,A
-0452   0210             
-0453   0210             ; 7x
-0454   0210             
-0455   0210 CB 70       	BIT 6,B
-0456   0212 CB 71       	BIT 6,C
-0457   0214 CB 72       	BIT 6,D
-0458   0216 CB 73       	BIT 6,E
-0459   0218 CB 74       	BIT 6,H
-0460   021A CB 75       	BIT 6,L
-0461   021C CB 76       	BIT 6,(HL)
-0462   021E CB 77       	BIT 6,A
-0463   0220 CB 78       	BIT 7,B
-0464   0222 CB 79       	BIT 7,C
-0465   0224 CB 7A       	BIT 7,D
-0466   0226 CB 7B       	BIT 7,E
-0467   0228 CB 7C       	BIT 7,H
-0468   022A CB 7D       	BIT 7,L
-0469   022C CB 7E       	BIT 7,(HL)
-0470   022E CB 7F       	BIT 7,A
-0471   0230             
-0472   0230             ; 8x
-0473   0230             
-0474   0230 CB 80       	RES 0,B
-0475   0232 CB 81       	RES 0,C
-0476   0234 CB 82       	RES 0,D
-0477   0236 CB 83       	RES 0,E
-0478   0238 CB 84       	RES 0,H
-0479   023A CB 85       	RES 0,L
-0480   023C CB 86       	RES 0,(HL)
-0481   023E CB 87       	RES 0,A
-0482   0240 CB 88       	RES 1,B
-0483   0242 CB 89       	RES 1,C
-0484   0244 CB 8A       	RES 1,D
-0485   0246 CB 8B       	RES 1,E
-0486   0248 CB 8C       	RES 1,H
-0487   024A CB 8D       	RES 1,L
-0488   024C CB 8E       	RES 1,(HL)
-0489   024E CB 8F       	RES 1,A
-0490   0250             
-0491   0250             ; 9x
-0492   0250             
-0493   0250 CB 90       	RES 2,B
-0494   0252 CB 91       	RES 2,C
-0495   0254 CB 92       	RES 2,D
-0496   0256 CB 93       	RES 2,E
-0497   0258 CB 94       	RES 2,H
-0498   025A CB 95       	RES 2,L
-0499   025C CB 96       	RES 2,(HL)
-0500   025E CB 97       	RES 2,A
-0501   0260 CB 98       	RES 3,B
-0502   0262 CB 99       	RES 3,C
-0503   0264 CB 9A       	RES 3,D
-0504   0266 CB 9B       	RES 3,E
-0505   0268 CB 9C       	RES 3,H
-0506   026A CB 9D       	RES 3,L
-0507   026C CB 9E       	RES 3,(HL)
-0508   026E CB 9F       	RES 3,A
-0509   0270             
-0510   0270             ; Ax
-0511   0270             
-0512   0270 CB A0       	RES 4,B
-0513   0272 CB A1       	RES 4,C
-0514   0274 CB A2       	RES 4,D
-0515   0276 CB A3       	RES 4,E
-0516   0278 CB A4       	RES 4,H
-0517   027A CB A5       	RES 4,L
-0518   027C CB A6       	RES 4,(HL)
-0519   027E CB A7       	RES 4,A
-0520   0280 CB A8       	RES 5,B
-0521   0282 CB A9       	RES 5,C
-0522   0284 CB AA       	RES 5,D
-0523   0286 CB AB       	RES 5,E
-0524   0288 CB AC       	RES 5,H
-0525   028A CB AD       	RES 5,L
-0526   028C CB AE       	RES 5,(HL)
-0527   028E CB AF       	RES 5,A
-0528   0290             
-0529   0290             ; Bx
-0530   0290             
-0531   0290 CB B0       	RES 6,B
-0532   0292 CB B1       	RES 6,C
-0533   0294 CB B2       	RES 6,D
-0534   0296 CB B3       	RES 6,E
-0535   0298 CB B4       	RES 6,H
-0536   029A CB B5       	RES 6,L
-0537   029C CB B6       	RES 6,(HL)
-0538   029E CB B7       	RES 6,A
-0539   02A0 CB B8       	RES 7,B
-0540   02A2 CB B9       	RES 7,C
-0541   02A4 CB BA       	RES 7,D
-0542   02A6 CB BB       	RES 7,E
-0543   02A8 CB BC       	RES 7,H
-0544   02AA CB BD       	RES 7,L
-0545   02AC CB BE       	RES 7,(HL)
-0546   02AE CB BF       	RES 7,A
-0547   02B0             
-0548   02B0             ; Cx
-0549   02B0             
-0550   02B0 CB C0       	SET 0,B
-0551   02B2 CB C1       	SET 0,C
-0552   02B4 CB C2       	SET 0,D
-0553   02B6 CB C3       	SET 0,E
-0554   02B8 CB C4       	SET 0,H
-0555   02BA CB C5       	SET 0,L
-0556   02BC CB C6       	SET 0,(HL)
-0557   02BE CB C7       	SET 0,A
-0558   02C0 CB C8       	SET 1,B
-0559   02C2 CB C9       	SET 1,C
-0560   02C4 CB CA       	SET 1,D
-0561   02C6 CB CB       	SET 1,E
-0562   02C8 CB CC       	SET 1,H
-0563   02CA CB CD       	SET 1,L
-0564   02CC CB CE       	SET 1,(HL)
-0565   02CE CB CF       	SET 1,A
-0566   02D0             
-0567   02D0             ; Dx
-0568   02D0             
-0569   02D0 CB D0       	SET 2,B
-0570   02D2 CB D1       	SET 2,C
-0571   02D4 CB D2       	SET 2,D
-0572   02D6 CB D3       	SET 2,E
-0573   02D8 CB D4       	SET 2,H
-0574   02DA CB D5       	SET 2,L
-0575   02DC CB D6       	SET 2,(HL)
-0576   02DE CB D7       	SET 2,A
-0577   02E0 CB D8       	SET 3,B
-0578   02E2 CB D9       	SET 3,C
-0579   02E4 CB DA       	SET 3,D
-0580   02E6 CB DB       	SET 3,E
-0581   02E8 CB DC       	SET 3,H
-0582   02EA CB DD       	SET 3,L
-0583   02EC CB DE       	SET 3,(HL)
-0584   02EE CB DF       	SET 3,A
-0585   02F0             
-0586   02F0             ; Ex
-0587   02F0             
-0588   02F0 CB E0       	SET 4,B
-0589   02F2 CB E1       	SET 4,C
-0590   02F4 CB E2       	SET 4,D
-0591   02F6 CB E3       	SET 4,E
-0592   02F8 CB E4       	SET 4,H
-0593   02FA CB E5       	SET 4,L
-0594   02FC CB E6       	SET 4,(HL)
-0595   02FE CB E7       	SET 4,A
-0596   0300 CB E8       	SET 5,B
-0597   0302 CB E9       	SET 5,C
-0598   0304 CB EA       	SET 5,D
-0599   0306 CB EB       	SET 5,E
-0600   0308 CB EC       	SET 5,H
-0601   030A CB ED       	SET 5,L
-0602   030C CB EE       	SET 5,(HL)
-0603   030E CB EF       	SET 5,A
-0604   0310             
-0605   0310             ; Fx
-0606   0310             
-0607   0310 CB F0       	SET 6,B
-0608   0312 CB F1       	SET 6,C
-0609   0314 CB F2       	SET 6,D
-0610   0316 CB F3       	SET 6,E
-0611   0318 CB F4       	SET 6,H
-0612   031A CB F5       	SET 6,L
-0613   031C CB F6       	SET 6,(HL)
-0614   031E CB F7       	SET 6,A
-0615   0320 CB F8       	SET 7,B
-0616   0322 CB F9       	SET 7,C
-0617   0324 CB FA       	SET 7,D
-0618   0326 CB FB       	SET 7,E
-0619   0328 CB FC       	SET 7,H
-0620   032A CB FD       	SET 7,L
-0621   032C CB FE       	SET 7,(HL)
-0622   032E CB FF       	SET 7,A
-0623   0330             
-0624   0330             	end
+0322   0130             ; Prefix CB
+0323   0130             
+0324   0130             ; 0x
+0325   0130             
+0326   0130 CB 00       	RLC B
+0327   0132 CB 01       	RLC C
+0328   0134 CB 02       	RLC D
+0329   0136 CB 03       	RLC E
+0330   0138 CB 04       	RLC H
+0331   013A CB 05       	RLC L
+0332   013C CB 06       	RLC (HL)
+0333   013E CB 07       	RLC A
+0334   0140 CB 08       	RRC B
+0335   0142 CB 09       	RRC C
+0336   0144 CB 0A       	RRC D
+0337   0146 CB 0B       	RRC E
+0338   0148 CB 0C       	RRC H
+0339   014A CB 0D       	RRC L
+0340   014C CB 0E       	RRC (HL)
+0341   014E CB 0F       	RRC A
+0342   0150             
+0343   0150             ; 1x
+0344   0150             
+0345   0150 CB 10       	RL B
+0346   0152 CB 11       	RL C
+0347   0154 CB 12       	RL D
+0348   0156 CB 13       	RL E
+0349   0158 CB 14       	RL H
+0350   015A CB 15       	RL L
+0351   015C CB 16       	RL (HL)
+0352   015E CB 17       	RL A
+0353   0160 CB 18       	RR B
+0354   0162 CB 19       	RR C
+0355   0164 CB 1A       	RR D
+0356   0166 CB 1B       	RR E
+0357   0168 CB 1C       	RR H
+0358   016A CB 1D       	RR L
+0359   016C CB 1E       	RR (HL)
+0360   016E CB 1F       	RR A
+0361   0170             
+0362   0170             ; 2x
+0363   0170             
+0364   0170 CB 20       	SLA B
+0365   0172 CB 21       	SLA C
+0366   0174 CB 22       	SLA D
+0367   0176 CB 23       	SLA E
+0368   0178 CB 24       	SLA H
+0369   017A CB 25       	SLA L
+0370   017C CB 26       	SLA (HL)
+0371   017E CB 27       	SLA A
+0372   0180 CB 28       	SRA B
+0373   0182 CB 29       	SRA C
+0374   0184 CB 2A       	SRA D
+0375   0186 CB 2B       	SRA E
+0376   0188 CB 2C       	SRA H
+0377   018A CB 2D       	SRA L
+0378   018C CB 2E       	SRA (HL)
+0379   018E CB 2F       	SRA A
+0380   0190             
+0381   0190             ; 3x
+0382   0190             
+0383   0190 CB 30       	SWAP B
+0384   0192 CB 31       	SWAP C
+0385   0194 CB 32       	SWAP D
+0386   0196 CB 33       	SWAP E
+0387   0198 CB 34       	SWAP H
+0388   019A CB 35       	SWAP L
+0389   019C CB 36       	SWAP (HL)
+0390   019E CB 37       	SWAP A
+0391   01A0 CB 38       	SRL B
+0392   01A2 CB 39       	SRL C
+0393   01A4 CB 3A       	SRL D
+0394   01A6 CB 3B       	SRL E
+0395   01A8 CB 3C       	SRL H
+0396   01AA CB 3D       	SRL L
+0397   01AC CB 3E       	SRL (HL)
+0398   01AE CB 3F       	SRL A
+0399   01B0             
+0400   01B0             ; 4x
+0401   01B0             
+0402   01B0 CB 40       	BIT 0,B
+0403   01B2 CB 41       	BIT 0,C
+0404   01B4 CB 42       	BIT 0,D
+0405   01B6 CB 43       	BIT 0,E
+0406   01B8 CB 44       	BIT 0,H
+0407   01BA CB 45       	BIT 0,L
+0408   01BC CB 46       	BIT 0,(HL)
+0409   01BE CB 47       	BIT 0,A
+0410   01C0 CB 48       	BIT 1,B
+0411   01C2 CB 49       	BIT 1,C
+0412   01C4 CB 4A       	BIT 1,D
+0413   01C6 CB 4B       	BIT 1,E
+0414   01C8 CB 4C       	BIT 1,H
+0415   01CA CB 4D       	BIT 1,L
+0416   01CC CB 4E       	BIT 1,(HL)
+0417   01CE CB 4F       	BIT 1,A
+0418   01D0             
+0419   01D0             ; 5x
+0420   01D0             
+0421   01D0 CB 50       	BIT 2,B
+0422   01D2 CB 51       	BIT 2,C
+0423   01D4 CB 52       	BIT 2,D
+0424   01D6 CB 53       	BIT 2,E
+0425   01D8 CB 54       	BIT 2,H
+0426   01DA CB 55       	BIT 2,L
+0427   01DC CB 56       	BIT 2,(HL)
+0428   01DE CB 57       	BIT 2,A
+0429   01E0 CB 58       	BIT 3,B
+0430   01E2 CB 59       	BIT 3,C
+0431   01E4 CB 5A       	BIT 3,D
+0432   01E6 CB 5B       	BIT 3,E
+0433   01E8 CB 5C       	BIT 3,H
+0434   01EA CB 5D       	BIT 3,L
+0435   01EC CB 5E       	BIT 3,(HL)
+0436   01EE CB 5F       	BIT 3,A
+0437   01F0             
+0438   01F0             ; 6x
+0439   01F0             
+0440   01F0 CB 60       	BIT 4,B
+0441   01F2 CB 61       	BIT 4,C
+0442   01F4 CB 62       	BIT 4,D
+0443   01F6 CB 63       	BIT 4,E
+0444   01F8 CB 64       	BIT 4,H
+0445   01FA CB 65       	BIT 4,L
+0446   01FC CB 66       	BIT 4,(HL)
+0447   01FE CB 67       	BIT 4,A
+0448   0200 CB 68       	BIT 5,B
+0449   0202 CB 69       	BIT 5,C
+0450   0204 CB 6A       	BIT 5,D
+0451   0206 CB 6B       	BIT 5,E
+0452   0208 CB 6C       	BIT 5,H
+0453   020A CB 6D       	BIT 5,L
+0454   020C CB 6E       	BIT 5,(HL)
+0455   020E CB 6F       	BIT 5,A
+0456   0210             
+0457   0210             ; 7x
+0458   0210             
+0459   0210 CB 70       	BIT 6,B
+0460   0212 CB 71       	BIT 6,C
+0461   0214 CB 72       	BIT 6,D
+0462   0216 CB 73       	BIT 6,E
+0463   0218 CB 74       	BIT 6,H
+0464   021A CB 75       	BIT 6,L
+0465   021C CB 76       	BIT 6,(HL)
+0466   021E CB 77       	BIT 6,A
+0467   0220 CB 78       	BIT 7,B
+0468   0222 CB 79       	BIT 7,C
+0469   0224 CB 7A       	BIT 7,D
+0470   0226 CB 7B       	BIT 7,E
+0471   0228 CB 7C       	BIT 7,H
+0472   022A CB 7D       	BIT 7,L
+0473   022C CB 7E       	BIT 7,(HL)
+0474   022E CB 7F       	BIT 7,A
+0475   0230             
+0476   0230             ; 8x
+0477   0230             
+0478   0230 CB 80       	RES 0,B
+0479   0232 CB 81       	RES 0,C
+0480   0234 CB 82       	RES 0,D
+0481   0236 CB 83       	RES 0,E
+0482   0238 CB 84       	RES 0,H
+0483   023A CB 85       	RES 0,L
+0484   023C CB 86       	RES 0,(HL)
+0485   023E CB 87       	RES 0,A
+0486   0240 CB 88       	RES 1,B
+0487   0242 CB 89       	RES 1,C
+0488   0244 CB 8A       	RES 1,D
+0489   0246 CB 8B       	RES 1,E
+0490   0248 CB 8C       	RES 1,H
+0491   024A CB 8D       	RES 1,L
+0492   024C CB 8E       	RES 1,(HL)
+0493   024E CB 8F       	RES 1,A
+0494   0250             
+0495   0250             ; 9x
+0496   0250             
+0497   0250 CB 90       	RES 2,B
+0498   0252 CB 91       	RES 2,C
+0499   0254 CB 92       	RES 2,D
+0500   0256 CB 93       	RES 2,E
+0501   0258 CB 94       	RES 2,H
+0502   025A CB 95       	RES 2,L
+0503   025C CB 96       	RES 2,(HL)
+0504   025E CB 97       	RES 2,A
+0505   0260 CB 98       	RES 3,B
+0506   0262 CB 99       	RES 3,C
+0507   0264 CB 9A       	RES 3,D
+0508   0266 CB 9B       	RES 3,E
+0509   0268 CB 9C       	RES 3,H
+0510   026A CB 9D       	RES 3,L
+0511   026C CB 9E       	RES 3,(HL)
+0512   026E CB 9F       	RES 3,A
+0513   0270             
+0514   0270             ; Ax
+0515   0270             
+0516   0270 CB A0       	RES 4,B
+0517   0272 CB A1       	RES 4,C
+0518   0274 CB A2       	RES 4,D
+0519   0276 CB A3       	RES 4,E
+0520   0278 CB A4       	RES 4,H
+0521   027A CB A5       	RES 4,L
+0522   027C CB A6       	RES 4,(HL)
+0523   027E CB A7       	RES 4,A
+0524   0280 CB A8       	RES 5,B
+0525   0282 CB A9       	RES 5,C
+0526   0284 CB AA       	RES 5,D
+0527   0286 CB AB       	RES 5,E
+0528   0288 CB AC       	RES 5,H
+0529   028A CB AD       	RES 5,L
+0530   028C CB AE       	RES 5,(HL)
+0531   028E CB AF       	RES 5,A
+0532   0290             
+0533   0290             ; Bx
+0534   0290             
+0535   0290 CB B0       	RES 6,B
+0536   0292 CB B1       	RES 6,C
+0537   0294 CB B2       	RES 6,D
+0538   0296 CB B3       	RES 6,E
+0539   0298 CB B4       	RES 6,H
+0540   029A CB B5       	RES 6,L
+0541   029C CB B6       	RES 6,(HL)
+0542   029E CB B7       	RES 6,A
+0543   02A0 CB B8       	RES 7,B
+0544   02A2 CB B9       	RES 7,C
+0545   02A4 CB BA       	RES 7,D
+0546   02A6 CB BB       	RES 7,E
+0547   02A8 CB BC       	RES 7,H
+0548   02AA CB BD       	RES 7,L
+0549   02AC CB BE       	RES 7,(HL)
+0550   02AE CB BF       	RES 7,A
+0551   02B0             
+0552   02B0             ; Cx
+0553   02B0             
+0554   02B0 CB C0       	SET 0,B
+0555   02B2 CB C1       	SET 0,C
+0556   02B4 CB C2       	SET 0,D
+0557   02B6 CB C3       	SET 0,E
+0558   02B8 CB C4       	SET 0,H
+0559   02BA CB C5       	SET 0,L
+0560   02BC CB C6       	SET 0,(HL)
+0561   02BE CB C7       	SET 0,A
+0562   02C0 CB C8       	SET 1,B
+0563   02C2 CB C9       	SET 1,C
+0564   02C4 CB CA       	SET 1,D
+0565   02C6 CB CB       	SET 1,E
+0566   02C8 CB CC       	SET 1,H
+0567   02CA CB CD       	SET 1,L
+0568   02CC CB CE       	SET 1,(HL)
+0569   02CE CB CF       	SET 1,A
+0570   02D0             
+0571   02D0             ; Dx
+0572   02D0             
+0573   02D0 CB D0       	SET 2,B
+0574   02D2 CB D1       	SET 2,C
+0575   02D4 CB D2       	SET 2,D
+0576   02D6 CB D3       	SET 2,E
+0577   02D8 CB D4       	SET 2,H
+0578   02DA CB D5       	SET 2,L
+0579   02DC CB D6       	SET 2,(HL)
+0580   02DE CB D7       	SET 2,A
+0581   02E0 CB D8       	SET 3,B
+0582   02E2 CB D9       	SET 3,C
+0583   02E4 CB DA       	SET 3,D
+0584   02E6 CB DB       	SET 3,E
+0585   02E8 CB DC       	SET 3,H
+0586   02EA CB DD       	SET 3,L
+0587   02EC CB DE       	SET 3,(HL)
+0588   02EE CB DF       	SET 3,A
+0589   02F0             
+0590   02F0             ; Ex
+0591   02F0             
+0592   02F0 CB E0       	SET 4,B
+0593   02F2 CB E1       	SET 4,C
+0594   02F4 CB E2       	SET 4,D
+0595   02F6 CB E3       	SET 4,E
+0596   02F8 CB E4       	SET 4,H
+0597   02FA CB E5       	SET 4,L
+0598   02FC CB E6       	SET 4,(HL)
+0599   02FE CB E7       	SET 4,A
+0600   0300 CB E8       	SET 5,B
+0601   0302 CB E9       	SET 5,C
+0602   0304 CB EA       	SET 5,D
+0603   0306 CB EB       	SET 5,E
+0604   0308 CB EC       	SET 5,H
+0605   030A CB ED       	SET 5,L
+0606   030C CB EE       	SET 5,(HL)
+0607   030E CB EF       	SET 5,A
+0608   0310             
+0609   0310             ; Fx
+0610   0310             
+0611   0310 CB F0       	SET 6,B
+0612   0312 CB F1       	SET 6,C
+0613   0314 CB F2       	SET 6,D
+0614   0316 CB F3       	SET 6,E
+0615   0318 CB F4       	SET 6,H
+0616   031A CB F5       	SET 6,L
+0617   031C CB F6       	SET 6,(HL)
+0618   031E CB F7       	SET 6,A
+0619   0320 CB F8       	SET 7,B
+0620   0322 CB F9       	SET 7,C
+0621   0324 CB FA       	SET 7,D
+0622   0326 CB FB       	SET 7,E
+0623   0328 CB FC       	SET 7,H
+0624   032A CB FD       	SET 7,L
+0625   032C CB FE       	SET 7,(HL)
+0626   032E CB FF       	SET 7,A
+0627   0330             
+0628   0330             	end

@@ -1,3 +1,7 @@
+# ===========================================================================
+# uz80as, a macro assembler for Z80 based microprocessors.
+# ===========================================================================
+
 AM_CFLAGS = $(WARN_CFLAGS)
 bin_PROGRAMS = uz80as
 uz80as_CFLAGS = $(AM_CFLAGS)

@@ -1,35 +1,35 @@
-/*
-Copyright (c) 2016 Jorge Giner Cordero
+/* ===========================================================================
+ * uz80as, a macro assembler for Z80 based microprocessors.
+ *
+ * Expression parsing.
+ * ===========================================================================
+ */
 
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be included
-in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
-
-#include <assert.h>
-#include <ctype.h>
-#include <limits.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <config.h>
+#include "expr.h"
 #include "utils.h"
 #include "err.h"
 #include "sym.h"
-#include "expr.h"
+
+#ifndef ASSERT_H
+#include <assert.h>
+#endif
+
+#ifndef CTYPE_H
+#include <ctype.h>
+#endif
+
+#ifndef LIMITS_H
+#include <limits.h>
+#endif
+
+#ifndef STDIO_H
+#include <stdio.h>
+#endif
+
+#ifndef STDLIB_H
+#include <stdlib.h>
+#endif
 
 /* Max nested expressions. */
 #define ESTKSZ		16
@@ -119,8 +119,6 @@ static const char *getpnum(const char *p, int radix, int *v)
 	*v = n;
 	return q;
 }
-
-static int ashr(int r, int n);
 
 /* Left shift */
 static int shl(int r, int n)
@@ -411,7 +409,7 @@ oper:
 	case 'G': r = r >= n; break;
 	case 'S': r = r <= n; break;
 	case 'N': r = r != n; break;
-	/* This will be logical right shift:
+	/* This would be logical right shift:
 	 * case 'R': r = (unsigned int) r >> n; break;
 	 */
 	case 'R': r = ashr(r, n); break;

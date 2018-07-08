@@ -17,9 +17,12 @@ function tgen ()
         rm -f $1.lokt
 }
 
-tgen tasm
+# tgen tasm
 # tgen Spanish128_ROM0
 tgen main
+ugen z80
+ugen gbz80 -cgbz80
+ugen tasmfail
 ugen longlabel
 ugen orgbelow
 ugen orgabove
@@ -43,4 +46,3 @@ ugen unoffok -x
 ugen div
 ugen mod
 ugen fillcmdln -fab
-ugen gbz80 -cgbz80
