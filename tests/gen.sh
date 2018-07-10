@@ -21,6 +21,7 @@ function tgen ()
 # tgen Spanish128_ROM0
 tgen main
 ugen z80
+ugen z80u -u
 ugen gbz80 -cgbz80
 ugen tasmfail
 ugen longlabel

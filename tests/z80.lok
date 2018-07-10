@@ -803,7 +803,7 @@
 0803   03E2             	; LD IXH,C	; 61
 0804   03E2             	; LD IXH,D	; 62
 0805   03E2             	; LD IXH,E	; 63
-0806   03E2             	; LD IXH,XH	; 64
+0806   03E2             	; LD IXH,IXH	; 64
 0807   03E2             	; LD IXH,IXL	; 65
 0808   03E2 DD 66 07    	LD H,(IX+offs)
 0809   03E5             	; LD IXH,A	; 67
@@ -811,7 +811,7 @@
 0811   03E5             	; LD IXL,C	; 69
 0812   03E5             	; LD IXL,D	; 6A
 0813   03E5             	; LD IXL,E	; 6B
-0814   03E5             	; LD IXL,XH	; 6C
+0814   03E5             	; LD IXL,IXH	; 6C
 0815   03E5             	; LD IXL,IXL	; 6D
 0816   03E5 DD 6E 07    	LD L,(IX+offs)
 0817   03E8             	; LD IXL,A	; 6F
@@ -977,7 +977,7 @@
 0977   0450             	; LD IYH,C	; 61
 0978   0450             	; LD IYH,D	; 62
 0979   0450             	; LD IYH,E	; 63
-0980   0450             	; LD IYH,YH	; 64
+0980   0450             	; LD IYH,IYH	; 64
 0981   0450             	; LD IYH,IYL	; 65
 0982   0450 FD 66 07    	LD H,(IY+offs)
 0983   0453             	; LD IYH,A	; 67
@@ -985,7 +985,7 @@
 0985   0453             	; LD IYL,C	; 69
 0986   0453             	; LD IYL,D	; 6A
 0987   0453             	; LD IYL,E	; 6B
-0988   0453             	; LD IYL,YH	; 6C
+0988   0453             	; LD IYL,IYH	; 6C
 0989   0453             	; LD IYL,IYL	; 6D
 0990   0453 FD 6E 07    	LD L,(IY+offs)
 0991   0456             	; LD IYL,A	; 6F
@@ -1037,8 +1037,8 @@
 1037   047A             	; AND IYL
 1038   047A FD A6 07    	AND (IY+offs)
 1039   047D             	; A6-AB
-1040   047D             	; YOR IYH
-1041   047D             	; YOR IYL
+1040   047D             	; XOR IYH
+1041   047D             	; XOR IYL
 1042   047D FD AE 07    	XOR (IY+offs)
 1043   0480             	; AF
 1044   0480             
