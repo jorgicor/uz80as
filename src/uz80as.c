@@ -114,7 +114,7 @@ struct matchtab {
  * 	h: INC,DEC
  * 	i: BC,DE,IX,SP
  * 	j: BC,DE,IY,SP
- * 	k: RLC,RRC,RL,RR,SLA,SRA,SLL,SRL
+ * 	k: RLC,RRC,RL,RR,SLA,SRA,SRL
  * 	l: BIT,RES,SET
  * 	m: NZ,Z,NC,C,PO,PE,P,M
  * 	n: NZ,Z,NC,C
@@ -339,6 +339,7 @@ const struct matchtab s_matchtab_z80[] =
 	{ "SLL b", "CB.30c0.", MATCH_F_UNDOC },
 	{ "SLL (HL)", "CB.36.", MATCH_F_UNDOC },
 	{ "SLL (ca)", "d0.CB.d1.36.", MATCH_F_UNDOC },
+	{ "SLL (ca),b", "d0.CB.d1.30c2.", MATCH_F_UNDOC },
 	{ "k b", "CB.00b0c1." },
 	{ "k (HL)", "CB.06b0." },
 	{ "k (ca)", "d1.CB.d2.06b0." },
@@ -388,19 +389,19 @@ const char *const bval[] = { "B", "C", "D", "E", "H", "L", "", "A", NULL };
 const char *const cval[] = { "IX", "IY", NULL };
 const char *const dval[] = { "BC", "DE", "HL", "SP", NULL };
 const char *const fval[] = { "BC", "DE", "HL", "AF", NULL };
-const char *const gval[] = { "ADD", "ADC", "SUB", "SBC", "AND",
-			     "XOR", "OR", "CP", NULL };
+const char *const gval[] = { "ADD", "ADC", "SUB", "SBC",
+			     "AND", "XOR", "OR", "CP", NULL };
 const char *const hval[] = { "INC", "DEC", NULL };
 const char *const ival[] = { "BC", "DE", "IX", "SP", NULL };
 const char *const jval[] = { "BC", "DE", "IY", "SP", NULL };
-const char *const kval[] = { "RLC", "RRC", "RL", "RR", "SLA",
-			     "SRA", "SLL", "SRL", NULL };
+const char *const kval[] = { "RLC", "RRC", "RL", "RR",
+			     "SLA", "SRA", "", "SRL", NULL };
 const char *const lval[] = { "", "BIT", "RES", "SET", NULL };
-const char *const mval[] = { "NZ", "Z", "NC", "C", "PO",
-			     "PE", "P", "M", NULL };
+const char *const mval[] = { "NZ", "Z", "NC", "C",
+			     "PO", "PE", "P", "M", NULL };
 const char *const nval[] = { "NZ", "Z", "NC", "C", NULL };
-const char *const oval[] = { "RLC", "RRC", "RL", "RR", "SLA",
-			     "SRA", "SWAP", "SRL", NULL };
+const char *const oval[] = { "RLC", "RRC", "RL", "RR",
+			     "SLA", "SRA", "SWAP", "SRL", NULL };
 const char *const pval[] = { "B", "C", "D", "E", "IXH", "IXL", "", "A", NULL };
 const char *const qval[] = { "B", "C", "D", "E", "IYH", "IYL", "", "A", NULL };
 
@@ -544,7 +545,7 @@ loop:
 			  break;
 		case 'm': if (s_pass == 0 && !s_extended_op) {
 				  if (vs[i] != 0 && vs[i] != 1 && vs[i] != 3) {
-					eprint(_("unofficial instruction\n"));
+					eprint(_("unofficial syntax\n"));
 					eprcol(s_pline, s_pline_ep);
 					newerr();
 				  }
@@ -552,7 +553,7 @@ loop:
 			  break;
 		case 'n': if (s_pass == 0 && !s_extended_op) {
 				  if (vs[i] == 0 || vs[i] == 1 || vs[i] == 3) {
-					eprint(_("unofficial instruction\n"));
+					eprint(_("unofficial syntax\n"));
 					eprcol(s_pline, s_pline_ep);
 					newerr();
 				  }

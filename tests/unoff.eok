@@ -1,96 +1,96 @@
-unoff.asm:7: unofficial instruction
+unoff.asm:7: unofficial syntax
   ADD A
   ^
-unoff.asm:8: unofficial instruction
+unoff.asm:8: unofficial syntax
   ADD 1
   ^
-unoff.asm:9: unofficial instruction
+unoff.asm:9: unofficial syntax
   ADD (HL)
   ^
-unoff.asm:10: unofficial instruction
+unoff.asm:10: unofficial syntax
   ADD (IX+1)
   ^
-unoff.asm:16: unofficial instruction
+unoff.asm:16: unofficial syntax
   ADC A
   ^
-unoff.asm:17: unofficial instruction
+unoff.asm:17: unofficial syntax
   ADC 1
   ^
-unoff.asm:18: unofficial instruction
+unoff.asm:18: unofficial syntax
   ADC (HL)
   ^
-unoff.asm:19: unofficial instruction
+unoff.asm:19: unofficial syntax
   ADC (IX+1)
   ^
-unoff.asm:21: unofficial instruction
+unoff.asm:21: unofficial syntax
   SUB A,A
   ^
-unoff.asm:22: unofficial instruction
+unoff.asm:22: unofficial syntax
   SUB A,1
   ^
-unoff.asm:23: unofficial instruction
+unoff.asm:23: unofficial syntax
   SUB A,(HL)
   ^
-unoff.asm:24: unofficial instruction
+unoff.asm:24: unofficial syntax
   SUB A,(IX+1)
   ^
-unoff.asm:34: unofficial instruction
+unoff.asm:34: unofficial syntax
   SBC A
   ^
-unoff.asm:35: unofficial instruction
+unoff.asm:35: unofficial syntax
   SBC 1
   ^
-unoff.asm:36: unofficial instruction
+unoff.asm:36: unofficial syntax
   SBC (HL)
   ^
-unoff.asm:37: unofficial instruction
+unoff.asm:37: unofficial syntax
   SBC (IX+1)
   ^
-unoff.asm:39: unofficial instruction
+unoff.asm:39: unofficial syntax
   AND A,A
   ^
-unoff.asm:40: unofficial instruction
+unoff.asm:40: unofficial syntax
   AND A,1
   ^
-unoff.asm:41: unofficial instruction
+unoff.asm:41: unofficial syntax
   AND A,(HL)
   ^
-unoff.asm:42: unofficial instruction
+unoff.asm:42: unofficial syntax
   AND A,(IX+1)
   ^
-unoff.asm:48: unofficial instruction
+unoff.asm:48: unofficial syntax
   OR A,A
   ^
-unoff.asm:49: unofficial instruction
+unoff.asm:49: unofficial syntax
   OR A,1
   ^
-unoff.asm:50: unofficial instruction
+unoff.asm:50: unofficial syntax
   OR A,(HL)
   ^
-unoff.asm:51: unofficial instruction
+unoff.asm:51: unofficial syntax
   OR A,(IX+1)
   ^
-unoff.asm:57: unofficial instruction
+unoff.asm:57: unofficial syntax
   XOR A,A
   ^
-unoff.asm:58: unofficial instruction
+unoff.asm:58: unofficial syntax
   XOR A,1
   ^
-unoff.asm:59: unofficial instruction
+unoff.asm:59: unofficial syntax
   XOR A,(HL)
   ^
-unoff.asm:60: unofficial instruction
+unoff.asm:60: unofficial syntax
   XOR A,(IX+1)
   ^
-unoff.asm:66: unofficial instruction
+unoff.asm:66: unofficial syntax
   CP A,A
   ^
-unoff.asm:67: unofficial instruction
+unoff.asm:67: unofficial syntax
   CP A,1
   ^
-unoff.asm:68: unofficial instruction
+unoff.asm:68: unofficial syntax
   CP A,(HL)
   ^
-unoff.asm:69: unofficial instruction
+unoff.asm:69: unofficial syntax
   CP A,(IX+1)
   ^
