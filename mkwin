@@ -1,6 +1,10 @@
 #!/bin/sh
 
-# This script is used by the author to make the Windows version.
+# ===========================================================================
+# uz80as, a macro assembler for Z80 based microprocessors.
+#
+# This script is used by the author to build the Windows package under Cygwin.
+# ===========================================================================
 
 case $# in
 	2) uz80as_vmaj=$1; uz80as_vmin=$2 ;;

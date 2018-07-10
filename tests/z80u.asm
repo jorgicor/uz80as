@@ -380,14 +380,14 @@ loop5:	JR C,loop5
 
 ; 3x
 
-	; SLL B		; 30
-	; SLL C		; 31
-	; SLL D		; 32
-	; SLL E		; 33
-	; SLL H		; 34
-	; SLL L		; 35
-	; SLL (HL)	; 36
-	; SLL A		; 37
+	SLL B
+	SLL C
+	SLL D
+	SLL E
+	SLL H
+	SLL L
+	SLL (HL)
+	SLL A
 	SRL B
 	SRL C
 	SRL D
@@ -686,8 +686,8 @@ loop5:	JR C,loop5
 
 ; 7x
 
-	; IN (C)
-	; OUT (C),0
+	IN (C)
+	OUT (C),0
 	SBC HL,SP
 	LD (nn),SP
 	; NEG
@@ -749,17 +749,17 @@ loop5:	JR C,loop5
 	LD IX,nn
 	LD (nn),IX
 	INC IX
-	; INC IXH
-	; DEC IXH
-	; LD IXH,n
+	INC IXH
+	DEC IXH
+	LD IXH,n
 	; 27
 	; 28
 	ADD IX,IX
 	LD IX,(nn)
 	DEC IX
-	; INC IXL
-	; DEC IXL
-	; LD IXL,n
+	INC IXL
+	DEC IXL
+	LD IXL,n
 	; 2F
 
 ; 3x
@@ -776,45 +776,45 @@ loop5:	JR C,loop5
 ; 4x
 
 	; 40-43
-	; LD B,IXH
-	; LD B,IXL
+	LD B,IXH
+	LD B,IXL
 	LD B,(IX+offs)
 	; 47-4B
-	; LD C,IXH
-	; LD C,IXL
+	LD C,IXH
+	LD C,IXL
 	LD C,(IX+offs)
 	; 4F
 
 ; 5x
 
 	; 50-53
-	; LD D,IXH
-	; LD D,IXL
+	LD D,IXH
+	LD D,IXL
 	LD D,(IX+offs)
 	; 57-5B
-	; LD E,IXH
-	; LD E,IXL
+	LD E,IXH
+	LD E,IXL
 	LD E,(IX+offs)
 	; 5F
 
 ; 6x
 
-	; LD IXH,B	; 60
-	; LD IXH,C	; 61
-	; LD IXH,D	; 62
-	; LD IXH,E	; 63
-	; LD IXH,IXH	; 64
-	; LD IXH,IXL	; 65
+	LD IXH,B	; 60
+	LD IXH,C	; 61
+	LD IXH,D	; 62
+	LD IXH,E	; 63
+	LD IXH,IXH	; 64
+	LD IXH,IXL	; 65
 	LD H,(IX+offs)
-	; LD IXH,A	; 67
-	; LD IXL,B	; 68
-	; LD IXL,C	; 69
-	; LD IXL,D	; 6A
-	; LD IXL,E	; 6B
-	; LD IXL,IXH	; 6C
-	; LD IXL,IXL	; 6D
+	LD IXH,A	; 67
+	LD IXL,B	; 68
+	LD IXL,C	; 69
+	LD IXL,D	; 6A
+	LD IXL,E	; 6B
+	LD IXL,IXH	; 6C
+	LD IXL,IXL	; 6D
 	LD L,(IX+offs)
-	; LD IXL,A	; 6F
+	LD IXL,A	; 6F
 
 ; 7x
 
@@ -827,56 +827,56 @@ loop5:	JR C,loop5
 	; 76
 	LD (IX+offs),A
 	; 78-7B
-	; LD A,IXH
-	; LD A,IXL
+	LD A,IXH
+	LD A,IXL
 	LD A,(IX+offs)
 	; 7F
 
 ; 8x
 
 	; 80-83
-	; ADD A,IXH
-	; ADD A,IXL
+	ADD A,IXH
+	ADD A,IXL
 	ADD A,(IX+offs)
 	; 86-8B
-	; ADC A,IXH
-	; ADC A,IXL
+	ADC A,IXH
+	ADC A,IXL
 	ADC A,(IX+offs)
 	; 8F
 
 ; 9x
 
 	; 90-93
-	; SUB IXH
-	; SUB IXL
+	SUB IXH
+	SUB IXL
 	SUB (IX+offs)
 	; 96-9B
-	; SBC A,IXH
-	; SBC A,IXL
+	SBC A,IXH
+	SBC A,IXL
 	SBC A,(IX+offs)
 	; 9F
 
 ; Ax
 
 	; A0-A3
-	; AND IXH
-	; AND IXL
+	AND IXH
+	AND IXL
 	AND (IX+offs)
 	; A6-AB
-	; XOR IXH
-	; XOR IXL
+	XOR IXH
+	XOR IXL
 	XOR (IX+offs)
 	; AF
 
 ; Bx
 
 	; B0-B3
-	; OR IXH
-	; OR IXL
+	OR IXH
+	OR IXL
 	OR (IX+offs)
 	; B6-BB
-	; CP IXH
-	; CP IXL
+	CP IXH
+	CP IXL
 	CP (IX+offs)
 	; BF
 
@@ -923,17 +923,17 @@ loop5:	JR C,loop5
 	LD IY,nn
 	LD (nn),IY
 	INC IY
-	; INC IYH
-	; DEC IYH
-	; LD IYH,n
+	INC IYH
+	DEC IYH
+	LD IYH,n
 	; 27
 	; 28
 	ADD IY,IY
 	LD IY,(nn)
 	DEC IY
-	; INC IYL
-	; DEC IYL
-	; LD IYL,n
+	INC IYL
+	DEC IYL
+	LD IYL,n
 	; 2F
 
 ; 3x
@@ -950,45 +950,45 @@ loop5:	JR C,loop5
 ; 4x
 
 	; 40-43
-	; LD B,IYH
-	; LD B,IYL
+	LD B,IYH
+	LD B,IYL
 	LD B,(IY+offs)
 	; 47-4B
-	; LD C,IYH
-	; LD C,IYL
+	LD C,IYH
+	LD C,IYL
 	LD C,(IY+offs)
 	; 4F
 
 ; 5x
 
 	; 50-53
-	; LD D,IYH
-	; LD D,IYL
+	LD D,IYH
+	LD D,IYL
 	LD D,(IY+offs)
 	; 57-5B
-	; LD E,IYH
-	; LD E,IYL
+	LD E,IYH
+	LD E,IYL
 	LD E,(IY+offs)
 	; 5F
 
 ; 6x
 
-	; LD IYH,B	; 60
-	; LD IYH,C	; 61
-	; LD IYH,D	; 62
-	; LD IYH,E	; 63
-	; LD IYH,IYH	; 64
-	; LD IYH,IYL	; 65
+	LD IYH,B	; 60
+	LD IYH,C	; 61
+	LD IYH,D	; 62
+	LD IYH,E	; 63
+	LD IYH,IYH	; 64
+	LD IYH,IYL	; 65
 	LD H,(IY+offs)
-	; LD IYH,A	; 67
-	; LD IYL,B	; 68
-	; LD IYL,C	; 69
-	; LD IYL,D	; 6A
-	; LD IYL,E	; 6B
-	; LD IYL,IYH	; 6C
-	; LD IYL,IYL	; 6D
+	LD IYH,A	; 67
+	LD IYL,B	; 68
+	LD IYL,C	; 69
+	LD IYL,D	; 6A
+	LD IYL,E	; 6B
+	LD IYL,IYH	; 6C
+	LD IYL,IYL	; 6D
 	LD L,(IY+offs)
-	; LD IYL,A	; 6F
+	LD IYL,A	; 6F
 
 ; 7x
 
@@ -1001,56 +1001,56 @@ loop5:	JR C,loop5
 	; 76
 	LD (IY+offs),A
 	; 78-7B
-	; LD A,IYH
-	; LD A,IYL
+	LD A,IYH
+	LD A,IYL
 	LD A,(IY+offs)
 	; 7F
 
 ; 8x
 
 	; 80-83
-	; ADD A,IYH
-	; ADD A,IYL
+	ADD A,IYH
+	ADD A,IYL
 	ADD A,(IY+offs)
 	; 86-8B
-	; ADC A,IYH
-	; ADC A,IYL
+	ADC A,IYH
+	ADC A,IYL
 	ADC A,(IY+offs)
 	; 8F
 
 ; 9x
 
 	; 90-93
-	; SUB IYH
-	; SUB IYL
+	SUB IYH
+	SUB IYL
 	SUB (IY+offs)
 	; 96-9B
-	; SBC A,IYH
-	; SBC A,IYL
+	SBC A,IYH
+	SBC A,IYL
 	SBC A,(IY+offs)
 	; 9F
 
 ; Ax
 
 	; A0-A3
-	; AND IYH
-	; AND IYL
+	AND IYH
+	AND IYL
 	AND (IY+offs)
 	; A6-AB
-	; XOR IYH
-	; XOR IYL
+	XOR IYH
+	XOR IYL
 	XOR (IY+offs)
 	; AF
 
 ; Bx
 
 	; B0-B3
-	; OR IYH
-	; OR IYL
+	OR IYH
+	OR IYL
 	OR (IY+offs)
 	; B6-BB
-	; CP IYH
-	; CP IYL
+	CP IYH
+	CP IYL
 	CP (IY+offs)
 	; BF
 
@@ -1081,79 +1081,79 @@ loop5:	JR C,loop5
 
 ; 0x
 
-	; RLC (IX+offs),B
-	; RLC (IX+offs),C
-	; RLC (IX+offs),D
-	; RLC (IX+offs),E
-	; RLC (IX+offs),H
-	; RLC (IX+offs),L
+	RLC (IX+offs),B
+	RLC (IX+offs),C
+	RLC (IX+offs),D
+	RLC (IX+offs),E
+	RLC (IX+offs),H
+	RLC (IX+offs),L
 	RLC (IX+offs)		; 06
-	; RLC (IX+offs),A
-	; RRC (IX+offs),B
-	; RRC (IX+offs),C
-	; RRC (IX+offs),D
-	; RRC (IX+offs),E
-	; RRC (IX+offs),H
-	; RRC (IX+offs),L
+	RLC (IX+offs),A
+	RRC (IX+offs),B
+	RRC (IX+offs),C
+	RRC (IX+offs),D
+	RRC (IX+offs),E
+	RRC (IX+offs),H
+	RRC (IX+offs),L
 	RRC (IX+offs)		; 0E
-	; RRC (IX+offs),A
+	RRC (IX+offs),A
 
 ; 1x
 
-	; RL (IX+offs),B
-	; RL (IX+offs),C
-	; RL (IX+offs),D
-	; RL (IX+offs),E
-	; RL (IX+offs),H
-	; RL (IX+offs),L
+	RL (IX+offs),B
+	RL (IX+offs),C
+	RL (IX+offs),D
+	RL (IX+offs),E
+	RL (IX+offs),H
+	RL (IX+offs),L
 	RL (IX+offs)		; 16
-	; RL (IX+offs),A
-	; RR (IX+offs),B
-	; RR (IX+offs),C
-	; RR (IX+offs),D
-	; RR (IX+offs),E
-	; RR (IX+offs),H
-	; RR (IX+offs),L
+	RL (IX+offs),A
+	RR (IX+offs),B
+	RR (IX+offs),C
+	RR (IX+offs),D
+	RR (IX+offs),E
+	RR (IX+offs),H
+	RR (IX+offs),L
 	RR (IX+offs)		; 1E
-	; RR (IX+offs),A
+	RR (IX+offs),A
 
 ; 2x
 
-	; SLA (IX+offs),B
-	; SLA (IX+offs),C
-	; SLA (IX+offs),D
-	; SLA (IX+offs),E
-	; SLA (IX+offs),H
-	; SLA (IX+offs),L
+	SLA (IX+offs),B
+	SLA (IX+offs),C
+	SLA (IX+offs),D
+	SLA (IX+offs),E
+	SLA (IX+offs),H
+	SLA (IX+offs),L
 	SLA (IX+offs)		; 26
-	; SLA (IX+offs),A
-	; SRA (IX+offs),B
-	; SRA (IX+offs),C
-	; SRA (IX+offs),D
-	; SRA (IX+offs),E
-	; SRA (IX+offs),H
-	; SRA (IX+offs),L
+	SLA (IX+offs),A
+	SRA (IX+offs),B
+	SRA (IX+offs),C
+	SRA (IX+offs),D
+	SRA (IX+offs),E
+	SRA (IX+offs),H
+	SRA (IX+offs),L
 	SRA (IX+offs)		; 2E
-	; SRA (IX+offs),A
+	SRA (IX+offs),A
 
 ; 3x
 
-	; SLL (IX+offs),B
-	; SLL (IX+offs),C
-	; SLL (IX+offs),D
-	; SLL (IX+offs),E
-	; SLL (IX+offs),H
-	; SLL (IX+offs),L
-	; SLL (IX+offs)		; 36
-	; SLL (IX+offs),A
-	; SRL (IX+offs),B
-	; SRL (IX+offs),C
-	; SRL (IX+offs),D
-	; SRL (IX+offs),E
-	; SRL (IX+offs),H
-	; SRL (IX+offs),L
+	SLL (IX+offs),B
+	SLL (IX+offs),C
+	SLL (IX+offs),D
+	SLL (IX+offs),E
+	SLL (IX+offs),H
+	SLL (IX+offs),L
+	SLL (IX+offs)		; 36
+	SLL (IX+offs),A
+	SRL (IX+offs),B
+	SRL (IX+offs),C
+	SRL (IX+offs),D
+	SRL (IX+offs),E
+	SRL (IX+offs),H
+	SRL (IX+offs),L
 	SRL (IX+offs)		; 3E
-	; SRL (IX+offs),A
+	SRL (IX+offs),A
 
 ; 4x
 
@@ -1233,233 +1233,233 @@ loop5:	JR C,loop5
 
 ; 8x
 
-	; RES 0,(IX+offs),B
-	; RES 0,(IX+offs),C
-	; RES 0,(IX+offs),D
-	; RES 0,(IX+offs),E
-	; RES 0,(IX+offs),H
-	; RES 0,(IX+offs),L
+	RES 0,(IX+offs),B
+	RES 0,(IX+offs),C
+	RES 0,(IX+offs),D
+	RES 0,(IX+offs),E
+	RES 0,(IX+offs),H
+	RES 0,(IX+offs),L
 	RES 0,(IX+offs)		; 86
-	; RES 0,(IX+offs),A
-	; RES 1,(IX+offs),B
-	; RES 1,(IX+offs),C
-	; RES 1,(IX+offs),D
-	; RES 1,(IX+offs),E
-	; RES 1,(IX+offs),H
-	; RES 1,(IX+offs),L
+	RES 0,(IX+offs),A
+	RES 1,(IX+offs),B
+	RES 1,(IX+offs),C
+	RES 1,(IX+offs),D
+	RES 1,(IX+offs),E
+	RES 1,(IX+offs),H
+	RES 1,(IX+offs),L
 	RES 1,(IX+offs)		; 8E
-	; RES 1,(IX+offs),A
+	RES 1,(IX+offs),A
 
 ; 9x
 
-	; RES 2,(IX+offs),B
-	; RES 2,(IX+offs),C
-	; RES 2,(IX+offs),D
-	; RES 2,(IX+offs),E
-	; RES 2,(IX+offs),H
-	; RES 2,(IX+offs),L
+	RES 2,(IX+offs),B
+	RES 2,(IX+offs),C
+	RES 2,(IX+offs),D
+	RES 2,(IX+offs),E
+	RES 2,(IX+offs),H
+	RES 2,(IX+offs),L
 	RES 2,(IX+offs)		; 96
-	; RES 2,(IX+offs),A
-	; RES 3,(IX+offs),B
-	; RES 3,(IX+offs),C
-	; RES 3,(IX+offs),D
-	; RES 3,(IX+offs),E
-	; RES 3,(IX+offs),H
-	; RES 3,(IX+offs),L
+	RES 2,(IX+offs),A
+	RES 3,(IX+offs),B
+	RES 3,(IX+offs),C
+	RES 3,(IX+offs),D
+	RES 3,(IX+offs),E
+	RES 3,(IX+offs),H
+	RES 3,(IX+offs),L
 	RES 3,(IX+offs)		; 9E
-	; RES 3,(IX+offs),A
+	RES 3,(IX+offs),A
 
 ; Ax
 
-	; RES 4,(IX+offs),B
-	; RES 4,(IX+offs),C
-	; RES 4,(IX+offs),D
-	; RES 4,(IX+offs),E
-	; RES 4,(IX+offs),H
-	; RES 4,(IX+offs),L
+	RES 4,(IX+offs),B
+	RES 4,(IX+offs),C
+	RES 4,(IX+offs),D
+	RES 4,(IX+offs),E
+	RES 4,(IX+offs),H
+	RES 4,(IX+offs),L
 	RES 4,(IX+offs)		; A6
-	; RES 4,(IX+offs),A
-	; RES 5,(IX+offs),B
-	; RES 5,(IX+offs),C
-	; RES 5,(IX+offs),D
-	; RES 5,(IX+offs),E
-	; RES 5,(IX+offs),H
-	; RES 5,(IX+offs),L
+	RES 4,(IX+offs),A
+	RES 5,(IX+offs),B
+	RES 5,(IX+offs),C
+	RES 5,(IX+offs),D
+	RES 5,(IX+offs),E
+	RES 5,(IX+offs),H
+	RES 5,(IX+offs),L
 	RES 5,(IX+offs)		; AE
-	; RES 5,(IX+offs),A
+	RES 5,(IX+offs),A
 
 ; Bx
 
-	; RES 6,(IX+offs),B
-	; RES 6,(IX+offs),C
-	; RES 6,(IX+offs),D
-	; RES 6,(IX+offs),E
-	; RES 6,(IX+offs),H
-	; RES 6,(IX+offs),L
+	RES 6,(IX+offs),B
+	RES 6,(IX+offs),C
+	RES 6,(IX+offs),D
+	RES 6,(IX+offs),E
+	RES 6,(IX+offs),H
+	RES 6,(IX+offs),L
 	RES 6,(IX+offs)		; B6
-	; RES 6,(IX+offs),A
-	; RES 7,(IX+offs),B
-	; RES 7,(IX+offs),C
-	; RES 7,(IX+offs),D
-	; RES 7,(IX+offs),E
-	; RES 7,(IX+offs),H
-	; RES 7,(IX+offs),L
+	RES 6,(IX+offs),A
+	RES 7,(IX+offs),B
+	RES 7,(IX+offs),C
+	RES 7,(IX+offs),D
+	RES 7,(IX+offs),E
+	RES 7,(IX+offs),H
+	RES 7,(IX+offs),L
 	RES 7,(IX+offs)		; BE
-	; RES 7,(IX+offs),A
+	RES 7,(IX+offs),A
 
 ; Cx
 
-	; SET 0,(IX+offs),B
-	; SET 0,(IX+offs),C
-	; SET 0,(IX+offs),D
-	; SET 0,(IX+offs),E
-	; SET 0,(IX+offs),H
-	; SET 0,(IX+offs),L
+	SET 0,(IX+offs),B
+	SET 0,(IX+offs),C
+	SET 0,(IX+offs),D
+	SET 0,(IX+offs),E
+	SET 0,(IX+offs),H
+	SET 0,(IX+offs),L
 	SET 0,(IX+offs)		; C6
-	; SET 0,(IX+offs),A
-	; SET 1,(IX+offs),B
-	; SET 1,(IX+offs),C
-	; SET 1,(IX+offs),D
-	; SET 1,(IX+offs),E
-	; SET 1,(IX+offs),H
-	; SET 1,(IX+offs),L
+	SET 0,(IX+offs),A
+	SET 1,(IX+offs),B
+	SET 1,(IX+offs),C
+	SET 1,(IX+offs),D
+	SET 1,(IX+offs),E
+	SET 1,(IX+offs),H
+	SET 1,(IX+offs),L
 	SET 1,(IX+offs)		; CE
-	; SET 1,(IX+offs),A
+	SET 1,(IX+offs),A
 
 ; Dx
 
-	; SET 2,(IX+offs),B
-	; SET 2,(IX+offs),C
-	; SET 2,(IX+offs),D
-	; SET 2,(IX+offs),E
-	; SET 2,(IX+offs),H
-	; SET 2,(IX+offs),L
+	SET 2,(IX+offs),B
+	SET 2,(IX+offs),C
+	SET 2,(IX+offs),D
+	SET 2,(IX+offs),E
+	SET 2,(IX+offs),H
+	SET 2,(IX+offs),L
 	SET 2,(IX+offs)		; D6
-	; SET 2,(IX+offs),A
-	; SET 3,(IX+offs),B
-	; SET 3,(IX+offs),C
-	; SET 3,(IX+offs),D
-	; SET 3,(IX+offs),E
-	; SET 3,(IX+offs),H
-	; SET 3,(IX+offs),L
+	SET 2,(IX+offs),A
+	SET 3,(IX+offs),B
+	SET 3,(IX+offs),C
+	SET 3,(IX+offs),D
+	SET 3,(IX+offs),E
+	SET 3,(IX+offs),H
+	SET 3,(IX+offs),L
 	SET 3,(IX+offs)		; DE
-	; SET 3,(IX+offs),A
+	SET 3,(IX+offs),A
 
 ; Ex
 
-	; SET 4,(IX+offs),B
-	; SET 4,(IX+offs),C
-	; SET 4,(IX+offs),D
-	; SET 4,(IX+offs),E
-	; SET 4,(IX+offs),H
-	; SET 4,(IX+offs),L
+	SET 4,(IX+offs),B
+	SET 4,(IX+offs),C
+	SET 4,(IX+offs),D
+	SET 4,(IX+offs),E
+	SET 4,(IX+offs),H
+	SET 4,(IX+offs),L
 	SET 4,(IX+offs)		; E6
-	; SET 4,(IX+offs),A
-	; SET 5,(IX+offs),B
-	; SET 5,(IX+offs),C
-	; SET 5,(IX+offs),D
-	; SET 5,(IX+offs),E
-	; SET 5,(IX+offs),H
-	; SET 5,(IX+offs),L
+	SET 4,(IX+offs),A
+	SET 5,(IX+offs),B
+	SET 5,(IX+offs),C
+	SET 5,(IX+offs),D
+	SET 5,(IX+offs),E
+	SET 5,(IX+offs),H
+	SET 5,(IX+offs),L
 	SET 5,(IX+offs)		; EE
-	; SET 5,(IX+offs),A
+	SET 5,(IX+offs),A
 
 ; Fx
 
-	; SET 6,(IX+offs),B
-	; SET 6,(IX+offs),C
-	; SET 6,(IX+offs),D
-	; SET 6,(IX+offs),E
-	; SET 6,(IX+offs),H
-	; SET 6,(IX+offs),L
+	SET 6,(IX+offs),B
+	SET 6,(IX+offs),C
+	SET 6,(IX+offs),D
+	SET 6,(IX+offs),E
+	SET 6,(IX+offs),H
+	SET 6,(IX+offs),L
 	SET 6,(IX+offs)		; F6
-	; SET 6,(IX+offs),A
-	; SET 7,(IX+offs),B
-	; SET 7,(IX+offs),C
-	; SET 7,(IX+offs),D
-	; SET 7,(IX+offs),E
-	; SET 7,(IX+offs),H
-	; SET 7,(IX+offs),L
+	SET 6,(IX+offs),A
+	SET 7,(IX+offs),B
+	SET 7,(IX+offs),C
+	SET 7,(IX+offs),D
+	SET 7,(IX+offs),E
+	SET 7,(IX+offs),H
+	SET 7,(IX+offs),L
 	SET 7,(IX+offs)		; FE
-	; SET 7,(IX+offs),A
+	SET 7,(IX+offs),A
 
 ; FDCB prefix
 
 ; 0x
 
-	; RLC (IY+offs),B
-	; RLC (IY+offs),C
-	; RLC (IY+offs),D
-	; RLC (IY+offs),E
-	; RLC (IY+offs),H
-	; RLC (IY+offs),L
+	RLC (IY+offs),B
+	RLC (IY+offs),C
+	RLC (IY+offs),D
+	RLC (IY+offs),E
+	RLC (IY+offs),H
+	RLC (IY+offs),L
 	RLC (IY+offs)		; 06
-	; RLC (IY+offs),A
-	; RRC (IY+offs),B
-	; RRC (IY+offs),C
-	; RRC (IY+offs),D
-	; RRC (IY+offs),E
-	; RRC (IY+offs),H
-	; RRC (IY+offs),L
+	RLC (IY+offs),A
+	RRC (IY+offs),B
+	RRC (IY+offs),C
+	RRC (IY+offs),D
+	RRC (IY+offs),E
+	RRC (IY+offs),H
+	RRC (IY+offs),L
 	RRC (IY+offs)		; 0E
-	; RRC (IY+offs),A
+	RRC (IY+offs),A
 
 ; 1x
 
-	; RL (IY+offs),B
-	; RL (IY+offs),C
-	; RL (IY+offs),D
-	; RL (IY+offs),E
-	; RL (IY+offs),H
-	; RL (IY+offs),L
+	RL (IY+offs),B
+	RL (IY+offs),C
+	RL (IY+offs),D
+	RL (IY+offs),E
+	RL (IY+offs),H
+	RL (IY+offs),L
 	RL (IY+offs)		; 16
-	; RL (IY+offs),A
-	; RR (IY+offs),B
-	; RR (IY+offs),C
-	; RR (IY+offs),D
-	; RR (IY+offs),E
-	; RR (IY+offs),H
-	; RR (IY+offs),L
+	RL (IY+offs),A
+	RR (IY+offs),B
+	RR (IY+offs),C
+	RR (IY+offs),D
+	RR (IY+offs),E
+	RR (IY+offs),H
+	RR (IY+offs),L
 	RR (IY+offs)		; 1E
-	; RR (IY+offs),A
+	RR (IY+offs),A
 
 ; 2x
 
-	; SLA (IY+offs),B
-	; SLA (IY+offs),C
-	; SLA (IY+offs),D
-	; SLA (IY+offs),E
-	; SLA (IY+offs),H
-	; SLA (IY+offs),L
+	SLA (IY+offs),B
+	SLA (IY+offs),C
+	SLA (IY+offs),D
+	SLA (IY+offs),E
+	SLA (IY+offs),H
+	SLA (IY+offs),L
 	SLA (IY+offs)		; 26
-	; SLA (IY+offs),A
-	; SRA (IY+offs),B
-	; SRA (IY+offs),C
-	; SRA (IY+offs),D
-	; SRA (IY+offs),E
-	; SRA (IY+offs),H
-	; SRA (IY+offs),L
+	SLA (IY+offs),A
+	SRA (IY+offs),B
+	SRA (IY+offs),C
+	SRA (IY+offs),D
+	SRA (IY+offs),E
+	SRA (IY+offs),H
+	SRA (IY+offs),L
 	SRA (IY+offs)		; 2E
-	; SRA (IY+offs),A
+	SRA (IY+offs),A
 
 ; 3x
 
-	; SLL (IY+offs),B
-	; SLL (IY+offs),C
-	; SLL (IY+offs),D
-	; SLL (IY+offs),E
-	; SLL (IY+offs),H
-	; SLL (IY+offs),L
-	; SLL (IY+offs)		; 36
-	; SLL (IY+offs),A
-	; SRL (IY+offs),B
-	; SRL (IY+offs),C
-	; SRL (IY+offs),D
-	; SRL (IY+offs),E
-	; SRL (IY+offs),H
-	; SRL (IY+offs),L
+	SLL (IY+offs),B
+	SLL (IY+offs),C
+	SLL (IY+offs),D
+	SLL (IY+offs),E
+	SLL (IY+offs),H
+	SLL (IY+offs),L
+	SLL (IY+offs)		; 36
+	SLL (IY+offs),A
+	SRL (IY+offs),B
+	SRL (IY+offs),C
+	SRL (IY+offs),D
+	SRL (IY+offs),E
+	SRL (IY+offs),H
+	SRL (IY+offs),L
 	SRL (IY+offs)		; 3E
-	; SRL (IY+offs),A
+	SRL (IY+offs),A
 
 ; 4x
 
@@ -1539,154 +1539,154 @@ loop5:	JR C,loop5
 
 ; 8x
 
-	; RES 0,(IY+offs),B
-	; RES 0,(IY+offs),C
-	; RES 0,(IY+offs),D
-	; RES 0,(IY+offs),E
-	; RES 0,(IY+offs),H
-	; RES 0,(IY+offs),L
+	RES 0,(IY+offs),B
+	RES 0,(IY+offs),C
+	RES 0,(IY+offs),D
+	RES 0,(IY+offs),E
+	RES 0,(IY+offs),H
+	RES 0,(IY+offs),L
 	RES 0,(IY+offs)		; 86
-	; RES 0,(IY+offs),A
-	; RES 1,(IY+offs),B
-	; RES 1,(IY+offs),C
-	; RES 1,(IY+offs),D
-	; RES 1,(IY+offs),E
-	; RES 1,(IY+offs),H
-	; RES 1,(IY+offs),L
+	RES 0,(IY+offs),A
+	RES 1,(IY+offs),B
+	RES 1,(IY+offs),C
+	RES 1,(IY+offs),D
+	RES 1,(IY+offs),E
+	RES 1,(IY+offs),H
+	RES 1,(IY+offs),L
 	RES 1,(IY+offs)		; 8E
-	; RES 1,(IY+offs),A
+	RES 1,(IY+offs),A
 
 ; 9x
 
-	; RES 2,(IY+offs),B
-	; RES 2,(IY+offs),C
-	; RES 2,(IY+offs),D
-	; RES 2,(IY+offs),E
-	; RES 2,(IY+offs),H
-	; RES 2,(IY+offs),L
+	RES 2,(IY+offs),B
+	RES 2,(IY+offs),C
+	RES 2,(IY+offs),D
+	RES 2,(IY+offs),E
+	RES 2,(IY+offs),H
+	RES 2,(IY+offs),L
 	RES 2,(IY+offs)		; 96
-	; RES 2,(IY+offs),A
-	; RES 3,(IY+offs),B
-	; RES 3,(IY+offs),C
-	; RES 3,(IY+offs),D
-	; RES 3,(IY+offs),E
-	; RES 3,(IY+offs),H
-	; RES 3,(IY+offs),L
+	RES 2,(IY+offs),A
+	RES 3,(IY+offs),B
+	RES 3,(IY+offs),C
+	RES 3,(IY+offs),D
+	RES 3,(IY+offs),E
+	RES 3,(IY+offs),H
+	RES 3,(IY+offs),L
 	RES 3,(IY+offs)		; 9E
-	; RES 3,(IY+offs),A
+	RES 3,(IY+offs),A
 
 ; Ax
 
-	; RES 4,(IY+offs),B
-	; RES 4,(IY+offs),C
-	; RES 4,(IY+offs),D
-	; RES 4,(IY+offs),E
-	; RES 4,(IY+offs),H
-	; RES 4,(IY+offs),L
+	RES 4,(IY+offs),B
+	RES 4,(IY+offs),C
+	RES 4,(IY+offs),D
+	RES 4,(IY+offs),E
+	RES 4,(IY+offs),H
+	RES 4,(IY+offs),L
 	RES 4,(IY+offs)		; A6
-	; RES 4,(IY+offs),A
-	; RES 5,(IY+offs),B
-	; RES 5,(IY+offs),C
-	; RES 5,(IY+offs),D
-	; RES 5,(IY+offs),E
-	; RES 5,(IY+offs),H
-	; RES 5,(IY+offs),L
+	RES 4,(IY+offs),A
+	RES 5,(IY+offs),B
+	RES 5,(IY+offs),C
+	RES 5,(IY+offs),D
+	RES 5,(IY+offs),E
+	RES 5,(IY+offs),H
+	RES 5,(IY+offs),L
 	RES 5,(IY+offs)		; AE
-	; RES 5,(IY+offs),A
+	RES 5,(IY+offs),A
 
 ; Bx
 
-	; RES 6,(IY+offs),B
-	; RES 6,(IY+offs),C
-	; RES 6,(IY+offs),D
-	; RES 6,(IY+offs),E
-	; RES 6,(IY+offs),H
-	; RES 6,(IY+offs),L
+	RES 6,(IY+offs),B
+	RES 6,(IY+offs),C
+	RES 6,(IY+offs),D
+	RES 6,(IY+offs),E
+	RES 6,(IY+offs),H
+	RES 6,(IY+offs),L
 	RES 6,(IY+offs)		; B6
-	; RES 6,(IY+offs),A
-	; RES 7,(IY+offs),B
-	; RES 7,(IY+offs),C
-	; RES 7,(IY+offs),D
-	; RES 7,(IY+offs),E
-	; RES 7,(IY+offs),H
-	; RES 7,(IY+offs),L
+	RES 6,(IY+offs),A
+	RES 7,(IY+offs),B
+	RES 7,(IY+offs),C
+	RES 7,(IY+offs),D
+	RES 7,(IY+offs),E
+	RES 7,(IY+offs),H
+	RES 7,(IY+offs),L
 	RES 7,(IY+offs)		; BE
-	; RES 7,(IY+offs),A
+	RES 7,(IY+offs),A
 
 ; Cx
 
-	; SET 0,(IY+offs),B
-	; SET 0,(IY+offs),C
-	; SET 0,(IY+offs),D
-	; SET 0,(IY+offs),E
-	; SET 0,(IY+offs),H
-	; SET 0,(IY+offs),L
+	SET 0,(IY+offs),B
+	SET 0,(IY+offs),C
+	SET 0,(IY+offs),D
+	SET 0,(IY+offs),E
+	SET 0,(IY+offs),H
+	SET 0,(IY+offs),L
 	SET 0,(IY+offs)		; C6
-	; SET 0,(IY+offs),A
-	; SET 1,(IY+offs),B
-	; SET 1,(IY+offs),C
-	; SET 1,(IY+offs),D
-	; SET 1,(IY+offs),E
-	; SET 1,(IY+offs),H
-	; SET 1,(IY+offs),L
+	SET 0,(IY+offs),A
+	SET 1,(IY+offs),B
+	SET 1,(IY+offs),C
+	SET 1,(IY+offs),D
+	SET 1,(IY+offs),E
+	SET 1,(IY+offs),H
+	SET 1,(IY+offs),L
 	SET 1,(IY+offs)		; CE
-	; SET 1,(IY+offs),A
+	SET 1,(IY+offs),A
 
 ; Dx
 
-	; SET 2,(IY+offs),B
-	; SET 2,(IY+offs),C
-	; SET 2,(IY+offs),D
-	; SET 2,(IY+offs),E
-	; SET 2,(IY+offs),H
-	; SET 2,(IY+offs),L
+	SET 2,(IY+offs),B
+	SET 2,(IY+offs),C
+	SET 2,(IY+offs),D
+	SET 2,(IY+offs),E
+	SET 2,(IY+offs),H
+	SET 2,(IY+offs),L
 	SET 2,(IY+offs)		; D6
-	; SET 2,(IY+offs),A
-	; SET 3,(IY+offs),B
-	; SET 3,(IY+offs),C
-	; SET 3,(IY+offs),D
-	; SET 3,(IY+offs),E
-	; SET 3,(IY+offs),H
-	; SET 3,(IY+offs),L
+	SET 2,(IY+offs),A
+	SET 3,(IY+offs),B
+	SET 3,(IY+offs),C
+	SET 3,(IY+offs),D
+	SET 3,(IY+offs),E
+	SET 3,(IY+offs),H
+	SET 3,(IY+offs),L
 	SET 3,(IY+offs)		; DE
-	; SET 3,(IY+offs),A
+	SET 3,(IY+offs),A
 
 ; Ex
 
-	; SET 4,(IY+offs),B
-	; SET 4,(IY+offs),C
-	; SET 4,(IY+offs),D
-	; SET 4,(IY+offs),E
-	; SET 4,(IY+offs),H
-	; SET 4,(IY+offs),L
+	SET 4,(IY+offs),B
+	SET 4,(IY+offs),C
+	SET 4,(IY+offs),D
+	SET 4,(IY+offs),E
+	SET 4,(IY+offs),H
+	SET 4,(IY+offs),L
 	SET 4,(IY+offs)		; E6
-	; SET 4,(IY+offs),A
-	; SET 5,(IY+offs),B
-	; SET 5,(IY+offs),C
-	; SET 5,(IY+offs),D
-	; SET 5,(IY+offs),E
-	; SET 5,(IY+offs),H
-	; SET 5,(IY+offs),L
+	SET 4,(IY+offs),A
+	SET 5,(IY+offs),B
+	SET 5,(IY+offs),C
+	SET 5,(IY+offs),D
+	SET 5,(IY+offs),E
+	SET 5,(IY+offs),H
+	SET 5,(IY+offs),L
 	SET 5,(IY+offs)		; EE
-	; SET 5,(IY+offs),A
+	SET 5,(IY+offs),A
 
 ; Fx
 
-	; SET 6,(IY+offs),B
-	; SET 6,(IY+offs),C
-	; SET 6,(IY+offs),D
-	; SET 6,(IY+offs),E
-	; SET 6,(IY+offs),H
-	; SET 6,(IY+offs),L
+	SET 6,(IY+offs),B
+	SET 6,(IY+offs),C
+	SET 6,(IY+offs),D
+	SET 6,(IY+offs),E
+	SET 6,(IY+offs),H
+	SET 6,(IY+offs),L
 	SET 6,(IY+offs)		; F6
-	; SET 6,(IY+offs),A
-	; SET 7,(IY+offs),B
-	; SET 7,(IY+offs),C
-	; SET 7,(IY+offs),D
-	; SET 7,(IY+offs),E
-	; SET 7,(IY+offs),H
-	; SET 7,(IY+offs),L
+	SET 6,(IY+offs),A
+	SET 7,(IY+offs),B
+	SET 7,(IY+offs),C
+	SET 7,(IY+offs),D
+	SET 7,(IY+offs),E
+	SET 7,(IY+offs),H
+	SET 7,(IY+offs),L
 	SET 7,(IY+offs)		; FE
-	; SET 7,(IY+offs),A
+	SET 7,(IY+offs),A
 
 	end

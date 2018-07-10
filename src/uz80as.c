@@ -91,9 +91,16 @@ static struct direc {
 	{ "WORD", d_word },
 };
 
+/* matchtab.flags */
+enum {
+	MATCH_F_UNDOC = 1,
+	MATCH_F_EXTEN = 2,
+};
+
 struct matchtab {
 	const char *pat;
 	const char *gen;
+	unsigned char flags;
 };
 
 /* pat:
@@ -112,6 +119,8 @@ struct matchtab {
  * 	m: NZ,Z,NC,C,PO,PE,P,M
  * 	n: NZ,Z,NC,C
  * 	o: RLC,RRC,RL,RR,SLA,SRA,SWAP,SRL
+ *      p: B,C,D,E,IXH,IXL,A
+ *      q: B,C,D,E,IYH,IYL,A
  *
  * gen:
  * 	.: output lastbyte
@@ -239,6 +248,8 @@ const struct matchtab s_matchtab_gbz80[] =
 const struct matchtab s_matchtab_z80[] =
 {
 	{ "LD b,b", "40b0c1." },
+	{ "LD p,p", "DD.40b0c1.", MATCH_F_UNDOC },
+	{ "LD q,q", "FD.40b0c1.", MATCH_F_UNDOC },
 	{ "LD b,(HL)", "46b0." },
 	{ "LD b,(ca)", "d1.46b0.d2." },
 	{ "LD A,I", "ED.57." },
@@ -247,6 +258,8 @@ const struct matchtab s_matchtab_z80[] =
 	{ "LD A,(DE)", "1A." },
 	{ "LD A,(a)", "3A.e0" },
 	{ "LD b,a", "06b0.d1." },
+	{ "LD p,a", "DD.06b0.d1.", MATCH_F_UNDOC },
+	{ "LD q,a", "FD.06b0.d1.", MATCH_F_UNDOC },
 	{ "LD I,A", "ED.47." },
 	{ "LD R,A", "ED.4F." },
 	{ "LD SP,HL", "F9." },
@@ -289,14 +302,20 @@ const struct matchtab s_matchtab_z80[] =
 	{ "ADC HL,d", "ED.4Af0." },
 	{ "SBC HL,d", "ED.42f0." },
 	{ "g A,b", "m080b0c1." },
+	{ "g A,p", "DD.m080b0c1.", MATCH_F_UNDOC },
+	{ "g A,q", "FD.m080b0c1.", MATCH_F_UNDOC },
 	{ "g A,(HL)", "m086b0." },
 	{ "g A,(ca)", "m0d1.86b0.d2." },
 	{ "g A,a", "m0C6b0.d1." },
 	{ "g b", "n080b0c1." },
+	{ "g p", "DD.n080b0c1.", MATCH_F_UNDOC },
+	{ "g q", "FD.n080b0c1.", MATCH_F_UNDOC },
 	{ "g (HL)", "n086b0." },
 	{ "g (ca)", "n0d1.86b0.d2." },
 	{ "g a", "n0C6b0.d1." },
 	{ "h b", "04b1c0." },
+	{ "h p", "DD.04b1c0.", MATCH_F_UNDOC },
+	{ "h q", "FD.04b1c0.", MATCH_F_UNDOC },
 	{ "h (HL)", "34c0." },
 	{ "h (ca)", "d1.34c0.d2." },
 	{ "INC d", "03f0." },
@@ -317,14 +336,20 @@ const struct matchtab s_matchtab_z80[] =
 	{ "RLA", "17." },
 	{ "RRCA", "0F." },
 	{ "RRA", "1F." },
+	{ "SLL b", "CB.30c0.", MATCH_F_UNDOC },
+	{ "SLL (HL)", "CB.36.", MATCH_F_UNDOC },
+	{ "SLL (ca)", "d0.CB.d1.36.", MATCH_F_UNDOC },
 	{ "k b", "CB.00b0c1." },
 	{ "k (HL)", "CB.06b0." },
 	{ "k (ca)", "d1.CB.d2.06b0." },
+	{ "k (ca),b", "d1.CB.d2.00b0c3.", MATCH_F_UNDOC },
 	{ "RLD", "ED.6F." },
 	{ "RRD", "ED.67." },
 	{ "l a,b", "CB.00g0b1c2." },
 	{ "l a,(HL)", "CB.06g0b1." },
 	{ "l a,(ca)", "d2.CB.d3.06g0b1." },
+	{ "RES a,(ca),b", "d1.CB.d2.80b0c3.", MATCH_F_UNDOC },
+	{ "SET a,(ca),b", "d1.CB.d2.C0b0c3.", MATCH_F_UNDOC },
 	{ "JP (HL)", "E9." },
 	{ "JP (e)", "d0.E9." },
 	{ "JP m,a", "C2b0.e1" },
@@ -342,11 +367,12 @@ const struct matchtab s_matchtab_z80[] =
 	{ "IN b,(C)", "ED.40b0." },
 	{ "IN A,(a)", "DB.d0." },
 	{ "IN F,(a)", "ED.70." },
+	{ "IN (C)", "ED.70.", MATCH_F_UNDOC },
 	{ "INI", "ED.A2." },
 	{ "INIR", "ED.B2." },
 	{ "IND", "ED.AA." },
 	{ "INDR", "ED.BA." },
-	{ "OUT (C),0", "ED.71." },
+	{ "OUT (C),0", "ED.71.", MATCH_F_UNDOC },
 	{ "OUT (C),b", "ED.41b0." },
 	{ "OUT (a),A", "D3.d0." },
 	{ "OUTI", "ED.A3." },
@@ -375,11 +401,14 @@ const char *const mval[] = { "NZ", "Z", "NC", "C", "PO",
 const char *const nval[] = { "NZ", "Z", "NC", "C", NULL };
 const char *const oval[] = { "RLC", "RRC", "RL", "RR", "SLA",
 			     "SRA", "SWAP", "SRL", NULL };
+const char *const pval[] = { "B", "C", "D", "E", "IXH", "IXL", "", "A", NULL };
+const char *const qval[] = { "B", "C", "D", "E", "IYH", "IYL", "", "A", NULL };
 
 const char *const *const valtab[] = { 
 	bval, cval, dval, dval, fval,
        	gval, hval, ival, jval, kval,
-       	lval, mval, nval, oval
+       	lval, mval, nval, oval, pval,
+	qval
 };
 
 /* The z80 addressable memory. The object code. */
@@ -513,7 +542,7 @@ loop:
 			  else if (vs[i] == 2)
 				  b = 0x5E;
 			  break;
-		case 'm': if (s_pass == 0 && !s_extended_iset) {
+		case 'm': if (s_pass == 0 && !s_extended_op) {
 				  if (vs[i] != 0 && vs[i] != 1 && vs[i] != 3) {
 					eprint(_("unofficial instruction\n"));
 					eprcol(s_pline, s_pline_ep);
@@ -521,7 +550,7 @@ loop:
 				  }
 			  }
 			  break;
-		case 'n': if (s_pass == 0 && !s_extended_iset) {
+		case 'n': if (s_pass == 0 && !s_extended_op) {
 				  if (vs[i] == 0 || vs[i] == 1 || vs[i] == 3) {
 					eprint(_("unofficial instruction\n"));
 					eprcol(s_pline, s_pline_ep);
@@ -548,6 +577,11 @@ loop:
 	goto loop;
 }
 
+/*
+ * Tries to match *p with any of the strings in list.
+ * If matched, returns the index in list and r points to the position
+ * in p past the matched string.
+ */
 static int mreg(const char *p, const char *const list[], const char **r)
 {
 	const char *s;
@@ -690,6 +724,10 @@ next:
 	s = s_matchtab[n].pat;
 	if (s == NULL) {
 		return NULL;
+	} else if (!s_undocumented_op
+	           && (s_matchtab[n].flags & MATCH_F_UNDOC))
+	{
+		goto next;
 	}
 	p = pp;
 	vi = 0;
@@ -717,7 +755,7 @@ loop:
 	} else if (*s == 'c' || *s == 'e') {
 		v = indval(p, *s == 'c', &q);
 		goto reg;
-	} else if (*s >= 'b' && *s <= 'o') {
+	} else if (*s >= 'b' && *s <= 'q') {
 		v = mreg(p, valtab[(int) (*s - 'b')], &q);
 		goto reg;
 	} else if (*p == *s && *p == ',') {

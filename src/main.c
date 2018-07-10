@@ -84,7 +84,8 @@ static void print_help(const char *argv0)
 "  -d, --define=MACRO   Define a macro.\n"
 "  -f, --fill=n         Fill memory with value n.\n"
 "  -q, --quiet          Do not generate the listing file.\n"
-"  -x, --extended       Enable the extended instruction set.\n"
+"  -x, --extended       Enable extended instruction syntax.\n"
+"  -u, --undocumented   Enable undocumented instructions.\n"
 "  -c, --cpu=NAME       Select the cpu: z80 (default), gbz80.\n" 
 "\n"
 "Examples:\n"
@@ -179,14 +180,15 @@ int main(int argc, char *argv[])
 	struct ngetopt ngo;
 
 	static struct ngetopt_opt ops[] = {
-		{ "version", 0, 'v' },
-		{ "help", 0, 'h' },
-		{ "license", 0, 'l' },
+		{ "cpu", 1, 'c' },
 		{ "define", 1, 'd' },
 		{ "extended", 0, 'x' },
 		{ "fill", 1, 'f' },
+		{ "help", 0, 'h' },
+		{ "license", 0, 'l' },
 		{ "quiet", 0, 'q' },
-		{ "cpu", 1, 'c' },
+		{ "undocumented", 0, 'u' },
+		{ "version", 0, 'v' },
 		{ NULL, 0, 0 },
 	};
 
@@ -218,7 +220,10 @@ int main(int argc, char *argv[])
 			s_listing = 0;
 			break;
 		case 'x':
-			s_extended_iset = 1;
+			s_extended_op = 1;
+			break;
+		case 'u':
+			s_undocumented_op = 1;
 			break;
 		case '?':
 			eprint(_("unrecognized option %s\n"),

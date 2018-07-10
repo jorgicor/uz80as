@@ -14,7 +14,8 @@ const char *s_objfname;	/* Name of generated binary file. */
 const char *s_lstfname;	/* Name of listing file. */
 const char *s_cpuname = "z80"; /* Name of cpu */
 int s_listing = 1;	/* If we generate the listing file or not. */
-int s_extended_iset = 0;	/* Allow extended instruction set. */
+int s_extended_op = 0;	/* Allow extended instruction syntax. */
+int s_undocumented_op = 0;  /* Allow undocumented instructions. */
 int s_mem_fillval = 0;	/* Default value to fill the 64K memory. */
 
 /* Command line macro definitions. */
