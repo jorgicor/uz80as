@@ -9,7 +9,7 @@ TESTS_ENVIRONMENT = uz80as=$(top_builddir)/src/uz80as$(EXEEXT) \
 dist_check_SCRIPTS = main.test \
 		     z80.test \
 		     z80u.test \
-		     gbz80.test \
+		     gbcpu.test \
 		     tasmfail.test \
 		     longlabel.test \
 		     orgbelow.test \
@@ -55,10 +55,10 @@ EXTRA_DIST = igen.sh \
 	     z80u.bok \
 	     z80u.lok \
 	     z80u.eok \
-	     gbz80.asm \
-	     gbz80.bok \
-	     gbz80.lok \
-	     gbz80.eok \
+	     gbcpu.asm \
+	     gbcpu.bok \
+	     gbcpu.lok \
+	     gbcpu.eok \
 	     tasmfail.asm \
 	     tasmfail.bok \
 	     tasmfail.lok \

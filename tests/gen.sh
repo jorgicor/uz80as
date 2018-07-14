@@ -22,7 +22,7 @@ function tgen ()
 tgen main
 ugen z80
 ugen z80u -u
-ugen gbz80 -cgbz80
+ugen gbz80 -tgbcpu
 ugen tasmfail
 ugen longlabel
 ugen orgbelow

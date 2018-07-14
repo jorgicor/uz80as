@@ -16,6 +16,7 @@
 #include "exprint.h"
 #include "pp.h"
 #include "list.h"
+#include "targets.h"
 
 #ifndef ASSERT_H
 #include <assert.h>
@@ -91,326 +92,81 @@ static struct direc {
 	{ "WORD", d_word },
 };
 
-/* matchtab.flags */
-enum {
-	MATCH_F_UNDOC = 1,
-	MATCH_F_EXTEN = 2,
-};
-
-struct matchtab {
-	const char *pat;
-	const char *gen;
-	unsigned char flags;
-};
-
-/* pat:
- * 	a: expr
- * 	b: B,C,D,E,H,L,A
- * 	c: IX,IY (must be followed by + or -)
- * 	d: BC,DE,HL,SP
- * 	e: IX,IY
- * 	f: BC,DE,HL,AF
- * 	g: ADD,ADC,SUB,SBC,AND,XOR,OR,CP
- * 	h: INC,DEC
- * 	i: BC,DE,IX,SP
- * 	j: BC,DE,IY,SP
- * 	k: RLC,RRC,RL,RR,SLA,SRA,SRL
- * 	l: BIT,RES,SET
- * 	m: NZ,Z,NC,C,PO,PE,P,M
- * 	n: NZ,Z,NC,C
- * 	o: RLC,RRC,RL,RR,SLA,SRA,SWAP,SRL
- *      p: B,C,D,E,IXH,IXL,A
- *      q: B,C,D,E,IYH,IYL,A
- *
- * gen:
- * 	.: output lastbyte
- * 	b: (op << 3) | lastbyte
- * 	c: op | lastbyte
- * 	d: lastbyte = op as 8 bit value
- * 	e: output op as word (no '.' sould follow)
- * 	f: (op << 4) | lastbyte
- * 	g: (op << 6) | lastbyte
- * 	h: (op << 3) | lastbyte
- * 	i: relative jump to op
- * 	j: possible value to RST
- * 	k: possible value to IM
- * 	m: check arithmetic used with A register
- * 	n: check arithmetic used without A register
- * 	o: if op >= FF00 output last byte and then op as 8 bit value;
- * 	   else output (lastbyte | 0x0A) and output op as word
- * 	   (no '.' should follow)
- */
-
 #if 0
-Opcode  Z80             GMB
- ---------------------------------------
- 08      EX   AF,AF      LD   (nn),SP
- 10      DJNZ PC+dd      STOP
- 22      LD   (nn),HL    LDI  (HL),A
- 2A      LD   HL,(nn)    LDI  A,(HL)
- 32      LD   (nn),A     LDD  (HL),A
- 3A      LD   A,(nn)     LDD  A,(HL)
- D3      OUT  (n),A      -
- D9      EXX             RETI
- DB      IN   A,(n)      -
- DD      <IX>            -
- E0      RET  PO         LD   (FF00+n),A
- E2      JP   PO,nn      LD   (FF00+C),A
- E3      EX   (SP),HL    -
- E4      CALL PO,nn      -
- E8      RET  PE         ADD  SP,dd
- EA      JP   PE,nn      LD   (nn),A
- EB      EX   DE,HL      -
- EC      CALL PE,nn      -
- ED      <pref>          -
- F0      RET  P          LD   A,(FF00+n)
- F2      JP   P,nn       LD   A,(FF00+C)
- F4      CALL P,nn       -
- F8      RET  M          LD   HL,SP+dd
- FA      JP   M,nn       LD   A,(nn)
- FC      CALL M,nn       -
- FD      <IY>            -
- CB3X    SLL  r/(HL)     SWAP r/(HL) 
+// a: expression
+// d: B,C,D,E,H,L,M,A
+// p: BC,DE,HL,SP
+// q: BC,DE
+// w: BC,DE,HL,PSW
+// j: JNZ,JZ,JNC,JC,JPO,JPE,JP,JM
+// c: CNZ,CZ,CNC,CC,CPO,CPE,CP,CM
+// r: RNZ,RZ,RNC,RC,RPO,RPE,RP,RM
+//
+const struct matchtab s_matchtab_i8080[] =
+{
+	{ "MOV d,d", "40b0c1." },
+	{ "MVI d,a", "06b0.d1." },
+	{ "LXI p,a", "01f0.e1" },
+	{ "LDA a", "3A.e0" },
+	{ "STA a", "32.e0" },
+	{ "LHLD a", "2A.e0" },
+	{ "SHLD a", "22.e0" },
+	{ "LDAX q", "0A.f0." },
+	{ "STAX q", "02.f0." },
+	{ "XCHG", "EB." },
+	{ "ADD d", "80c0." },
+	{ "ADI a", "C6.d0." },
+	{ "ADC d", "88c0." },
+	{ "ACI a", "CE.d0." },
+	{ "SUB d", "90c0." },
+	{ "SUI a", "D6.d0." },
+	{ "SBB d", "98c0." },
+	{ "SBI a", "DE.d0." },
+	{ "INR d", "04b0." },
+	{ "DCR d", "05b0." },
+	{ "INX p", "03f0." },
+	{ "DCX p", "0Bf0." },
+	{ "DAD p", "09f0." },
+	{ "DAA", "27." },
+	{ "ANA d", "A0c0." },
+	{ "ANI a", "E6.d0." },
+	{ "ORA d", "B0c0." },
+	{ "ORI a", "F6.d0." },
+	{ "XRA d", "A8c0." },
+	{ "XRI a", "EE.d0." },
+	{ "CMP d", "B8c0." },
+	{ "CPI a", "FE.d0." },
+	{ "RLC", "07." },
+	{ "RRC", "0F." },
+	{ "RAL", "17." },
+	{ "RAR", "1F." },
+	{ "CMA", "2F." },
+	{ "CMC", "3F." },
+	{ "STC", "37." },
+	{ "JMP a", "C3.e0" },
+	{ "j a", "C2b0.e1" },
+	{ "CALL a", "CD.e0" },
+	{ "c a", "C0b0.e1" },
+	{ "RET", "C9." },
+	{ "r a", "C0b0.e1" },
+	{ "RST a", "C7j0." },
+	{ "PCHL", "E9." },
+	{ "PUSH w", "C5f0." },
+	{ "POP w", "C1f0." },
+	{ "XTHL", "E3." },
+	{ "SPHL", "F9." },
+	{ "IN a", "DB.d0." },
+	{ "OUT a", "D3.d0." },
+	{ "EI", "FB." },
+	{ "DI", "F3." },
+	{ "HLT", "76." },
+	{ "NOP", "00. "},
+	{ NULL, NULL },
+};
 #endif
 
-/* The gameboy cpu Sharp LR35902 */
-const struct matchtab s_matchtab_gbz80[] =
-{
-	{ "LD b,b", "40b0c1." },
-	{ "LD b,(HL)", "46b0." },
-	{ "LD A,(C)", "F2." }, // * LD A,(FF00+C)
-	{ "LD A,(BC)", "0A." },
-	{ "LD A,(DE)", "1A." },
-	{ "LD A,(HLI)", "2A." }, // *
-	{ "LD A,(HLD)", "3A." }, // *
-	{ "LD A,(a)", "F0o0" }, // * LD A,(nn) & LD A,(FF00+n)
-	{ "LD b,a", "06b0.d1." },
-	{ "LD SP,HL", "F9." },
-	{ "LDHL SP,a", "F8.d0." }, // * LD HL,SP+n
-	{ "LD d,a", "01f0.e1" },
-	{ "LD (C),A", "E2." }, // * LD (FF00+C),A
-	{ "LD (HL),b", "70c0." },
-	{ "LD (HL),a", "36.d0." },
-	{ "LD (HLI),A", "22." }, // *
-	{ "LD (HLD),A", "32." }, // *
-	{ "LD (BC),A", "02." },
-	{ "LD (DE),A", "12." },
-	{ "LD (a),A", "E0o0" }, // * LD (nn),A & LD (FF00+n),A
-	{ "LD (a),SP", "08.e0" }, // *
-	{ "LDH A,(a)", "F0.d0." }, // * LD A,(FF00+n)
-	{ "LDH (a),A", "E0.d0." }, // * LD (FF00+n),A
-	{ "PUSH f", "C5f0." },
-	{ "POP f", "C1f0." },
-	{ "ADD HL,d", "09f0." },
-	{ "ADD SP,a", "E8.d0." }, // * 
-	{ "g A,b", "m080b0c1." },
-	{ "g A,(HL)", "m086b0." },
-	{ "g A,a", "m0C6b0.d1." },
-	{ "g b", "n080b0c1." },
-	{ "g (HL)", "n086b0." },
-	{ "g a", "n0C6b0.d1." },
-	{ "h b", "04b1c0." },
-	{ "h (HL)", "34c0." },
-	{ "INC d", "03f0." },
-	{ "DEC d", "0Bf0." },
-	{ "DAA", "27." },
-	{ "CPL", "2F." },
-	{ "CCF", "3F." },
-	{ "SCF", "37." },
-	{ "NOP", "00." },
-	{ "HALT", "76." },
-	{ "DI", "F3." },
-	{ "EI", "FB." },
-	{ "RLCA", "07." },
-	{ "RLA", "17." },
-	{ "RRCA", "0F." },
-	{ "RRA", "1F." },
-	{ "o b", "CB.00b0c1." },
-	{ "o (HL)", "CB.06b0." },
-	{ "l a,b", "CB.00g0b1c2." },
-	{ "l a,(HL)", "CB.06g0b1." },
-	{ "JP (HL)", "E9." },
-	{ "JP n,a", "C2b0.e1" }, // *
-	{ "JP a", "C3.e0" },
-	{ "JR n,a", "20h0.i1." },
-	{ "JR a", "18.i0." },
-	{ "STOP", "10.00." }, // *
-	{ "CALL n,a", "C4b0.e1" }, // *
-	{ "CALL a", "CD.e0" },
-	{ "RETI", "D9." }, // *
-	{ "RET n", "C0b0." },
-	{ "RET", "C9." },
-	{ "RST a", "C7j0." },
-	{ NULL, NULL },
-};
-
-/* Original Zilog Z80 */
-const struct matchtab s_matchtab_z80[] =
-{
-	{ "LD b,b", "40b0c1." },
-	{ "LD p,p", "DD.40b0c1.", MATCH_F_UNDOC },
-	{ "LD q,q", "FD.40b0c1.", MATCH_F_UNDOC },
-	{ "LD b,(HL)", "46b0." },
-	{ "LD b,(ca)", "d1.46b0.d2." },
-	{ "LD A,I", "ED.57." },
-	{ "LD A,R", "ED.5F." },
-	{ "LD A,(BC)", "0A." },
-	{ "LD A,(DE)", "1A." },
-	{ "LD A,(a)", "3A.e0" },
-	{ "LD b,a", "06b0.d1." },
-	{ "LD p,a", "DD.06b0.d1.", MATCH_F_UNDOC },
-	{ "LD q,a", "FD.06b0.d1.", MATCH_F_UNDOC },
-	{ "LD I,A", "ED.47." },
-	{ "LD R,A", "ED.4F." },
-	{ "LD SP,HL", "F9." },
-	{ "LD SP,e", "d0.F9." },
-	{ "LD HL,(a)", "2A.e0" },
-	{ "LD d,(a)", "ED.4Bf0.e1" },
-	{ "LD d,a", "01f0.e1" },
-	{ "LD e,(a)", "d0.2A.e1" },
-	{ "LD e,a", "d0.21.e1" },
-	{ "LD (HL),b", "70c0." },
-	{ "LD (HL),a", "36.d0." },
-	{ "LD (BC),A", "02." },
-	{ "LD (DE),A", "12." },
-	{ "LD (ca),b", "d0.70c2.d1." },
-	{ "LD (ca),a", "d0.36.d1.d2." },
-	{ "LD (a),A", "32.e0" },
-	{ "LD (a),HL", "22.e0" },
-	{ "LD (a),d", "ED.43f1.e0" },
-	{ "LD (a),e", "d1.22.e0" },
-	{ "PUSH f", "C5f0." },
-	{ "PUSH e", "d0.E5." },
-	{ "POP f", "C1f0." },
-	{ "POP e", "d0.E1." },
-	{ "EX DE,HL", "EB." },
-	{ "EX AF,AF'", "08." },
-	{ "EX (SP),HL", "E3." },
-	{ "EX (SP),e", "d0.E3." },
-	{ "EXX", "D9." },
-	{ "LDI", "ED.A0." },
-	{ "LDIR", "ED.B0." },
-	{ "LDD", "ED.A8." },
-	{ "LDDR", "ED.B8." },
-	{ "CPI", "ED.A1." },
-	{ "CPIR", "ED.B1." },
-	{ "CPD", "ED.A9." },
-	{ "CPDR", "ED.B9." },
-	{ "ADD HL,d", "09f0." },
-	{ "ADD IX,i", "DD.09f0." },
-	{ "ADD IY,j", "FD.09f0." },
-	{ "ADC HL,d", "ED.4Af0." },
-	{ "SBC HL,d", "ED.42f0." },
-	{ "g A,b", "m080b0c1." },
-	{ "g A,p", "DD.m080b0c1.", MATCH_F_UNDOC },
-	{ "g A,q", "FD.m080b0c1.", MATCH_F_UNDOC },
-	{ "g A,(HL)", "m086b0." },
-	{ "g A,(ca)", "m0d1.86b0.d2." },
-	{ "g A,a", "m0C6b0.d1." },
-	{ "g b", "n080b0c1." },
-	{ "g p", "DD.n080b0c1.", MATCH_F_UNDOC },
-	{ "g q", "FD.n080b0c1.", MATCH_F_UNDOC },
-	{ "g (HL)", "n086b0." },
-	{ "g (ca)", "n0d1.86b0.d2." },
-	{ "g a", "n0C6b0.d1." },
-	{ "h b", "04b1c0." },
-	{ "h p", "DD.04b1c0.", MATCH_F_UNDOC },
-	{ "h q", "FD.04b1c0.", MATCH_F_UNDOC },
-	{ "h (HL)", "34c0." },
-	{ "h (ca)", "d1.34c0.d2." },
-	{ "INC d", "03f0." },
-	{ "INC e", "d0.23." },
-	{ "DEC d", "0Bf0." },
-	{ "DEC e", "d0.2B." },
-	{ "DAA", "27." },
-	{ "CPL", "2F." },
-	{ "NEG", "ED.44." },
-	{ "CCF", "3F." },
-	{ "SCF", "37." },
-	{ "NOP", "00." },
-	{ "HALT", "76." },
-	{ "DI", "F3." },
-	{ "EI", "FB." },
-	{ "IM a", "ED.k0." },
-	{ "RLCA", "07." },
-	{ "RLA", "17." },
-	{ "RRCA", "0F." },
-	{ "RRA", "1F." },
-	{ "SLL b", "CB.30c0.", MATCH_F_UNDOC },
-	{ "SLL (HL)", "CB.36.", MATCH_F_UNDOC },
-	{ "SLL (ca)", "d0.CB.d1.36.", MATCH_F_UNDOC },
-	{ "SLL (ca),b", "d0.CB.d1.30c2.", MATCH_F_UNDOC },
-	{ "k b", "CB.00b0c1." },
-	{ "k (HL)", "CB.06b0." },
-	{ "k (ca)", "d1.CB.d2.06b0." },
-	{ "k (ca),b", "d1.CB.d2.00b0c3.", MATCH_F_UNDOC },
-	{ "RLD", "ED.6F." },
-	{ "RRD", "ED.67." },
-	{ "l a,b", "CB.00g0b1c2." },
-	{ "l a,(HL)", "CB.06g0b1." },
-	{ "l a,(ca)", "d2.CB.d3.06g0b1." },
-	{ "RES a,(ca),b", "d1.CB.d2.80b0c3.", MATCH_F_UNDOC },
-	{ "SET a,(ca),b", "d1.CB.d2.C0b0c3.", MATCH_F_UNDOC },
-	{ "JP (HL)", "E9." },
-	{ "JP (e)", "d0.E9." },
-	{ "JP m,a", "C2b0.e1" },
-	{ "JP a", "C3.e0" },
-	{ "JR n,a", "20h0.i1." },
-	{ "JR a", "18.i0." },
-	{ "DJNZ a", "10.i0." },
-	{ "CALL m,a", "C4b0.e1" },
-	{ "CALL a", "CD.e0" },
-	{ "RETI", "ED.4D." },
-	{ "RETN", "ED.45." },
-	{ "RET m", "C0b0." },
-	{ "RET", "C9." },
-	{ "RST a", "C7j0." },
-	{ "IN b,(C)", "ED.40b0." },
-	{ "IN A,(a)", "DB.d0." },
-	{ "IN F,(a)", "ED.70." },
-	{ "IN (C)", "ED.70.", MATCH_F_UNDOC },
-	{ "INI", "ED.A2." },
-	{ "INIR", "ED.B2." },
-	{ "IND", "ED.AA." },
-	{ "INDR", "ED.BA." },
-	{ "OUT (C),0", "ED.71.", MATCH_F_UNDOC },
-	{ "OUT (C),b", "ED.41b0." },
-	{ "OUT (a),A", "D3.d0." },
-	{ "OUTI", "ED.A3." },
-	{ "OTIR", "ED.B3." },
-	{ "OUTD", "ED.AB." },
-	{ "OTDR", "ED.BB." },
-	{ NULL, NULL },
-};
-
-const struct matchtab *s_matchtab = s_matchtab_z80;
-
-const char *const bval[] = { "B", "C", "D", "E", "H", "L", "", "A", NULL };
-const char *const cval[] = { "IX", "IY", NULL };
-const char *const dval[] = { "BC", "DE", "HL", "SP", NULL };
-const char *const fval[] = { "BC", "DE", "HL", "AF", NULL };
-const char *const gval[] = { "ADD", "ADC", "SUB", "SBC",
-			     "AND", "XOR", "OR", "CP", NULL };
-const char *const hval[] = { "INC", "DEC", NULL };
-const char *const ival[] = { "BC", "DE", "IX", "SP", NULL };
-const char *const jval[] = { "BC", "DE", "IY", "SP", NULL };
-const char *const kval[] = { "RLC", "RRC", "RL", "RR",
-			     "SLA", "SRA", "", "SRL", NULL };
-const char *const lval[] = { "", "BIT", "RES", "SET", NULL };
-const char *const mval[] = { "NZ", "Z", "NC", "C",
-			     "PO", "PE", "P", "M", NULL };
-const char *const nval[] = { "NZ", "Z", "NC", "C", NULL };
-const char *const oval[] = { "RLC", "RRC", "RL", "RR",
-			     "SLA", "SRA", "SWAP", "SRL", NULL };
-const char *const pval[] = { "B", "C", "D", "E", "IXH", "IXL", "", "A", NULL };
-const char *const qval[] = { "B", "C", "D", "E", "IYH", "IYL", "", "A", NULL };
-
-const char *const *const valtab[] = { 
-	bval, cval, dval, dval, fval,
-       	gval, hval, ival, jval, kval,
-       	lval, mval, nval, oval, pval,
-	qval
-};
+/* The target. */
+const struct target *s_target;
 
 /* The z80 addressable memory. The object code. */
 static unsigned char s_mem[64 * 1024];
@@ -437,7 +193,7 @@ static int s_gen_after_end;
 static const char *s_empty_line = "";
 
 /* Pointer in s_pline for error reporting. */
-static const char *s_pline_ep;
+const char *s_pline_ep;
 
 /* We skip characters until endline or backslash or comment. */
 static const char *sync(const char *p)
@@ -451,7 +207,7 @@ static const char *sync(const char *p)
  * Generates a byte to the output and updates s_pc, s_minpc and s_maxpc.
  * Will issue a fatal error if we write beyong 64k.
  */
-static void genb(int b, const char *ep)
+void genb(int b, const char *ep)
 {
 	if (s_pass == 0 && s_end_seen && !s_gen_after_end) {
 		s_gen_after_end = 1;
@@ -496,9 +252,12 @@ static void genw(int n, const char *ep)
  */
 static void gen(const char *p, const int *vs)
 {
-	int w, b, i, savepc;
+	// int w, b, i, savepc;
+	int b, i, savepc;
+	const char *p_orig;
 
 	savepc = s_pc;
+	p_orig = p;
 	b = 0;
 loop:
 	i = hexvalu(*p);
@@ -511,68 +270,14 @@ loop:
 	} else if (*p == '\0') {
 		return;
 	} else {
-		i = *(p + 1) - '0';
-		switch (*p++) {
-		case 'b': b |= ((vs[i] & 7) << 3); break;
-		case 'c': b |= (vs[i] & 7); break;
-		case 'd': b = vs[i]; break;
-		case 'e': genb(vs[i] & 0xff, s_pline_ep);
-			  genb(vs[i] >> 8, s_pline_ep);
-			  break;
-		case 'f': b |= ((vs[i] & 3) << 4); break;
-		case 'g': b |= ((vs[i] & 3) << 6); break;
-		case 'h': b |= ((vs[i] & 3) << 3); break;
-		case 'i': b = (vs[i] - savepc - 2); break;
-		case 'j': if (s_pass > 0 && (vs[i] & ~56) != 0) {
-				  eprint(_("invalid RST argument (%d)\n"),
-				  	vs[i]);
-				  eprcol(s_pline, s_pline_ep);
-				  newerr();
-			  }
-			  b |= vs[i];
-			  break;
-		case 'k': if (s_pass > 0 && (vs[i] < 0 || vs[i] > 2)) {
-				  eprint(_("invalid IM argument (%d)\n"),
-					vs[i]);
-				  eprcol(s_pline, s_pline_ep);
-				  newerr();
-			  }
-			  b = 0x46;
-			  if (vs[i] == 1)
-				  b = 0x56;
-			  else if (vs[i] == 2)
-				  b = 0x5E;
-			  break;
-		case 'm': if (s_pass == 0 && !s_extended_op) {
-				  if (vs[i] != 0 && vs[i] != 1 && vs[i] != 3) {
-					eprint(_("unofficial syntax\n"));
-					eprcol(s_pline, s_pline_ep);
-					newerr();
-				  }
-			  }
-			  break;
-		case 'n': if (s_pass == 0 && !s_extended_op) {
-				  if (vs[i] == 0 || vs[i] == 1 || vs[i] == 3) {
-					eprint(_("unofficial syntax\n"));
-					eprcol(s_pline, s_pline_ep);
-					newerr();
-				  }
-			  }
-			  break;
-		case 'o': w = vs[i] & 0xffff;
-			  if (w >= 0xff00) {
-				genb(b, s_pline_ep);
-				b = 0;
-			  	genb(w & 0xff, s_pline_ep);
-			  } else {
-				b |= 0x0A; 
-				genb(b, s_pline_ep);
-				b = 0;
-			  	genb(w & 0xff, s_pline_ep);
-			  	genb(w >> 8, s_pline_ep);
-			  }
-			  break;
+		if (s_target->genf(&b, *p, vs, *(p + 1) - '0', savepc) == -1) { 
+			eprogname();
+			fprintf(stderr, _("fatal:  bad pattern %s ('%c')"),
+			       p_orig, *p);
+			enl();
+			exit(EXIT_FAILURE);
 		}
+		p++;
 	}
 	p++;
 	goto loop;
@@ -583,7 +288,7 @@ loop:
  * If matched, returns the index in list and r points to the position
  * in p past the matched string.
  */
-static int mreg(const char *p, const char *const list[], const char **r)
+int mreg(const char *p, const char *const list[], const char **r)
 {
 	const char *s;
 	const char *q;
@@ -599,22 +304,6 @@ static int mreg(const char *p, const char *const list[], const char **r)
 				*r = q;
 				return i - 1;
 			}
-		}
-	}
-	return -1;
-}
-
-static int indval(const char *p, int disp, const char **q)
-{
-	int v;
-	const char *r;
-
-	v = mreg(p, cval, &r);
-	if (v >= 0) {
-		v = (v == 0) ? 0xDD : 0xFD;
-		if (!disp || *r == '+' || *r == '-') {
-			*q = r;
-			return v;
 		}
 	}
 	return -1;
@@ -711,23 +400,23 @@ static const char *genstr(const char *p, enum strmode mode)
  */
 static const char *match(const char *p)
 {
+	const struct matchtab *mtab;
 	const char *s, *pp, *q;
 	int v, n, vi, linepc;
 	int vs[4];
 
 	assert(!isspace(*p));
 
+	mtab = s_target->matcht;
 	linepc = s_pc;
 	pp = p;
 	n = -1;
 next:
 	n++;
-	s = s_matchtab[n].pat;
+	s = mtab[n].pat;
 	if (s == NULL) {
 		return NULL;
-	} else if (!s_undocumented_op
-	           && (s_matchtab[n].flags & MATCH_F_UNDOC))
-	{
+	} else if (!s_undocumented_op && (mtab[n].flags & MATCH_F_UNDOC)) {
 		goto next;
 	}
 	p = pp;
@@ -753,11 +442,8 @@ loop:
 		if (p == NULL)
 			return NULL;
 		vs[vi++] = v;
-	} else if (*s == 'c' || *s == 'e') {
-		v = indval(p, *s == 'c', &q);
-		goto reg;
-	} else if (*s >= 'b' && *s <= 'q') {
-		v = mreg(p, valtab[(int) (*s - 'b')], &q);
+	} else if (*s >= 'b' && *s <= 'z') {
+		v = s_target->matchf(*s, p, &q);
 		goto reg;
 	} else if (*p == *s && *p == ',') {
 		p = skipws(p + 1);
@@ -773,13 +459,14 @@ reg:
 	if (v < 0) {
 		goto next;
 	} else {
+		assert(vi < sizeof(vs));
 		vs[vi++] = v;
 		p = q;
 	}
 	goto freg;
 found:
 	// printf("%s\n", s_matchtab[n].pat);
-	gen(s_matchtab[n].gen, vs);
+	gen(mtab[n].gen, vs);
 	return p;
 }
 
@@ -1401,8 +1088,10 @@ static void output ()
 /* Start the assembly using the config in options.c. */
 void uz80as(void)
 {
-	if (strcmp(s_cpuname, "gbz80") == 0) {
-		s_matchtab = s_matchtab_gbz80;
+	s_target = find_target(s_target_id);
+	if (s_target == NULL) {
+		eprint(_("target '%s' not supported\n"), s_target_id);
+		exit(EXIT_FAILURE);
 	}
 
 	for (s_pass = 0; s_nerrors == 0 && s_pass < 2; s_pass++) {

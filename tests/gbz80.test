@@ -1,4 +1,0 @@
-#!/bin/sh
-nom=gbz80
-uz80as="$uz80as -cgbz80"
-. "$srcdir"/chkall.inc

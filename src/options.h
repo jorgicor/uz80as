@@ -17,7 +17,7 @@ struct predef {
 extern const char *s_asmfname;
 extern const char *s_objfname;
 extern const char *s_lstfname;
-extern const char *s_cpuname;
+extern const char *s_target_id;
 extern int s_listing;
 extern int s_extended_op;
 extern int s_undocumented_op;

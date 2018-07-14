@@ -11,6 +11,7 @@
 #include "utils.h"
 #include "err.h"
 #include "uz80as.h"
+#include "targets.h"
 
 #ifndef STDIO_H
 #include <stdio.h>
@@ -64,7 +65,14 @@ static void print_license(FILE *f)
 
 static void print_version(FILE *f)
 {
+	const struct target *p;
+
 	fputs(PACKAGE_STRING, f);
+	fputs("\n", f);
+	fputs("Targets:", f);
+	for (p = first_target(); p != NULL; p = next_target()) {
+		fprintf(f, " %s", p->id);
+	}
 	fputs("\n", f);
 }
 
@@ -86,7 +94,8 @@ static void print_help(const char *argv0)
 "  -q, --quiet          Do not generate the listing file.\n"
 "  -x, --extended       Enable extended instruction syntax.\n"
 "  -u, --undocumented   Enable undocumented instructions.\n"
-"  -c, --cpu=NAME       Select the cpu: z80 (default), gbz80.\n" 
+"  -t, --target=NAME    Select the target micro. z80 is the default.\n" 
+"  -e, --list-targets   List the targets supported.\n" 
 "\n"
 "Examples:\n"
 "  " PACKAGE " p.asm                     Assemble p.asm into p.obj\n"
@@ -161,16 +170,26 @@ error:	eprogname();
 	exit(EXIT_FAILURE);
 }
 
-static void parse_cpu_name(const char *optarg)
+static void parse_target_id(const char *optarg)
 {
-	if (strcmp(optarg, "z80") == 0) {
-		s_cpuname = "z80";
-	} else if (strcmp(optarg, "gbz80") == 0) {
-		s_cpuname = "gbz80";
-	} else {
+	const struct target *p;
+
+	p = find_target(optarg);
+	if (p == NULL) {
 		eprogname();
-		fprintf(stderr, _("invalid cpu name (%s)\n"), optarg);
+		fprintf(stderr, _("invalid target '%s'\n"), optarg);
 		exit(EXIT_FAILURE);
+	} else {
+		s_target_id = p->id;
+	}
+}
+
+static void list_targets(FILE *f)
+{	
+	const struct target *p;
+
+	for (p = first_target(); p != NULL; p = next_target()) {
+		fprintf(f, "%s\t%s\n", p->id, p->descr);
 	}
 }
 
@@ -180,13 +199,14 @@ int main(int argc, char *argv[])
 	struct ngetopt ngo;
 
 	static struct ngetopt_opt ops[] = {
-		{ "cpu", 1, 'c' },
 		{ "define", 1, 'd' },
 		{ "extended", 0, 'x' },
+		{ "list-targets", 0, 'e' },
 		{ "fill", 1, 'f' },
 		{ "help", 0, 'h' },
 		{ "license", 0, 'l' },
 		{ "quiet", 0, 'q' },
+		{ "target", 1, 't' },
 		{ "undocumented", 0, 'u' },
 		{ "version", 0, 'v' },
 		{ NULL, 0, 0 },
@@ -207,8 +227,12 @@ int main(int argc, char *argv[])
 			fputs("\n", stdout);
 			print_license(stdout);
 			exit(EXIT_SUCCESS);
-		case 'c':
-			parse_cpu_name(ngo.optarg);
+		case 't':
+			parse_target_id(ngo.optarg);
+			break;
+		case 'e':
+			list_targets(stdout);
+			exit(EXIT_SUCCESS);
 			break;
 		case 'd':
 			predefine(ngo.optarg);

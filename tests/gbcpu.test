@@ -1,0 +1,4 @@
+#!/bin/sh
+nom=gbcpu
+uz80as="$uz80as -tgbcpu"
+. "$srcdir"/chkall.inc
