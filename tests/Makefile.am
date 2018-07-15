@@ -11,6 +11,8 @@ dist_check_SCRIPTS = main.test \
 		     z80u.test \
 		     gbcpu.test \
 		     i8080.test \
+		     i8085.test \
+		     i8085u.test \
 		     tasmfail.test \
 		     longlabel.test \
 		     orgbelow.test \
@@ -64,6 +66,14 @@ EXTRA_DIST = igen.sh \
 	     i8080.bok \
 	     i8080.lok \
 	     i8080.eok \
+	     i8085.asm \
+	     i8085.bok \
+	     i8085.lok \
+	     i8085.eok \
+	     i8085u.asm \
+	     i8085u.bok \
+	     i8085u.lok \
+	     i8085u.eok \
 	     tasmfail.asm \
 	     tasmfail.bok \
 	     tasmfail.lok \

@@ -11,8 +11,11 @@ tasm=../../tasm/tasm
 
 function ugen ()
 {
-	echo $1
-	${uz80as} $2 $1.asm $1.bok $1.lok 2>$1.eok
+	local name
+	name=$1
+	echo $name
+	shift
+	${uz80as} $* $name.asm $name.bok $name.lok 2>$name.eok
 }
 
 function tgen ()
@@ -30,6 +33,8 @@ ugen z80
 ugen z80u -u
 ugen gbcpu -tgbcpu
 ugen i8080 -ti8080
+ugen i8085 -ti8085
+ugen i8085u -u -ti8085
 ugen tasmfail
 ugen longlabel
 ugen orgbelow
