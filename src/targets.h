@@ -1,3 +1,10 @@
+/* ===========================================================================
+ * uz80as, an assembler for the Zilog Z80 and several other microprocessors.
+ *
+ * Target list.
+ * ===========================================================================
+ */
+
 #ifndef TARGETS_H
 #define TARGETS_H
 

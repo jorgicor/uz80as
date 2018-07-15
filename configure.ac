@@ -2,11 +2,11 @@
 # Process this file with autoconf to produce a configure script.
 
 # ===========================================================================
-# uz80as, a macro assembler for Z80 based microprocessors.
+# uz80as, an assembler for the Zilog Z80 and several other microprocessors.
 # ===========================================================================
 
 AC_INIT([uz80as],
-	[1.03],
+	[1.04],
 	[jorge.giner@hotmail.com],
 	uz80as,
 	[http://jorgicor.sdfeu.org/uz80as])

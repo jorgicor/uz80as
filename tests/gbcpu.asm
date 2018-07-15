@@ -1,6 +1,9 @@
 ; ===========================================================================
-; uz80as, a macro assembler for Z80 based microprocessors.
+; uz80as, an assembler for the Zilog Z80 and several other microprocessors.
+;
+; Sharp LR25902 (Nintendo Gameboy CPU).
 ; ===========================================================================
+
 
 #define equ .equ
 #define end .end
@@ -9,7 +12,7 @@ n:          equ 20h
 nn:         equ 0584h
 dddd:       equ 07h
 a16:        equ $1234
-hi8:	equ $ff11
+hi8:        equ $ff11
 port:       equ 3
 imm8:       equ 56h    ;immediate data (8 bits)
 offset:     equ 7

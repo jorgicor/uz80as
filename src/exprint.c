@@ -1,5 +1,5 @@
 /* ===========================================================================
- * uz80as, a macro assembler for Z80 based microprocessors.
+ * uz80as, an assembler for the Zilog Z80 and several other microprocessors.
  *
  * Expression error reporting.
  * ===========================================================================

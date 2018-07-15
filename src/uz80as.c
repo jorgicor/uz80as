@@ -1,5 +1,5 @@
 /* ===========================================================================
- * uz80as, a macro assembler for Z80 based microprocessors.
+ * uz80as, an assembler for the Zilog Z80 and several other microprocessors.
  *
  * Assembler.
  * ===========================================================================
@@ -91,79 +91,6 @@ static struct direc {
 	{ "TITLE", d_title },
 	{ "WORD", d_word },
 };
-
-#if 0
-// a: expression
-// d: B,C,D,E,H,L,M,A
-// p: BC,DE,HL,SP
-// q: BC,DE
-// w: BC,DE,HL,PSW
-// j: JNZ,JZ,JNC,JC,JPO,JPE,JP,JM
-// c: CNZ,CZ,CNC,CC,CPO,CPE,CP,CM
-// r: RNZ,RZ,RNC,RC,RPO,RPE,RP,RM
-//
-const struct matchtab s_matchtab_i8080[] =
-{
-	{ "MOV d,d", "40b0c1." },
-	{ "MVI d,a", "06b0.d1." },
-	{ "LXI p,a", "01f0.e1" },
-	{ "LDA a", "3A.e0" },
-	{ "STA a", "32.e0" },
-	{ "LHLD a", "2A.e0" },
-	{ "SHLD a", "22.e0" },
-	{ "LDAX q", "0A.f0." },
-	{ "STAX q", "02.f0." },
-	{ "XCHG", "EB." },
-	{ "ADD d", "80c0." },
-	{ "ADI a", "C6.d0." },
-	{ "ADC d", "88c0." },
-	{ "ACI a", "CE.d0." },
-	{ "SUB d", "90c0." },
-	{ "SUI a", "D6.d0." },
-	{ "SBB d", "98c0." },
-	{ "SBI a", "DE.d0." },
-	{ "INR d", "04b0." },
-	{ "DCR d", "05b0." },
-	{ "INX p", "03f0." },
-	{ "DCX p", "0Bf0." },
-	{ "DAD p", "09f0." },
-	{ "DAA", "27." },
-	{ "ANA d", "A0c0." },
-	{ "ANI a", "E6.d0." },
-	{ "ORA d", "B0c0." },
-	{ "ORI a", "F6.d0." },
-	{ "XRA d", "A8c0." },
-	{ "XRI a", "EE.d0." },
-	{ "CMP d", "B8c0." },
-	{ "CPI a", "FE.d0." },
-	{ "RLC", "07." },
-	{ "RRC", "0F." },
-	{ "RAL", "17." },
-	{ "RAR", "1F." },
-	{ "CMA", "2F." },
-	{ "CMC", "3F." },
-	{ "STC", "37." },
-	{ "JMP a", "C3.e0" },
-	{ "j a", "C2b0.e1" },
-	{ "CALL a", "CD.e0" },
-	{ "c a", "C0b0.e1" },
-	{ "RET", "C9." },
-	{ "r a", "C0b0.e1" },
-	{ "RST a", "C7j0." },
-	{ "PCHL", "E9." },
-	{ "PUSH w", "C5f0." },
-	{ "POP w", "C1f0." },
-	{ "XTHL", "E3." },
-	{ "SPHL", "F9." },
-	{ "IN a", "DB.d0." },
-	{ "OUT a", "D3.d0." },
-	{ "EI", "FB." },
-	{ "DI", "F3." },
-	{ "HLT", "76." },
-	{ "NOP", "00. "},
-	{ NULL, NULL },
-};
-#endif
 
 /* The target. */
 const struct target *s_target;
@@ -270,12 +197,23 @@ loop:
 	} else if (*p == '\0') {
 		return;
 	} else {
-		if (s_target->genf(&b, *p, vs, *(p + 1) - '0', savepc) == -1) { 
-			eprogname();
-			fprintf(stderr, _("fatal:  bad pattern %s ('%c')"),
-			       p_orig, *p);
-			enl();
-			exit(EXIT_FAILURE);
+		i = *(p + 1) - '0';
+		switch (*p) {
+		case 'b': b |= (vs[i] << 3); break;
+		case 'c': b |= vs[i]; break;
+		case 'd': b = vs[i]; break;
+		case 'e': genb(vs[i] & 0xff, s_pline_ep);
+			  genb(vs[i] >> 8, s_pline_ep);
+			  break;
+		default:
+			if (s_target->genf(&b, *p, vs, i, savepc) == -1) { 
+				eprogname();
+				fprintf(stderr,
+					_("fatal:  bad pattern %s ('%c')"),
+					p_orig, *p);
+				enl();
+				exit(EXIT_FAILURE);
+			}
 		}
 		p++;
 	}

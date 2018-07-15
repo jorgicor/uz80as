@@ -1,9 +1,15 @@
+/* ===========================================================================
+ * uz80as, an assembler for the Zilog Z80 and several other microprocessors.
+ *
+ * Sharp LR35902 (Nintendo Gameboy CPU).
+ * ===========================================================================
+ */
+
 #include "pp.h"
 #include "err.h"
 #include "options.h"
 #include "uz80as.h"
 #include <stddef.h>
-#include <assert.h>
 
 #if 0
 Opcode  Z80             GMB
@@ -62,15 +68,15 @@ Opcode  Z80             GMB
  * 	e: output op as word (no '.' sould follow)
  * 	f: (op << 4) | lastbyte
  * 	g: (op << 6) | lastbyte
- * 	h: (op << 3) | lastbyte
+ * 	h: if op >= FF00 output last byte and then op as 8 bit value;
+ * 	   else output (lastbyte | 0x0A) and output op as word
+ * 	   (no '.' should follow)
  * 	i: relative jump to op
  * 	j: possible value to RST
  * 	k: possible value to IM
+ * 	l: *
  * 	m: check arithmetic used with A register
  * 	n: check arithmetic used without A register
- * 	o: if op >= FF00 output last byte and then op as 8 bit value;
- * 	   else output (lastbyte | 0x0A) and output op as word
- * 	   (no '.' should follow)
  */
 
 const struct matchtab s_matchtab_gbcpu[] = {
@@ -81,7 +87,7 @@ const struct matchtab s_matchtab_gbcpu[] = {
 	{ "LD A,(DE)", "1A." },
 	{ "LD A,(HLI)", "2A." }, // *
 	{ "LD A,(HLD)", "3A." }, // *
-	{ "LD A,(a)", "F0o0" }, // * LD A,(nn) & LD A,(FF00+n)
+	{ "LD A,(a)", "F0h0" }, // * LD A,(nn) & LD A,(FF00+n)
 	{ "LD b,a", "06b0.d1." },
 	{ "LD SP,HL", "F9." },
 	{ "LDHL SP,a", "F8.d0." }, // * LD HL,SP+n
@@ -93,7 +99,7 @@ const struct matchtab s_matchtab_gbcpu[] = {
 	{ "LD (HLD),A", "32." }, // *
 	{ "LD (BC),A", "02." },
 	{ "LD (DE),A", "12." },
-	{ "LD (a),A", "E0o0" }, // * LD (nn),A & LD (FF00+n),A
+	{ "LD (a),A", "E0h0" }, // * LD (nn),A & LD (FF00+n),A
 	{ "LD (a),SP", "08.e0" }, // *
 	{ "LDH A,(a)", "F0.d0." }, // * LD A,(FF00+n)
 	{ "LDH (a),A", "E0.d0." }, // * LD (FF00+n),A
@@ -130,7 +136,7 @@ const struct matchtab s_matchtab_gbcpu[] = {
 	{ "JP (HL)", "E9." },
 	{ "JP n,a", "C2b0.e1" }, // *
 	{ "JP a", "C3.e0" },
-	{ "JR n,a", "20h0.i1." },
+	{ "JR n,a", "20b0.i1." },
 	{ "JR a", "18.i0." },
 	{ "STOP", "10.00." }, // *
 	{ "CALL n,a", "C4b0.e1" }, // *
@@ -189,15 +195,21 @@ static int gen_gbcpu(int *eb, char p, const int *vs, int i, int savepc)
        
 	b = *eb;
 	switch (p) {
-	case 'b': b |= ((vs[i] & 7) << 3); break;
-	case 'c': b |= (vs[i] & 7); break;
-	case 'd': b = vs[i]; break;
-	case 'e': genb(vs[i] & 0xff, s_pline_ep);
-		  genb(vs[i] >> 8, s_pline_ep);
+	case 'f': b |= (vs[i] << 4); break;
+	case 'g': b |= (vs[i] << 6); break;
+	case 'h': w = vs[i] & 0xffff;
+		  if (w >= 0xff00) {
+			genb(b, s_pline_ep);
+			b = 0;
+			genb(w & 0xff, s_pline_ep);
+		  } else {
+			b |= 0x0A; 
+			genb(b, s_pline_ep);
+			b = 0;
+			genb(w & 0xff, s_pline_ep);
+			genb(w >> 8, s_pline_ep);
+		  }
 		  break;
-	case 'f': b |= ((vs[i] & 3) << 4); break;
-	case 'g': b |= ((vs[i] & 3) << 6); break;
-	case 'h': b |= ((vs[i] & 3) << 3); break;
 	case 'i': b = (vs[i] - savepc - 2); break;
 	case 'j': if (s_pass > 0 && (vs[i] & ~56) != 0) {
 			  eprint(_("invalid RST argument (%d)\n"),
@@ -235,19 +247,6 @@ static int gen_gbcpu(int *eb, char p, const int *vs, int i, int savepc)
 			  }
 		  }
 		  break;
-	case 'o': w = vs[i] & 0xffff;
-		  if (w >= 0xff00) {
-			genb(b, s_pline_ep);
-			b = 0;
-			genb(w & 0xff, s_pline_ep);
-		  } else {
-			b |= 0x0A; 
-			genb(b, s_pline_ep);
-			b = 0;
-			genb(w & 0xff, s_pline_ep);
-			genb(w >> 8, s_pline_ep);
-		  }
-		  break;
 	default:
 		  return -1;
 	}
@@ -256,10 +255,46 @@ static int gen_gbcpu(int *eb, char p, const int *vs, int i, int savepc)
 	return 0;
 }
 
+static int s_pat_char = 'b';
+static int s_pat_index;
+
+static void pat_char_rewind_gbcpu(int c)
+{
+	s_pat_char = c;
+	s_pat_index = 0;
+};
+
+static const char *pat_next_str_gbcpu(void)
+{
+	const char *s;
+
+	switch (s_pat_char) {
+	case 'b':
+	case 'd':
+	case 'f':
+	case 'g':
+	case 'h':
+	case 'l':
+	case 'n':
+	case 'o':
+		s = valtab[(int) (s_pat_char - 'b')][s_pat_index];
+		if (s != NULL) {
+			s_pat_index++;
+		}
+		break;
+	default:
+		s = NULL;
+	}
+
+	return s;
+};
+
 const struct target s_target_gbcpu = {
 	"gbcpu",
 	"Sharp LR35902 (Nintendo Gameboy CPU)",
 	s_matchtab_gbcpu,
 	match_gbcpu,
-	gen_gbcpu
+	gen_gbcpu,
+	pat_char_rewind_gbcpu,
+	pat_next_str_gbcpu,
 };

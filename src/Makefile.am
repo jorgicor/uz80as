@@ -1,5 +1,5 @@
 # ===========================================================================
-# uz80as, a macro assembler for Z80 based microprocessors.
+# uz80as, an assembler for the Zilog Z80 and several other microprocessors.
 # ===========================================================================
 
 AM_CFLAGS = $(WARN_CFLAGS)
@@ -25,4 +25,5 @@ uz80as_SOURCES = \
 	uz80as.c uz80as.h \
 	targets.c targets.h \
 	target/z80.c \
-	target/gbcpu.c
+	target/gbcpu.c \
+	target/i8080.c

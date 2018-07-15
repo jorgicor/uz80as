@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # ===========================================================================
-# uz80as, a macro assembler for Z80 based microprocessors.
+# uz80as, an assembler for the Zilog Z80 and several other microprocessors.
 # ===========================================================================
 
 # When you get the source from a version control repository, it is not

@@ -1,0 +1,432 @@
+@multitable @columnfractions .25 .25 .25 .25
+@item LD B,B
+@tab LD B,C
+@tab LD B,D
+@tab LD B,E
+@item LD B,H
+@tab LD B,L
+@tab LD B,A
+@tab * LD B,B
+@item * LD B,C
+@tab * LD B,D
+@tab * LD B,E
+@tab * LD B,IXH
+@item * LD B,IXL
+@tab * LD B,A
+@tab * LD B,B
+@tab * LD B,C
+@item * LD B,D
+@tab * LD B,E
+@tab * LD B,IYH
+@tab * LD B,IYL
+@item * LD B,A
+@tab LD B,(HL)
+@tab LD C,(HL)
+@tab LD D,(HL)
+@item LD E,(HL)
+@tab LD H,(HL)
+@tab LD L,(HL)
+@tab LD A,(HL)
+@item LD B,(IXa)
+@tab LD B,(IYa)
+@tab LD A,I
+@tab LD A,R
+@item LD A,(BC)
+@tab LD A,(DE)
+@tab LD A,(a)
+@tab LD B,a
+@item LD C,a
+@tab LD D,a
+@tab LD E,a
+@tab LD H,a
+@item LD L,a
+@tab LD A,a
+@tab * LD B,a
+@tab * LD C,a
+@item * LD D,a
+@tab * LD E,a
+@tab * LD IXH,a
+@tab * LD IXL,a
+@item * LD A,a
+@tab * LD B,a
+@tab * LD C,a
+@tab * LD D,a
+@item * LD E,a
+@tab * LD IYH,a
+@tab * LD IYL,a
+@tab * LD A,a
+@item LD I,A
+@tab LD R,A
+@tab LD SP,HL
+@tab LD SP,BC
+@item LD SP,DE
+@tab LD SP,HL
+@tab LD SP,SP
+@tab LD HL,(a)
+@item LD BC,(a)
+@tab LD DE,(a)
+@tab LD HL,(a)
+@tab LD SP,(a)
+@item LD BC,a
+@tab LD DE,a
+@tab LD HL,a
+@tab LD SP,a
+@item LD BC,(a)
+@tab LD DE,(a)
+@tab LD HL,(a)
+@tab LD SP,(a)
+@item LD BC,a
+@tab LD DE,a
+@tab LD HL,a
+@tab LD SP,a
+@item LD (HL),B
+@tab LD (HL),C
+@tab LD (HL),D
+@tab LD (HL),E
+@item LD (HL),H
+@tab LD (HL),L
+@tab LD (HL),A
+@tab LD (HL),a
+@item LD (BC),A
+@tab LD (DE),A
+@tab LD (IXa),B
+@tab LD (IXa),C
+@item LD (IXa),D
+@tab LD (IXa),E
+@tab LD (IXa),H
+@tab LD (IXa),L
+@item LD (IXa),A
+@tab LD (IXa),a
+@tab LD (IYa),a
+@tab LD (a),A
+@item LD (a),HL
+@tab LD (a),BC
+@tab LD (a),DE
+@tab LD (a),HL
+@item LD (a),SP
+@tab LD (a),BC
+@tab LD (a),DE
+@tab LD (a),HL
+@item LD (a),SP
+@tab PUSH BC
+@tab PUSH DE
+@tab PUSH HL
+@item PUSH AF
+@tab PUSH BC
+@tab PUSH DE
+@tab PUSH HL
+@item PUSH SP
+@tab POP BC
+@tab POP DE
+@tab POP HL
+@item POP AF
+@tab POP BC
+@tab POP DE
+@tab POP HL
+@item POP SP
+@tab EX DE,HL
+@tab EX AF,AF'
+@tab EX (SP),HL
+@item EX (SP),BC
+@tab EX (SP),DE
+@tab EX (SP),HL
+@tab EX (SP),SP
+@item EXX
+@tab LDI
+@tab LDIR
+@tab LDD
+@item LDDR
+@tab CPI
+@tab CPIR
+@tab CPD
+@item CPDR
+@tab ADD HL,BC
+@tab ADD HL,DE
+@tab ADD HL,HL
+@item ADD HL,SP
+@tab ADD IX,BC
+@tab ADD IX,DE
+@tab ADD IX,IX
+@item ADD IX,SP
+@tab ADD IY,BC
+@tab ADD IY,DE
+@tab ADD IY,IY
+@item ADD IY,SP
+@tab ADC HL,BC
+@tab ADC HL,DE
+@tab ADC HL,HL
+@item ADC HL,SP
+@tab SBC HL,BC
+@tab SBC HL,DE
+@tab SBC HL,HL
+@item SBC HL,SP
+@tab ADD A,B
+@tab ADD A,C
+@tab ADD A,D
+@item ADD A,E
+@tab ADD A,H
+@tab ADD A,L
+@tab ADD A,A
+@item * ADD A,B
+@tab * ADD A,C
+@tab * ADD A,D
+@tab * ADD A,E
+@item * ADD A,IXH
+@tab * ADD A,IXL
+@tab * ADD A,A
+@tab * ADD A,B
+@item * ADD A,C
+@tab * ADD A,D
+@tab * ADD A,E
+@tab * ADD A,IYH
+@item * ADD A,IYL
+@tab * ADD A,A
+@tab ADD A,(HL)
+@tab ADC A,(HL)
+@item SUB A,(HL)
+@tab SBC A,(HL)
+@tab AND A,(HL)
+@tab XOR A,(HL)
+@item OR A,(HL)
+@tab CP A,(HL)
+@tab ADD A,(IXa)
+@tab ADD A,(IYa)
+@item ADD A,a
+@tab ADC A,a
+@tab SUB A,a
+@tab SBC A,a
+@item AND A,a
+@tab XOR A,a
+@tab OR A,a
+@tab CP A,a
+@item ADD B
+@tab ADD C
+@tab ADD D
+@tab ADD E
+@item ADD H
+@tab ADD L
+@tab ADD A
+@tab * ADD B
+@item * ADD C
+@tab * ADD D
+@tab * ADD E
+@tab * ADD IXH
+@item * ADD IXL
+@tab * ADD A
+@tab * ADD B
+@tab * ADD C
+@item * ADD D
+@tab * ADD E
+@tab * ADD IYH
+@tab * ADD IYL
+@item * ADD A
+@tab ADD (HL)
+@tab ADC (HL)
+@tab SUB (HL)
+@item SBC (HL)
+@tab AND (HL)
+@tab XOR (HL)
+@tab OR (HL)
+@item CP (HL)
+@tab ADD (IXa)
+@tab ADD (IYa)
+@tab ADD a
+@item ADC a
+@tab SUB a
+@tab SBC a
+@tab AND a
+@item XOR a
+@tab OR a
+@tab CP a
+@tab INC B
+@item INC C
+@tab INC D
+@tab INC E
+@tab INC H
+@item INC L
+@tab INC A
+@tab * INC B
+@tab * INC C
+@item * INC D
+@tab * INC E
+@tab * INC IXH
+@tab * INC IXL
+@item * INC A
+@tab * INC B
+@tab * INC C
+@tab * INC D
+@item * INC E
+@tab * INC IYH
+@tab * INC IYL
+@tab * INC A
+@item INC (HL)
+@tab DEC (HL)
+@tab INC (IXa)
+@tab INC (IYa)
+@item INC BC
+@tab INC DE
+@tab INC HL
+@tab INC SP
+@item INC BC
+@tab INC DE
+@tab INC HL
+@tab INC SP
+@item DEC BC
+@tab DEC DE
+@tab DEC HL
+@tab DEC SP
+@item DEC BC
+@tab DEC DE
+@tab DEC HL
+@tab DEC SP
+@item DAA
+@tab CPL
+@tab NEG
+@tab CCF
+@item SCF
+@tab NOP
+@tab HALT
+@tab DI
+@item EI
+@tab IM a
+@tab RLCA
+@tab RLA
+@item RRCA
+@tab RRA
+@tab * SLL B
+@tab * SLL C
+@item * SLL D
+@tab * SLL E
+@tab * SLL H
+@tab * SLL L
+@item * SLL A
+@tab * SLL (HL)
+@tab * SLL (IXa)
+@tab * SLL (IYa)
+@item * SLL (IXa),B
+@tab * SLL (IXa),C
+@tab * SLL (IXa),D
+@tab * SLL (IXa),E
+@item * SLL (IXa),H
+@tab * SLL (IXa),L
+@tab * SLL (IXa),A
+@tab RLC B
+@item RLC C
+@tab RLC D
+@tab RLC E
+@tab RLC H
+@item RLC L
+@tab RLC A
+@tab RLC (HL)
+@tab RRC (HL)
+@item RL (HL)
+@tab RR (HL)
+@tab SLA (HL)
+@tab SRA (HL)
+@item SRL (HL)
+@tab RLC (IXa)
+@tab RLC (IYa)
+@tab * RLC (IXa),B
+@item * RLC (IXa),C
+@tab * RLC (IXa),D
+@tab * RLC (IXa),E
+@tab * RLC (IXa),H
+@item * RLC (IXa),L
+@tab * RLC (IXa),A
+@tab RLD
+@tab RRD
+@item BIT a,B
+@tab BIT a,C
+@tab BIT a,D
+@tab BIT a,E
+@item BIT a,H
+@tab BIT a,L
+@tab BIT a,A
+@tab BIT a,(HL)
+@item RES a,(HL)
+@tab SET a,(HL)
+@tab BIT a,(IXa)
+@tab BIT a,(IYa)
+@item * RES a,(IXa),B
+@tab * RES a,(IXa),C
+@tab * RES a,(IXa),D
+@tab * RES a,(IXa),E
+@item * RES a,(IXa),H
+@tab * RES a,(IXa),L
+@tab * RES a,(IXa),A
+@tab * SET a,(IXa),B
+@item * SET a,(IXa),C
+@tab * SET a,(IXa),D
+@tab * SET a,(IXa),E
+@tab * SET a,(IXa),H
+@item * SET a,(IXa),L
+@tab * SET a,(IXa),A
+@tab JP (HL)
+@tab JP (BC)
+@item JP (DE)
+@tab JP (HL)
+@tab JP (SP)
+@tab JP NZ,a
+@item JP Z,a
+@tab JP NC,a
+@tab JP C,a
+@tab JP PO,a
+@item JP PE,a
+@tab JP P,a
+@tab JP M,a
+@tab JP a
+@item JR NZ,a
+@tab JR Z,a
+@tab JR NC,a
+@tab JR C,a
+@item JR a
+@tab DJNZ a
+@tab CALL NZ,a
+@tab CALL Z,a
+@item CALL NC,a
+@tab CALL C,a
+@tab CALL PO,a
+@tab CALL PE,a
+@item CALL P,a
+@tab CALL M,a
+@tab CALL a
+@tab RETI
+@item RETN
+@tab RET NZ
+@tab RET Z
+@tab RET NC
+@item RET C
+@tab RET PO
+@tab RET PE
+@tab RET P
+@item RET M
+@tab RET
+@tab RST a
+@tab IN B,(C)
+@item IN C,(C)
+@tab IN D,(C)
+@tab IN E,(C)
+@tab IN H,(C)
+@item IN L,(C)
+@tab IN A,(C)
+@tab IN A,(a)
+@tab IN F,(a)
+@item * IN (C)
+@tab INI
+@tab INIR
+@tab IND
+@item INDR
+@tab * OUT (C),0
+@tab OUT (C),B
+@tab OUT (C),C
+@item OUT (C),D
+@tab OUT (C),E
+@tab OUT (C),H
+@tab OUT (C),L
+@item OUT (C),A
+@tab OUT (a),A
+@tab OUTI
+@tab OTIR
+@item OUTD
+@tab OTDR
+@end multitable

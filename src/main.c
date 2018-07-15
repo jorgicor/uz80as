@@ -1,5 +1,5 @@
 /* ===========================================================================
- * uz80as, a macro assembler for Z80 based microprocessors.
+ * uz80as, an assembler for the Zilog Z80 and several other microprocessors.
  *
  * main(), handling of command line options.
  * ===========================================================================
@@ -23,6 +23,10 @@
 
 #ifndef STRING_H
 #include <string.h>
+#endif
+
+#ifndef CTYPE_H
+#include <ctype.h>
 #endif
 
 void print_copyright(FILE *f)
@@ -193,6 +197,71 @@ static void list_targets(FILE *f)
 	}
 }
 
+static void print_inst(FILE *f, const struct target *t, int *col, int flags,
+		       const char *p, char *buf, size_t bufsz, size_t bufi)
+{
+	const char *s;
+
+	while (*p && (*p == 'a' || !islower(*p))) {
+		buf[bufi++] = *p++;
+	}
+
+	if (*p == '\0') {
+		buf[bufi] = '\0';
+		if (*col == 0) {
+			fputs("@item ", f);
+		} else {
+			fputs("@tab ", f);
+		}
+		if (flags & MATCH_F_UNDOC) {
+			fputs("* ", f);
+		}
+		fprintf(f, "%s\n", buf);
+		(*col)++;
+		if (*col >= 4) {
+			*col = 0;
+		}
+	} else {
+		t->pat_char_rewind(*p);
+		while ((s = t->pat_next_str()) != NULL) {
+			if (s[0] != '\0') {
+				buf[bufi] = '\0';
+				strcat(buf, s);
+				print_inst(f, t, col, flags, p + 1, buf, bufsz,
+					   bufi + strlen(s));
+			}
+		}
+	}
+}
+
+static void print_table(FILE *f, const char *target_id)
+{
+	const struct target *t;
+	const struct matchtab *mt;
+	int i, col;
+	char buf[64];
+	
+	t = find_target(target_id);
+	if (t == NULL) {
+		eprogname();
+		fprintf(stderr, _("invalid target '%s'\n"), target_id);
+		exit(EXIT_FAILURE);
+	}
+
+	col = 0;
+	mt = t->matcht;
+	fputs("@multitable @columnfractions .25 .25 .25 .25\n", f);
+	// fputs("@itemize @bullet\n", f);
+	i = 0;
+	while (mt[i].pat != NULL) {
+		print_inst(f, t, &col, mt[i].flags, mt[i].pat, buf,
+			   sizeof(buf), 0);
+		i++;
+	}
+	// fputs("@end itemize\n", f);
+	fputs("@end multitable\n", f);
+}
+
 int main(int argc, char *argv[])
 {
 	int c;
@@ -209,6 +278,7 @@ int main(int argc, char *argv[])
 		{ "target", 1, 't' },
 		{ "undocumented", 0, 'u' },
 		{ "version", 0, 'v' },
+		{ "print-table", 1, 'p' },
 		{ NULL, 0, 0 },
 	};
 
@@ -229,6 +299,10 @@ int main(int argc, char *argv[])
 			exit(EXIT_SUCCESS);
 		case 't':
 			parse_target_id(ngo.optarg);
+			break;
+		case 'p':
+			print_table(stdout, ngo.optarg);
+			exit(EXIT_SUCCESS);
 			break;
 		case 'e':
 			list_targets(stdout);

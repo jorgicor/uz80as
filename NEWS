@@ -1,3 +1,23 @@
+1.04	2018-07-15
+
+	* uz80as becomes a multitarget assembler. The default target is the
+	  Zilog Z80. Other targets can be selected using the `--target` command
+	  line option.
+
+	* The targets accepted are:
+	  - z80: Zilog Z80 (the default if no target specified).
+	  - i8080: Intel 8080.
+	  - gbcpu: Sharp LR35902 (Nintendo Gameboy CPU).
+
+	* Added the `--undocumented` command line option to enable undocumented
+	  instructions.
+
+	* Added a `--license` command line option.
+
+	* Fixed: for the Z80, the `OUT (C),0` and SLL instructions where
+	  accepted by default, but they are undocumented instructions. Now are
+	  only accepted with the `--undocumented` command line option.
+
 1.03	2017-04-04
 
 	* Fixed typo in the --help output (assemle to assemble).

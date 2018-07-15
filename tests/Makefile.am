@@ -10,6 +10,7 @@ dist_check_SCRIPTS = main.test \
 		     z80.test \
 		     z80u.test \
 		     gbcpu.test \
+		     i8080.test \
 		     tasmfail.test \
 		     longlabel.test \
 		     orgbelow.test \
@@ -59,6 +60,10 @@ EXTRA_DIST = igen.sh \
 	     gbcpu.bok \
 	     gbcpu.lok \
 	     gbcpu.eok \
+	     i8080.asm \
+	     i8080.bok \
+	     i8080.lok \
+	     i8080.eok \
 	     tasmfail.asm \
 	     tasmfail.bok \
 	     tasmfail.lok \

@@ -80,8 +80,15 @@ This manual is for @command{uz80as} (Micro Z80 assembler) version
 @node About
 @chapter About
 
-@command{uz80as} is a cross assembler for the Zilog Z80 microprocessor.
+@command{uz80as} is an assembler for the Zilog Z80 and several other microprocessors.
 It accepts source files with the same syntax accepted by the Telemark Cross Assembler (TASM), with only minor differences.
+
+Currently, uz80as can assemble for these microprocessors:
+@itemize @bullet
+@item Zilog Z80
+@item Sharp LR35902 (Nintendo Gameboy CPU)
+@item Intel 8080
+@end itemize
 
 @command{uz80as} is free software.
 
@@ -961,10 +968,11 @@ Used to end a section that began with an @code{#IF}, @code{#IFDEF}, @code{IFNDEF
 
 @menu
 * Invoking uz80as::			How to invoke @command{uz80as}.
-* Z80 instruction set::			Instruction set for the Z80 cpu.
-* GBZ80 instruction set::		Instruction set for the LR35902 cpu.
 * Implementation-defined features::	Features specific to @command{uz80as}.
 * Differences with TASM::		How we differ from TASM.
+* z80 instruction set::			Instruction set for the Zilog Z80.
+* gbcpu instruction set::		Instruction set for the Sharp LR35902.
+* i8080 instruction set::		Instruction set for the Intel 8080.
 @end menu
 
 @node Invoking uz80as
@@ -1013,333 +1021,17 @@ If it is a macro for text substitution, you have to enclose the macro definition
 Disables the generation of the listing file.
 
 @item -x, --extended
-Accept alternative syntax for some instructions.
-@xref{Z80 extended syntax}.
+Accept an alternative syntax for some instructions.
 
 @item -u, --undocumented
 Accept undocumented instructions.
-@xref{Z80 undocumented instructions}.
+
+@item -t, --target target
+Selects the target microprocessor. The default is @code{z80}. See @code{--list-targets} to know the targets accepted.
+
+@item -e, --list-targets
+Displays a list of the targets accepted and a brief description.
 @end table
-
-@node Z80 instruction set
-@section Z80 instruction set
-
-@itemize @bullet
-@item LD b,b
-@item LD b,(HL)
-@item LD b,(ca)
-@item LD A,I
-@item LD A,R
-@item LD A,(BC)
-@item LD A,(DE)
-@item LD A,(a)
-@item LD b,a
-@item LD I,A
-@item LD R,A
-@item LD SP,HL
-@item LD SP,e
-@item LD HL,(a)
-@item LD d,(a)
-@item LD d,a
-@item LD e,(a)
-@item LD e,a
-@item LD (HL),b
-@item LD (HL),a
-@item LD (BC),A
-@item LD (DE),A
-@item LD (ca),b
-@item LD (ca),a
-@item LD (a),A
-@item LD (a),HL
-@item LD (a),d
-@item LD (a),e
-@item PUSH f
-@item PUSH e
-@item POP f
-@item POP e
-@item EX DE,HL
-@item EX AF,AF'
-@item EX (SP),HL
-@item EX (SP),e
-@item EXX
-@item LDI
-@item LDIR
-@item LDD
-@item LDDR
-@item CPI
-@item CPIR
-@item CPD
-@item CPDR
-@item ADD HL,d
-@item ADD IX,i
-@item ADD IY,j
-@item ADC HL,d
-@item SBC HL,d
-@item g A,b
-@item g A,(HL)
-@item g A,(ca)
-@item g A,a
-@item g b
-@item g (HL)
-@item g (ca)
-@item g a
-@item h b
-@item h (HL)
-@item h (ca)
-@item INC d
-@item INC e
-@item DEC d
-@item DEC e
-@item DAA
-@item CPL
-@item NEG
-@item CCF
-@item SCF
-@item NOP
-@item HALT
-@item DI
-@item EI
-@item IM a
-@item RLCA
-@item RLA
-@item RRCA
-@item RRA
-@item k b
-@item k (HL)
-@item k (ca)
-@item RLD
-@item RRD
-@item l a,b
-@item l a,(HL)
-@item l a,(ca)
-@item JP (HL)
-@item JP (e)
-@item JP m,a
-@item JP a
-@item JR n,a
-@item JR a
-@item DJNZ a
-@item CALL m,a
-@item CALL a
-@item RETI
-@item RETN
-@item RET m
-@item RET
-@item RST a
-@item IN b,(C)
-@item IN A,(a)
-@item IN F,(a)
-@item INI
-@item INIR
-@item IND
-@item INDR
-@item OUT (C),b
-@item OUT (a),A
-@item OUTI
-@item OTIR
-@item OUTD
-@item OTDR
-@end itemize
-
-Where:
-
-@itemize @bullet
-@item a: expression
-@item b: B,C,D,E,H,L,A
-@item c: IX,IY (must be followed by + or -)
-@item d: BC,DE,HL,SP
-@item e: IX,IY
-@item f: BC,DE,HL,AF
-@item g: ADD,ADC,SUB,SBC,AND,XOR,OR,CP
-@item h: INC,DEC
-@item i: BC,DE,IX,SP
-@item j: BC,DE,IY,SP
-@item k: RLC,RRC,RL,RR,SLA,SRA,SRL
-@item l: BIT,RES,SET
-@item m: NZ,Z,NC,C,PO,PE,P,M
-@item n: NZ,Z,NC,C
-@end itemize
-
-@menu
-* Z80 extended syntax::	 	    Alternative syntax for some instructions.
-* Z80 undocumented instructions::   To generate undocumented opcodes.
-@end menu
-
-@node Z80 extended syntax
-@subsection Z80 extended syntax
-
-Note that in the official Zilog syntax, some of the arithmetic group of instructions take the @code{A} register as first argument: @code{ADD}, @code{ADC} and @code{SBC}.
-Others do not: @code{SUB}, @code{AND}, @code{OR}, @code{XOR} and @code{CP}.
-So you write:
-
-@example
-	ADD A,B
-@end example
-
-and do not write
-
-@example
-	ADD B
-@end example
-
-And you write:
-
-@example
-	SUB B
-@end example
-
-but do not write
-
-@example
-	SUB A,B
-@end example
-
-By default, it is an error to use the unofficial forms of these instructions, but you can enable them by specifying the @code{-x} option at the command line.
-With this option enabled, you can write this:
-
-@example
-	ADD A,B
-	ADD B
-	SUB A,B
-	SUB B
-@end example
-
-For compatibility with other assemblers, it is better to keep the official syntax.
-
-@node Z80 undocumented instructions
-@subsection Z80 undocumented instructions
-
-These additional instructions will be accepted for the Z80 cpu if the @code{-u} option is specified:
-
-@itemize @bullet
-@item LD p,p
-@item LD q,q
-@item LD p,a
-@item LD q,a
-@item g A,p
-@item g A,q
-@item g p
-@item g q
-@item h p
-@item h q
-@item SLL b
-@item SLL (HL)
-@item SLL (ca)
-@item SLL (ca),b
-@item k (ca),b
-@item RES a,(ca),b
-@item SET a,(ca),b
-@item IN (C)
-@item OUT (C),0
-@end itemize
-
-where:
-
-@itemize @bullet
-@item a: expression
-@item b: B,C,D,E,H,L,A
-@item c: IX,IY (must be followed by + or -)
-@item g: ADD,ADC,SUB,SBC,AND,XOR,OR,CP
-@item h: INC,DEC
-@item k: RLC,RRC,RL,RR,SLA,SRA,SRL
-@item p: B,C,D,E,IXH,IXL,A
-@item q: B,C,D,E,IYH,IYL,A
-@end itemize
-
-@node GBZ80 instruction set
-@section GBZ80 instruction set
-
-@itemize @bullet
-@item LD b,b
-@item LD b,(HL)
-@item LD A,(C)
-@item LD A,(BC)
-@item LD A,(DE)
-@item LD A,(HLI)
-@item LD A,(HLD)
-@item LD A,(a)
-@item LD b,a
-@item LD SP,HL
-@item LDHL SP,a
-@item LD d,a
-@item LD (C),A
-@item LD (HL),b
-@item LD (HL),a
-@item LD (HLI),A
-@item LD (HLD),A
-@item LD (BC),A
-@item LD (DE),A
-@item LD (a),A
-@item LD (a),SP
-@item LDH A,(a)
-@item LDH (a),A
-@item PUSH f
-@item POP f
-@item ADD HL,d
-@item ADD SP,a
-@item g A,b
-@item g A,(HL)
-@item g A,a
-@item g b
-@item g (HL)
-@item g a
-@item h b
-@item h (HL)
-@item INC d
-@item DEC d
-@item DAA
-@item CPL
-@item CCF
-@item SCF
-@item NOP
-@item HALT
-@item DI
-@item EI
-@item RLCA
-@item RLA
-@item RRCA
-@item RRA
-@item o b
-@item o (HL)
-@item l a,b
-@item l a,(HL)
-@item JP (HL)
-@item JP n,a
-@item JP a
-@item JR n,a
-@item JR a
-@item STOP
-@item CALL n,a
-@item CALL a
-@item RETI
-@item RET n
-@item RET
-@item RST a
-@end itemize
-
-Where:
-
-@itemize @bullet
-@item a: expression
-@item b: B,C,D,E,H,L,A
-@item d: BC,DE,HL,SP
-@item f: BC,DE,HL,AF
-@item g: ADD,ADC,SUB,SBC,AND,XOR,OR,CP
-@item h: INC,DEC
-@item l: BIT,RES,SET
-@item n: NZ,Z,NC,C
-@item o: RLC,RRC,RL,RR,SLA,SRA,SWAP,SRL
-@end itemize
-
-@menu
-* GBZ80 extended syntax:: 	    Alternative syntax for some instructions.
-@end menu
-
-@node GBZ80 extended syntax
-@subsection GBZ80 extended syntax
-
-If the @code{-x} command line option is supplied, the arithmetic instructions (@code{ADD}, @code{ADC}, @code{SUB}, @code{SBC}, @code{AND}, @code{OR}, @code{XOR} and @code{CP}) will be accepted with or without the register @code{A} as the first argument.
-@xref{Z80 extended syntax}.
 
 @node Implementation-defined features
 @section Implementation-defined features
@@ -1419,7 +1111,7 @@ We allow this while @command{TASM} does not:
 @end example
 
 Moreover, in @command{uz80as} only the least @code{N} bits of the second operand are used in the shifting operation, where @code{N} is the number of bits used by an integer on this machine, minus one.
-For a system where an integer is 32 bits, @code{N} is 31.  
+For a system where an integer is 32 bits, @code{N} is 31.
 This seems compatible with @command{TASM}.
 
 @item
@@ -1468,7 +1160,7 @@ So our @code{.CHK} directive can generate a value completely different than @com
 
 @item
 We allow to write the instructions @code{ADD}, @code{ADC}, @code{SUB}, @code{SBC}, @code{AND}, @code{OR}, @code{XOR} and @code{CP} with the @code{A} register as first argument or without it (if the @code{-x} option is specified).
-@command{TASM} sticks to the official Zilog syntax. @xref{Z80 instruction set}.
+@command{TASM} sticks to the official Zilog syntax. @xref{z80 instruction set}.
 
 @item
 @command{TASM} accepts including files without enclosing them in double quotes:
@@ -1496,6 +1188,104 @@ We do not allow for trailing commas, you should write:
 .BYTE   1, 2, 3
 @end example
 
+@end itemize
+
+@node z80 instruction set
+@section z80 instruction set
+
+The @code{z80} target selects the Zilog Z80 instruction set.
+These are the instructions accepted:
+
+@include z80tb.texi
+
+Where @code{*} marks undocumented instructions (selected with the @code{-u} command line option) and @code{a} is any expression, except:
+
+@itemize @bullet
+@item For the RST instruction, the expression must evaluate to 0H, 8H, 10H, 18H, 20H, 28H, 30H or 38H.
+@item For IXa and IYa, this means IX or IY followed by a @code{+} or @code{-} sign and a expression.
+@end itemize
+
+@menu
+* z80 extended syntax::	 	    Alternative syntax for some instructions.
+@end menu
+
+@node z80 extended syntax
+@subsection z80 extended syntax
+
+Note that in the official Zilog documentation, some of the arithmetic group of instructions take the @code{A} register as first argument: @code{ADD}, @code{ADC} and @code{SBC}.
+Others do not: @code{SUB}, @code{AND}, @code{OR}, @code{XOR} and @code{CP}.
+So you write:
+
+@example
+	ADD A,B
+@end example
+
+and do not write
+
+@example
+	ADD B
+@end example
+
+And you write:
+
+@example
+	SUB B
+@end example
+
+but do not write
+
+@example
+	SUB A,B
+@end example
+
+By default, it is an error to use the unofficial forms of these instructions, but you can enable them by specifying the @code{-x} option at the command line.
+With this option enabled, you can write any of these instructions with or without the @code{A} register as the first argument, like this:
+
+@example
+	ADD A,B
+	ADD B
+	SUB A,B
+	SUB B
+@end example
+
+For compatibility with other assemblers, it is better to keep the official syntax.
+
+@node gbcpu instruction set
+@section gbcpu instruction set
+
+The @code{gbcpu} target selects the Sharp LR35902 CPU used in the Nintendo Gameboy.
+These are the instructions accepted:
+
+@include gbcputb.texi
+
+Where @code{a} is any expression, except:
+
+@itemize @bullet
+@item For the RST instruction, the expression must evaluate to 0H, 8H, 10H, 18H, 20H, 28H, 30H or 38H.
+@end itemize
+
+@menu
+* gbcpu extended syntax:: 	    Alternative syntax for some instructions.
+@end menu
+
+@node gbcpu extended syntax
+@subsection gbcpu extended syntax
+
+If the @code{-x} command line option is supplied, the arithmetic instructions (@code{ADD}, @code{ADC}, @code{SUB}, @code{SBC}, @code{AND}, @code{OR}, @code{XOR} and @code{CP}) will be accepted with or without the register @code{A} as the first argument.
+@xref{z80 extended syntax}.
+
+@node i8080 instruction set
+@section i8080 instruction set
+
+The @code{i8080} target selects the Intel 8080.
+These are the instructions accepted:
+
+@include i8080tb.texi
+
+Where @code{a} is any expression except:
+
+@itemize @bullet
+@item For the RST instruction it must evaluate to a value between 0 and 7.
 @end itemize
 
 @node Source guide
@@ -1544,6 +1334,10 @@ We do not allow for trailing commas, you should write:
 @itemize @minus
 @item
 @file{uz80as.c}: the assembler program.
+@item
+@file{target/*.c}: the different targets.
+@item
+@file{targets.c}: enumeration of the different targets available.
 @item
 @file{main.c}: the entry point.
 @end itemize

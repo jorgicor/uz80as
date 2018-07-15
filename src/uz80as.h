@@ -1,5 +1,5 @@
 /* ===========================================================================
- * uz80as, a macro assembler for Z80 based microprocessors.
+ * uz80as, an assembler for the Zilog Z80 and several other microprocessors.
  *
  * Assembler.
  * ===========================================================================
@@ -16,11 +16,15 @@ enum {
 
 /* pat:
  * 	a: expr
- * 	b - z: used bu target
+ * 	b - z: used by target
  *
  * gen:
  * 	.: output lastbyte
- * 	b - z: used by target
+ * 	b: (op << 3) | lastbyte
+ * 	c: op | lastbyte
+ * 	d: lastbyte = op as 8 bit value
+ * 	e: output op as word (no '.' sould follow)
+ * 	f - z: used by target
  */
 
 struct matchtab {
@@ -35,6 +39,8 @@ struct target {
 	const struct matchtab *matcht;
 	int (*matchf)(char c, const char *p, const char **q);
 	int (*genf)(int *eb, char p, const int *vs, int i, int savepc);
+	void (*pat_char_rewind)(int c);
+	const char * (*pat_next_str)(void);
 };
 
 extern const char *s_pline_ep;

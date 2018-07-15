@@ -1,0 +1,135 @@
+@multitable @columnfractions .25 .25 .25 .25
+@item MOV M,B
+@tab MOV M,C
+@tab MOV M,D
+@tab MOV M,E
+@item MOV M,H
+@tab MOV M,L
+@tab MOV M,A
+@tab MOV B,M
+@item MOV C,M
+@tab MOV D,M
+@tab MOV E,M
+@tab MOV H,M
+@item MOV L,M
+@tab MOV A,M
+@tab MOV B,B
+@tab MOV B,C
+@item MOV B,D
+@tab MOV B,E
+@tab MOV B,H
+@tab MOV B,L
+@item MOV B,A
+@tab MVI B,a
+@tab MVI C,a
+@tab MVI D,a
+@item MVI E,a
+@tab MVI H,a
+@tab MVI L,a
+@tab MVI M,a
+@item MVI A,a
+@tab LXI B,a
+@tab LXI D,a
+@tab LXI H,a
+@item LXI SP,a
+@tab SHLD a
+@tab LHLD a
+@tab STA a
+@item LDA a
+@tab STAX B
+@tab STAX D
+@tab XCHG
+@item ADD B
+@tab ADD C
+@tab ADD D
+@tab ADD E
+@item ADD H
+@tab ADD L
+@tab ADD M
+@tab ADD A
+@item ADI a
+@tab ACI a
+@tab SUI a
+@tab SBI a
+@item ANI a
+@tab XRI a
+@tab ORI a
+@tab CPI a
+@item INR B
+@tab INR C
+@tab INR D
+@tab INR E
+@item INR H
+@tab INR L
+@tab INR M
+@tab INR A
+@item DCR B
+@tab DCR C
+@tab DCR D
+@tab DCR E
+@item DCR H
+@tab DCR L
+@tab DCR M
+@tab DCR A
+@item INX B
+@tab INX D
+@tab INX H
+@tab INX SP
+@item DCX B
+@tab DCX D
+@tab DCX H
+@tab DCX SP
+@item DAD B
+@tab DAD D
+@tab DAD H
+@tab DAD SP
+@item DAA
+@tab RLC
+@tab RRC
+@tab RAL
+@item RAR
+@tab CMA
+@tab STC
+@tab CMC
+@item JMP a
+@tab JNZ a
+@tab JZ a
+@tab JNC a
+@item JC a
+@tab JPO a
+@tab JPE a
+@tab JP a
+@item JM a
+@tab CALL a
+@tab CNZ a
+@tab CZ a
+@item CNC a
+@tab CC a
+@tab CPO a
+@tab CPE a
+@item CP a
+@tab CM a
+@tab RET
+@tab RNZ
+@item RZ
+@tab RNC
+@tab RC
+@tab RPO
+@item RPE
+@tab RP
+@tab RM
+@tab RST a
+@item PCHL
+@tab POP B
+@tab POP D
+@tab POP H
+@item POP PSW
+@tab XTHL
+@tab SPHL
+@tab OUT a
+@item IN a
+@tab DI
+@tab EI
+@tab HLT
+@item NOP
+@end multitable

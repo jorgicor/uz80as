@@ -1,9 +1,15 @@
+/* ===========================================================================
+ * uz80as, an assembler for the Zilog Z80 and several other microprocessors.
+ *
+ * Zilog Z80 CPU.
+ * ===========================================================================
+ */
+
 #include "pp.h"
 #include "err.h"
 #include "options.h"
 #include "uz80as.h"
 #include <stddef.h>
-#include <assert.h>
 
 /* pat:
  * 	a: expr
@@ -32,7 +38,7 @@
  * 	e: output op as word (no '.' sould follow)
  * 	f: (op << 4) | lastbyte
  * 	g: (op << 6) | lastbyte
- * 	h: (op << 3) | lastbyte
+ * 	h: *
  * 	i: relative jump to op
  * 	j: possible value to RST
  * 	k: possible value to IM
@@ -149,7 +155,7 @@ static const struct matchtab s_matchtab_z80[] = {
 	{ "JP (e)", "d0.E9." },
 	{ "JP m,a", "C2b0.e1" },
 	{ "JP a", "C3.e0" },
-	{ "JR n,a", "20h0.i1." },
+	{ "JR n,a", "20b0.i1." },
 	{ "JR a", "18.i0." },
 	{ "DJNZ a", "10.i0." },
 	{ "CALL m,a", "C4b0.e1" },
@@ -226,11 +232,12 @@ static int match_z80(char c, const char *p, const char **q)
 {
 	int v;
 
-	v = -1;
 	if (c == 'c' || c == 'e') {
 		v = indval(p, c == 'c', q);
 	} else if (c <= 'q') {
 		v = mreg(p, valtab[(int) (c - 'b')], q);
+	} else {
+		v = -1;
 	}
 
 	return v;
@@ -242,15 +249,8 @@ static int gen_z80(int *eb, char p, const int *vs, int i, int savepc)
        
 	b = *eb;
 	switch (p) {
-	case 'b': b |= ((vs[i] & 7) << 3); break;
-	case 'c': b |= (vs[i] & 7); break;
-	case 'd': b = vs[i]; break;
-	case 'e': genb(vs[i] & 0xff, s_pline_ep);
-		  genb(vs[i] >> 8, s_pline_ep);
-		  break;
-	case 'f': b |= ((vs[i] & 3) << 4); break;
-	case 'g': b |= ((vs[i] & 3) << 6); break;
-	case 'h': b |= ((vs[i] & 3) << 3); break;
+	case 'f': b |= (vs[i] << 4); break;
+	case 'g': b |= (vs[i] << 6); break;
 	case 'i': b = (vs[i] - savepc - 2); break;
 	case 'j': if (s_pass > 0 && (vs[i] & ~56) != 0) {
 			  eprint(_("invalid RST argument (%d)\n"),
@@ -296,11 +296,38 @@ static int gen_z80(int *eb, char p, const int *vs, int i, int savepc)
 	return 0;
 }
 
+static int s_pat_char = 'b';
+static int s_pat_index;
+
+static void pat_char_rewind_z80(int c)
+{
+	s_pat_char = c;
+	s_pat_index = 0;
+};
+
+static const char *pat_next_str_z80(void)
+{
+	const char *s;
+
+	if (s_pat_char >= 'b' && s_pat_char <= 'q') {
+		s = valtab[(int) (s_pat_char - 'b')][s_pat_index];
+		if (s != NULL) {
+			s_pat_index++;
+		}
+	} else {
+		s = NULL;
+	}
+
+	return s;
+};
+
 const struct target s_target_z80 = {
 	"z80",
-	"Zilog Z80 CPU",
+	"Zilog Z80",
 	s_matchtab_z80,
 	match_z80,
-	gen_z80
+	gen_z80,
+	pat_char_rewind_z80,
+	pat_next_str_z80
 };
 

@@ -1,3 +1,10 @@
+/* ===========================================================================
+ * uz80as, an assembler for the Zilog Z80 and several other microprocessors.
+ *
+ * Target list.
+ * ===========================================================================
+ */
+
 #include "targets.h"
 #include "uz80as.h"
 
@@ -7,10 +14,12 @@
 
 extern const struct target s_target_z80;
 extern const struct target s_target_gbcpu;
+extern const struct target s_target_i8080;
 
 static const struct target *s_targets[] = {
 	&s_target_z80,
 	&s_target_gbcpu,
+	&s_target_i8080,
 	NULL,
 };
 

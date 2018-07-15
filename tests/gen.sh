@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# ===========================================================================
+# uz80as, an assembler for the Zilog Z80 and several other microprocessors.
+#
+# Generates the test files.
+# ===========================================================================
+
 uz80as=../src/uz80as
 tasm=../../tasm/tasm
 
@@ -22,7 +28,8 @@ function tgen ()
 tgen main
 ugen z80
 ugen z80u -u
-ugen gbz80 -tgbcpu
+ugen gbcpu -tgbcpu
+ugen i8080 -ti8080
 ugen tasmfail
 ugen longlabel
 ugen orgbelow
