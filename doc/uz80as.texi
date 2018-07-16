@@ -73,6 +73,7 @@ This manual is for @command{uz80as} (Micro Z80 assembler) version
 * About::		About @command{uz80as}.
 * Source syntax::	Source format accepted by @command{uz80as}.
 * Reference::		@command{uz80as} reference manual.
+* Targets::		Targets and instruction sets supported.
 * Source guide::	How the program works.
 * Copyright::		Copyright and license.
 @end menu
@@ -88,6 +89,7 @@ Currently, uz80as can assemble for these microprocessors:
 @item Zilog Z80
 @item Sharp LR35902 (Nintendo Gameboy CPU)
 @item Intel 8080
+@item Intel 8085
 @end itemize
 
 @command{uz80as} is free software.
@@ -970,9 +972,6 @@ Used to end a section that began with an @code{#IF}, @code{#IFDEF}, @code{IFNDEF
 * Invoking uz80as::			How to invoke @command{uz80as}.
 * Implementation-defined features::	Features specific to @command{uz80as}.
 * Differences with TASM::		How we differ from TASM.
-* z80 instruction set::			Instruction set for the Zilog Z80.
-* gbcpu instruction set::		Instruction set for the Sharp LR35902.
-* i8080 instruction set::		Instruction set for the Intel 8080.
 @end menu
 
 @node Invoking uz80as
@@ -1159,7 +1158,7 @@ START   .DB 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 So our @code{.CHK} directive can generate a value completely different than @command{TASM}, but should correctly implement what this manual says.
 
 @item
-We allow to write the instructions @code{ADD}, @code{ADC}, @code{SUB}, @code{SBC}, @code{AND}, @code{OR}, @code{XOR} and @code{CP} with the @code{A} register as first argument or without it (if the @code{-x} option is specified).
+We allow to write the instructions @code{ADD}, @code{ADC}, @code{SUB}, @code{SBC}, @code{AND}, @code{OR}, @code{XOR} and @code{CP} with the @code{A} register as the first argument or without it (if the @code{-x} option is specified).
 @command{TASM} sticks to the official Zilog syntax. @xref{z80 instruction set}.
 
 @item
@@ -1189,6 +1188,17 @@ We do not allow for trailing commas, you should write:
 @end example
 
 @end itemize
+
+@node Targets
+@chapter Targets
+
+@menu
+* z80 instruction set::			Zilog Z80 instruction set.
+* hd64180 instruction set::		Hitachi HD64180 instruction set.
+* gbcpu instruction set::		Sharp LR35902 instruction set.
+* i8080 instruction set::		Intel 8080 instruction set.
+* i8085 instruction set::		Intel 8085 instruction set.
+@end menu
 
 @node z80 instruction set
 @section z80 instruction set
@@ -1250,6 +1260,23 @@ With this option enabled, you can write any of these instructions with or withou
 
 For compatibility with other assemblers, it is better to keep the official syntax.
 
+@node hd64180 instruction set
+@section hd64180 instruction set
+
+The @code{hd64180} target selects the Hitachi HD64180 instruction set.
+The instructions accepted are the same as for the @code{z80} target (except undocumented instructions) plus these new instructions:
+
+@include hd64180tb.texi
+
+@menu
+* hd64180 extended syntax:: 	    Alternative syntax for some instructions.
+@end menu
+
+@node hd64180 extended syntax
+@subsection hd64180 extended syntax
+
+@xref{z80 extended syntax}.
+
 @node gbcpu instruction set
 @section gbcpu instruction set
 
@@ -1271,7 +1298,6 @@ Where @code{a} is any expression, except:
 @node gbcpu extended syntax
 @subsection gbcpu extended syntax
 
-If the @code{-x} command line option is supplied, the arithmetic instructions (@code{ADD}, @code{ADC}, @code{SUB}, @code{SBC}, @code{AND}, @code{OR}, @code{XOR} and @code{CP}) will be accepted with or without the register @code{A} as the first argument.
 @xref{z80 extended syntax}.
 
 @node i8080 instruction set
@@ -1286,6 +1312,22 @@ Where @code{a} is any expression except:
 
 @itemize @bullet
 @item For the RST instruction it must evaluate to a value between 0 and 7.
+@end itemize
+
+@node i8085 instruction set
+@section i8085 instruction set
+
+The @code{i8085} target selects the Intel 8085.
+The instruction set accepted is the same as for the @code{i8080} target, plus these new instructions:
+
+@include i8085tb.texi
+
+Where:
+
+@itemize @bullet
+@item @code{*} marks undocumented instructions (selected with the @code{-u} command line option).
+@item @code{JNX5} and @code{JNUI} are alternative names for the @code{JNK} instruction.
+@item @code{JX5}  and @code{JUI} are alternative names for the @code{JK} instruction.
 @end itemize
 
 @node Source guide

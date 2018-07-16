@@ -31,6 +31,7 @@ function tgen ()
 tgen main
 ugen z80
 ugen z80u -u
+ugen hd64180 -thd64180
 ugen gbcpu -tgbcpu
 ugen i8080 -ti8080
 ugen i8085 -ti8085

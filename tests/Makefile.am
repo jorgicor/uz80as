@@ -9,6 +9,7 @@ TESTS_ENVIRONMENT = uz80as=$(top_builddir)/src/uz80as$(EXEEXT) \
 dist_check_SCRIPTS = main.test \
 		     z80.test \
 		     z80u.test \
+		     hd64180.test \
 		     gbcpu.test \
 		     i8080.test \
 		     i8085.test \
@@ -58,6 +59,10 @@ EXTRA_DIST = igen.sh \
 	     z80u.bok \
 	     z80u.lok \
 	     z80u.eok \
+	     hd64180.asm \
+	     hd64180.bok \
+	     hd64180.lok \
+	     hd64180.eok \
 	     gbcpu.asm \
 	     gbcpu.bok \
 	     gbcpu.lok \

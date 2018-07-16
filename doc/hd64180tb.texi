@@ -1,0 +1,35 @@
+@multitable @columnfractions .25 .25 .25 .25
+@item IN0 B,(a)
+@tab IN0 C,(a)
+@tab IN0 D,(a)
+@tab IN0 E,(a)
+@item IN0 H,(a)
+@tab IN0 L,(a)
+@tab IN0 A,(a)
+@tab OUT0 (a),B
+@item OUT0 (a),C
+@tab OUT0 (a),D
+@tab OUT0 (a),E
+@tab OUT0 (a),H
+@item OUT0 (a),L
+@tab OUT0 (a),A
+@tab OTDM
+@tab OTDMR
+@item OTIM
+@tab OTIMR
+@tab MLT BC
+@tab MLT DE
+@item MLT HL
+@tab MLT SP
+@tab SLP
+@tab TST B
+@item TST C
+@tab TST D
+@tab TST E
+@tab TST H
+@item TST L
+@tab TST A
+@tab TST (HL)
+@tab TST a
+@item TSTIO a
+@end multitable

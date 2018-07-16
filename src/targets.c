@@ -13,12 +13,14 @@
 #endif
 
 extern const struct target s_target_z80;
+extern const struct target s_target_hd64180;
 extern const struct target s_target_gbcpu;
 extern const struct target s_target_i8080;
 extern const struct target s_target_i8085;
 
 static const struct target *s_targets[] = {
 	&s_target_z80,
+	&s_target_hd64180,
 	&s_target_gbcpu,
 	&s_target_i8080,
 	&s_target_i8085,
