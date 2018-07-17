@@ -28,4 +28,5 @@ uz80as_SOURCES = \
 	target/hd64180.c \
 	target/gbcpu.c \
 	target/i8080.c \
-	target/i8085.c
+	target/i8085.c \
+	target/dp2200.c
