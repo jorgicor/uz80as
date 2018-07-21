@@ -1,0 +1,4 @@
+#!/bin/sh
+nom=dp2200ii
+uz80as="$uz80as -tdp2200ii"
+. "$srcdir"/chkall.inc

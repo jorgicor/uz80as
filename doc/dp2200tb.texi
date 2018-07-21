@@ -1,0 +1,188 @@
+@multitable @columnfractions .25 .25 .25 .25
+@item HALT
+@tab SLC
+@tab SRC
+@tab RETURN
+@item INPUT
+@tab ADA
+@tab ADB
+@tab ADC
+@item ADD
+@tab ADE
+@tab ADH
+@tab ADL
+@item ADM
+@tab ACA
+@tab ACB
+@tab ACC
+@item ACD
+@tab ACE
+@tab ACH
+@tab ACL
+@item ACM
+@tab SUA
+@tab SUB
+@tab SUC
+@item SUD
+@tab SUE
+@tab SUH
+@tab SUL
+@item SUM
+@tab SBA
+@tab SBB
+@tab SBC
+@item SBD
+@tab SBE
+@tab SBH
+@tab SBL
+@item SBM
+@tab NDA
+@tab NDB
+@tab NDC
+@item NDD
+@tab NDE
+@tab NDH
+@tab NDL
+@item NDM
+@tab XRA
+@tab XRB
+@tab XRC
+@item XRD
+@tab XRE
+@tab XRH
+@tab XRL
+@item XRM
+@tab ORA
+@tab ORB
+@tab ORC
+@item ORD
+@tab ORE
+@tab ORH
+@tab ORL
+@item ORM
+@tab CPA
+@tab CPB
+@tab CPC
+@item CPD
+@tab CPE
+@tab CPH
+@tab CPL
+@item CPM
+@tab NOP
+@tab LAB
+@tab LAC
+@item LAD
+@tab LAE
+@tab LAH
+@tab LAL
+@item LAM
+@tab LBA
+@tab LBC
+@tab LBD
+@item LBE
+@tab LBH
+@tab LBL
+@tab LBM
+@item LCA
+@tab LCB
+@tab LCD
+@tab LCE
+@item LCH
+@tab LCL
+@tab LCM
+@tab LDA
+@item LDB
+@tab LDC
+@tab LDE
+@tab LDH
+@item LDL
+@tab LDM
+@tab LEA
+@tab LEB
+@item LEC
+@tab LED
+@tab LEH
+@tab LEL
+@item LEM
+@tab LHA
+@tab LHB
+@tab LHC
+@item LHD
+@tab LHE
+@tab LHL
+@tab LHM
+@item LLA
+@tab LLB
+@tab LLC
+@tab LLD
+@item LLE
+@tab LLH
+@tab LLM
+@tab LMA
+@item LMB
+@tab LMC
+@tab LMD
+@tab LME
+@item LMH
+@tab LML
+@tab EX ADR
+@tab EX STATUS
+@item EX DATA
+@tab EX WRITE
+@tab EX COM1
+@tab EX COM2
+@item EX COM3
+@tab EX COM4
+@tab EX BEEP
+@tab EX CLICK
+@item EX DECK1
+@tab EX DECK2
+@tab EX RBK
+@tab EX WBK
+@item EX BSP
+@tab EX SF
+@tab EX SB
+@tab EX REWND
+@item EX TSTOP
+@tab RFC
+@tab RFS
+@tab RTC
+@item RTS
+@tab RFZ
+@tab RFP
+@tab RTZ
+@item RTP
+@tab AD a
+@tab SU a
+@tab ND a
+@item OR a
+@tab LA a
+@tab LC a
+@tab LE a
+@item LL a
+@tab AC a
+@tab SB a
+@tab XR a
+@item CP a
+@tab LB a
+@tab LD a
+@tab LH a
+@item JFC a
+@tab JFS a
+@tab JTC a
+@tab JTS a
+@item CFC a
+@tab CFS a
+@tab CTC a
+@tab CTS a
+@item JFZ a
+@tab JFP a
+@tab JTZ a
+@tab JTP a
+@item CFZ a
+@tab CFP a
+@tab CTZ a
+@tab CTP a
+@item JMP a
+@tab CALL a
+@end multitable

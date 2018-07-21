@@ -1,0 +1,8 @@
+@multitable @columnfractions .25 .25 .25 .25
+@item BETA
+@tab DI
+@tab POP
+@tab ALPHA
+@item EI
+@tab PUSH
+@end multitable

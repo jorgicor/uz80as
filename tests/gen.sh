@@ -36,6 +36,8 @@ ugen gbcpu -tgbcpu
 ugen i8080 -ti8080
 ugen i8085 -ti8085
 ugen i8085u -u -ti8085
+ugen dp2200 -tdp2200
+ugen dp2200ii -tdp2200ii
 ugen tasmfail
 ugen longlabel
 ugen orgbelow
