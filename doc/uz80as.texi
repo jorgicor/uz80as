@@ -87,9 +87,12 @@ It accepts source files with the same syntax accepted by the Telemark Cross Asse
 Currently, uz80as can assemble for these microprocessors:
 @itemize @bullet
 @item Zilog Z80
+@item Hitachi HD64180
 @item Sharp LR35902 (Nintendo Gameboy CPU)
 @item Intel 8080
 @item Intel 8085
+@item Datapoint 2200 (version 1)
+@item Datapoint 2200 (version 2)
 @end itemize
 
 @command{uz80as} is free software.
@@ -1198,6 +1201,8 @@ We do not allow for trailing commas, you should write:
 * gbcpu instruction set::		Sharp LR35902 instruction set.
 * i8080 instruction set::		Intel 8080 instruction set.
 * i8085 instruction set::		Intel 8085 instruction set.
+* dp2200 instruction set::		Datapoint 2200 version 1.
+* dp2200ii instruction set::		Datapoint 2200 version 2.
 @end menu
 
 @node z80 instruction set
@@ -1329,6 +1334,22 @@ Where:
 @item @code{JNX5} and @code{JNUI} are alternative names for the @code{JNK} instruction.
 @item @code{JX5}  and @code{JUI} are alternative names for the @code{JK} instruction.
 @end itemize
+
+@node dp2200 instruction set
+@section dp2200 instruction set
+
+The @code{dp2200} target selects the Datapoint 2200 (version 1) instruction set.
+These are the instructions accepted:
+
+@include dp2200tb.texi
+
+@node dp2200ii instruction set
+@section dp2200ii instruction set
+
+The @code{dp2200ii} target selects the Datapoint 2200 (version 2) instruction set.
+The instruction set accepted is the same as for the @code{dp2200} target, plus these new instructions:
+
+@include dp2200iitb.texi
 
 @node Source guide
 @chapter Source guide
