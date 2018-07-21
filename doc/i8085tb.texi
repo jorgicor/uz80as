@@ -1,19 +1,18 @@
 @multitable @columnfractions .25 .25 .25 .25
-@item --
-@tab RIM
+@item RIM
 @tab SIM
 @tab * ARHL
-@item * DSUB
-@tab * RDEL
+@tab * DSUB
+@item * RDEL
 @tab * LDHI a
 @tab * LDSI a
-@item * RSTV
-@tab * SHLX
+@tab * RSTV
+@item * SHLX
 @tab * LHLX
 @tab * JNK a
-@item * JNX5 a
-@tab * JNUI a
+@tab * JNX5 a
+@item * JNUI a
 @tab * JK a
 @tab * JX5 a
-@item * JUI a
+@tab * JUI a
 @end multitable
