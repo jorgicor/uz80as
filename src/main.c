@@ -193,7 +193,7 @@ static void list_targets(FILE *f)
 	const struct target *p;
 
 	for (p = first_target(); p != NULL; p = next_target()) {
-		fprintf(f, "%s\t%s\n", p->id, p->descr);
+		fprintf(f, "%-14s%s\n", p->id, p->descr);
 	}
 }
 

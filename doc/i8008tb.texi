@@ -1,0 +1,192 @@
+@multitable @columnfractions .25 .25 .25 .25
+@item RET
+@tab RLC
+@tab RRC
+@tab RAL
+@item RAR
+@tab RFC
+@tab RFZ
+@tab RFS
+@item RFP
+@tab RTC
+@tab RTZ
+@tab RTS
+@item RTP
+@tab LAI a
+@tab LBI a
+@tab LCI a
+@item LDI a
+@tab LEI a
+@tab LHI a
+@tab LLI a
+@item LMI a
+@tab ADI a
+@tab ACI a
+@tab SUI a
+@item SBI a
+@tab NDI a
+@tab XRI a
+@tab ORI a
+@item CPI a
+@tab INB
+@tab INC
+@tab IND
+@item INE
+@tab INH
+@tab INL
+@tab DCB
+@item DCC
+@tab DCD
+@tab DCE
+@tab DCH
+@item DCL
+@tab RST a
+@tab JFC a
+@tab CFC a
+@item JMP a
+@tab CAL a
+@tab JFZ a
+@tab CFZ a
+@item JFS a
+@tab CFS a
+@tab JFP a
+@tab CFP a
+@item JTC a
+@tab CTC a
+@tab JTZ a
+@tab CTZ a
+@item JTS a
+@tab CTS a
+@tab JTP a
+@tab CTP a
+@item INP a
+@tab OUT a
+@tab ADA
+@tab ADB
+@item ADC
+@tab ADD
+@tab ADE
+@tab ADH
+@item ADL
+@tab ADM
+@tab ACA
+@tab ACB
+@item ACC
+@tab ACD
+@tab ACE
+@tab ACH
+@item ACL
+@tab ACM
+@tab SUA
+@tab SUB
+@item SUC
+@tab SUD
+@tab SUE
+@tab SUH
+@item SUL
+@tab SUM
+@tab SBA
+@tab SBB
+@item SBC
+@tab SBD
+@tab SBE
+@tab SBH
+@item SBL
+@tab SBM
+@tab NDA
+@tab NDB
+@item NDC
+@tab NDD
+@tab NDE
+@tab NDH
+@item NDL
+@tab NDM
+@tab XRA
+@tab XRB
+@item XRC
+@tab XRD
+@tab XRE
+@tab XRH
+@item XRL
+@tab XRM
+@tab ORA
+@tab ORB
+@item ORC
+@tab ORD
+@tab ORE
+@tab ORH
+@item ORL
+@tab ORM
+@tab CPA
+@tab CPB
+@item CPC
+@tab CPD
+@tab CPE
+@tab CPH
+@item CPL
+@tab CPM
+@tab NOP
+@tab LAB
+@item LAC
+@tab LAD
+@tab LAE
+@tab LAH
+@item LAL
+@tab LAM
+@tab LBA
+@tab LBB
+@item LBC
+@tab LBD
+@tab LBE
+@tab LBH
+@item LBL
+@tab LBM
+@tab LCA
+@tab LCB
+@item LCC
+@tab LCD
+@tab LCE
+@tab LCH
+@item LCL
+@tab LCM
+@tab LDA
+@tab LDB
+@item LDC
+@tab LDD
+@tab LDE
+@tab LDH
+@item LDL
+@tab LDM
+@tab LEA
+@tab LEB
+@item LEC
+@tab LED
+@tab LEE
+@tab LEH
+@item LEL
+@tab LEM
+@tab LHA
+@tab LHB
+@item LHC
+@tab LHD
+@tab LHE
+@tab LHH
+@item LHL
+@tab LHM
+@tab LLA
+@tab LLB
+@item LLC
+@tab LLD
+@tab LLE
+@tab LLH
+@item LLL
+@tab LLM
+@tab LMA
+@tab LMB
+@item LMC
+@tab LMD
+@tab LME
+@tab LMH
+@item LML
+@tab HLT
+@end multitable

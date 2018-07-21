@@ -5,6 +5,11 @@
  * ===========================================================================
  */
 
+/*
+ * Datapoint 2200 Version I, 2K to 8K mem (program counter 13 bits).
+ * Datapoint 2200 Version II, 2K to 16K mem (protram counter 14 bits).
+ */
+
 #include "pp.h"
 #include "err.h"
 #include "options.h"
@@ -28,20 +33,15 @@
  *	   LEA,LEB,LEC,LED,LEH,LEL,LEM,
  *	   LHA,LHB,LHC,LHD,LHE,LHL,LHM,
  *	   LLA,LLB,LLC,LLD,LLE,LLH,LLM,
- *	   LMA,LMB,LMC,LMD,LME,LMH,LML
+ *	   LMA,LMB,LMC,LMD,LME,LMH,LML,HALT
  *	d: ADR,STATUS,DATA,WRITE,COM1,COM2,COM3,COM4
  *	   BEEP,CLICK,DECK1,DECK2,
  *	   RBK,WBK,BSP,SF,SB,REWND,TSTOP 
- *	e: RFC,RFS,RTC,RTS
- *	f: RFZ,RFP,RTZ,RTP
- *	g: AD,SU,ND,OR
- *	h: LA,LC,LE,LL
- *	i: AC,SB,XR,CP
- *	j: LB,LD,LH
- *	k: JFC,JFS,JTC,JTS
- *	l: CFC,CFS,CTC,CTS
- *	m: JFZ,JFP,JTZ,JTP
- *	n: CFZ,CFP,CTZ,CTP
+ *	e: RFC,RFS,RTC,RTS,RFZ,RFP,RTZ,RTP
+ *	f: JFC,JFZ,JFS,JFP,JTC,JTZ,JTS,JTP
+ *	g: AD,SU,ND,OR,AC,SB,XR,CP
+ *	h: LA,LB,LC,LD,LE,LH,LL
+ *	i: CFC,CFZ,CFS,CFP,CTC,CTZ,CTS,CTP
  *
  * gen:
  * 	.: output lastbyte
@@ -54,7 +54,6 @@
  */
 
 const struct matchtab s_matchtab_dp2200[] = {
-	{ "HALT", "00.", 3, 0 },
 	{ "SLC", "02.", 3, 0 },
 	{ "SRC", "0A.", 3, 0 },
 	{ "RETURN", "07.", 3, 0 },
@@ -62,18 +61,14 @@ const struct matchtab s_matchtab_dp2200[] = {
 	{ "b", "80c0.", 3, 0 },
 	{ "c", "C0c0.", 3, 0 },
 	{ "EX d", "51f0.", 3, 0 },
-	{ "e", "03g0.", 3, 0 },
-	{ "f", "0Bg0.", 3, 0 },
-	{ "g a", "04g0.d1.", 3, 0 },
-	{ "h a", "06g0.d1.", 3, 0 },
-	{ "i a", "0Cg0.d1.", 3, 0 },
-	{ "j a", "0Eg0.d1.", 3, 0 },
-	{ "k a", "40g0.e1", 3, 0 },
-	{ "l a", "42g0.e1", 3, 0 },
-	{ "m a", "48g0.e1", 3, 0 },
-	{ "n a", "4Ag0.e1", 3, 0 },
+	{ "e", "03b0.", 3, 0 },
+	{ "g a", "04b0.d1.", 3, 0 },
+	{ "h a", "06b0.d1.", 3, 0 },
+	{ "f a", "40b0.e1", 3, 0 },
+	{ "i a", "42b0.e1", 3, 0 },
 	{ "JMP a", "44.e0", 3, 0 },
 	{ "CALL a", "46.e0", 3, 0 },
+	/* version II */
 	{ "BETA", "10.", 2, 0 },
 	{ "DI", "20.", 2, 0 },
 	{ "POP", "30.", 2, 0 },
@@ -102,7 +97,7 @@ static const char *const cval[] = {
 "LEA", "LEB", "LEC", "LED", "",    "LEH", "LEL", "LEM",
 "LHA", "LHB", "LHC", "LHD", "LHE", "",    "LHL", "LHM",
 "LLA", "LLB", "LLC", "LLD", "LLE", "LLH", "",    "LLM",
-"LMA", "LMB", "LMC", "LMD", "LME", "LMH", "LML",
+"LMA", "LMB", "LMC", "LMD", "LME", "LMH", "LML", "HALT",
 NULL };
 
 static const char *const dval[] = {
@@ -111,28 +106,36 @@ static const char *const dval[] = {
 "RBK", "WBK",    "",     "BSP",   "SF",   "SB",    "REWND", "TSTOP", 
 NULL };
 
-static const char *const eval[] = { "RFC", "RFS", "RTC", "RTS", NULL };
-static const char *const fval[] = { "RFZ", "RFP", "RTZ", "RTP", NULL };
-static const char *const gval[] = { "AD", "SU", "ND", "OR", NULL };
-static const char *const hval[] = { "LA", "LC", "LE", "LL", NULL };
-static const char *const ival[] = { "AC", "SB", "XR", "CP", NULL };
-static const char *const jval[] = { "LB", "LD", "LH", NULL };
-static const char *const kval[] = { "JFC", "JFS", "JTC", "JTS", NULL };
-static const char *const lval[] = { "CFC", "CFS", "CTC", "CTS", NULL };
-static const char *const mval[] = { "JFZ", "JFP", "JTZ", "JTP", NULL };
-static const char *const nval[] = { "CFZ", "CFP", "CTZ", "CTP", NULL };
-				  
+static const char *const eval[] = { "RFC", "RFZ", "RFS", "RFP",
+				    "RTC", "RTZ", "RTS", "RTP",
+				    NULL };
+
+static const char *const fval[] = { "JFC", "JFZ", "JFS", "JFP",
+				    "JTC", "JTZ", "JTS", "JTP",
+				    NULL };
+
+static const char *const gval[] = { "AD", "AC", "SU", "SB",
+				    "ND", "XR", "OR", "CP",
+				    NULL };
+
+static const char *const hval[] = { "LA", "LB", "LC", "LD",
+				    "LE", "LH", "LL",
+				    NULL };
+
+static const char *const ival[] = { "CFC", "CFZ", "CFS", "CFP",
+				    "CTC", "CTZ", "CTS", "CTP",
+				    NULL };
+
 static const char *const *const valtab[] = { 
 	bval, cval, dval, eval, fval,
-       	gval, hval, ival, jval, kval,
-	lval, mval, nval
+       	gval, hval, ival
 };
 
 static int match_dp2200(char c, const char *p, const char **q)
 {
 	int v;
 
-	if (c <= 'n') {
+	if (c <= 'i') {
 		v = mreg(p, valtab[(int) (c - 'b')], q);
 	} else {
 		v = -1;

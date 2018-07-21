@@ -33,11 +33,12 @@ ugen z80
 ugen z80u -u
 ugen hd64180 -thd64180
 ugen gbcpu -tgbcpu
+ugen dp2200 -tdp2200
+ugen dp2200ii -tdp2200ii
+ugen i8008 -ti8008
 ugen i8080 -ti8080
 ugen i8085 -ti8085
 ugen i8085u -u -ti8085
-ugen dp2200 -tdp2200
-ugen dp2200ii -tdp2200ii
 ugen tasmfail
 ugen longlabel
 ugen orgbelow

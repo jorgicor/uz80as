@@ -11,6 +11,7 @@ dist_check_SCRIPTS = main.test \
 		     z80u.test \
 		     hd64180.test \
 		     gbcpu.test \
+		     i8008.test \
 		     i8080.test \
 		     i8085.test \
 		     i8085u.test \
@@ -69,6 +70,10 @@ EXTRA_DIST = igen.sh \
 	     gbcpu.bok \
 	     gbcpu.lok \
 	     gbcpu.eok \
+	     i8008.asm \
+	     i8008.bok \
+	     i8008.lok \
+	     i8008.eok \
 	     i8080.asm \
 	     i8080.bok \
 	     i8080.lok \

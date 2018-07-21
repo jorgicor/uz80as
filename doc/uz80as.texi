@@ -1199,10 +1199,11 @@ We do not allow for trailing commas, you should write:
 * z80 instruction set::			Zilog Z80 instruction set.
 * hd64180 instruction set::		Hitachi HD64180 instruction set.
 * gbcpu instruction set::		Sharp LR35902 instruction set.
+* dp2200 instruction set::		Datapoint 2200 version I.
+* dp2200ii instruction set::		Datapoint 2200 version II.
+* i8008 instruction set::		Intel 8008 instruction set.
 * i8080 instruction set::		Intel 8080 instruction set.
 * i8085 instruction set::		Intel 8085 instruction set.
-* dp2200 instruction set::		Datapoint 2200 version 1.
-* dp2200ii instruction set::		Datapoint 2200 version 2.
 @end menu
 
 @node z80 instruction set
@@ -1305,6 +1306,47 @@ Where @code{a} is any expression, except:
 
 @xref{z80 extended syntax}.
 
+@node dp2200 instruction set
+@section dp2200 instruction set
+
+The @code{dp2200} target selects the Datapoint 2200 version I instruction set.
+
+Important: the Datapoint 2200 version I can only address 8K at maximum but @code{uz80as} at this moment accepts programs up to 64K and addressing up to 64K.
+
+These are the instructions accepted:
+
+@include dp2200tb.texi
+
+@node dp2200ii instruction set
+@section dp2200ii instruction set
+
+The @code{dp2200ii} target selects the Datapoint 2200 version II instruction set.
+
+Important: the Datapoint 2200 version II can only address 16K at maximum but @code{uz80as} at this moment accepts programs up to 64K and addressing up to 64K.
+
+The instruction set accepted is the same as for the @code{dp2200} target, plus these new instructions:
+
+@include dp2200iitb.texi
+
+@node i8008 instruction set
+@section i8008 instruction set
+
+The @code{i8008} target selects the Intel 8008 instruction set.
+
+Important: the Intel 8008 can only address 8K at maximum but @code{uz80as} at this moment accepts programs up to 64K and addressing up to 64K.
+
+These are the instructions accepted:
+
+@include i8008tb.texi
+
+Where @code{a} is any expression except:
+
+@itemize @bullet
+@item For the RST instruction it must evaluate to a value between 0 and 7.
+@item For the INP instruction it must evaluate to a value between 0 and 7.
+@item For the OUT instruction it must evaluate to a value between 8 and 31.
+@end itemize
+
 @node i8080 instruction set
 @section i8080 instruction set
 
@@ -1334,22 +1376,6 @@ Where:
 @item @code{JNX5} and @code{JNUI} are alternative names for the @code{JNK} instruction.
 @item @code{JX5}  and @code{JUI} are alternative names for the @code{JK} instruction.
 @end itemize
-
-@node dp2200 instruction set
-@section dp2200 instruction set
-
-The @code{dp2200} target selects the Datapoint 2200 (version 1) instruction set.
-These are the instructions accepted:
-
-@include dp2200tb.texi
-
-@node dp2200ii instruction set
-@section dp2200ii instruction set
-
-The @code{dp2200ii} target selects the Datapoint 2200 (version 2) instruction set.
-The instruction set accepted is the same as for the @code{dp2200} target, plus these new instructions:
-
-@include dp2200iitb.texi
 
 @node Source guide
 @chapter Source guide
