@@ -36,47 +36,64 @@
  * 	b: (op << 3) | lastbyte
  * 	c: op | lastbyte
  * 	d: lastbyte = op as 8 bit value
- * 	e: output op as word (no '.' sould follow)
+ * 	e: output op as word (no '.' should follow)
  * 	f: (op << 4) | lastbyte
  * 	g: possible value to RST
  * 	h: (op << 2) | lastbyte
  */
 
 const struct matchtab s_matchtab_i8080[] = {
-	{ "MOV M,i", "70c0." },
-	{ "MOV i,M", "46b0." },
-	{ "MOV i,i", "40b0c1." },
-	{ "MVI b,a", "06b0.d1." },
-	{ "LXI c,a", "01f0.e1" },
-	{ "m a", "22b0.e1" },
-	{ "r d", "02b0f1." },
-	{ "XCHG", "EB." },
-	{ "j b", "80b0c1." },
-	{ "l a", "C6b0.d0." },
-	{ "INR b", "04b0." },
-	{ "DCR b", "05b0." },
-	{ "INX c", "03f0." },
-	{ "DCX c", "0Bf0." },
-	{ "DAD c", "09f0." },
-	{ "DAA", "27." },
-	{ "k", "07b0." },
-	{ "CMA", "2F." },
-	{ "p", "37b0." },
-	{ "JMP a", "C3.e0" },
-	{ "f a", "C2b0.e1" },
-	{ "CALL a", "CD.e0" },
-	{ "g a", "C4b0.e1" },
-	{ "RET", "C9." },
-	{ "h", "C0b0." },
-	{ "RST a", "C7g0." },
-	{ "PCHL", "E9." },
-	{ "q e", "C1h0f1." },
-	{ "XTHL", "E3." },
-	{ "SPHL", "F9." },
-	{ "o a", "D3b0.d0." },
-	{ "n", "F3b0." },
-	{ "HLT", "76." },
-	{ "NOP", "00."},
+	{ "MOV M,i", "70c0.", 3, 0 },
+	{ "MOV i,M", "46b0.", 3, 0 },
+	{ "MOV i,i", "40b0c1.", 3, 0 },
+	{ "MVI b,a", "06b0.d1.", 3, 0 },
+	{ "LXI c,a", "01f0.e1", 3, 0 },
+	{ "m a", "22b0.e1", 3, 0 },
+	{ "r d", "02b0f1.", 3, 0 },
+	{ "XCHG", "EB.", 3, 0 },
+	{ "j b", "80b0c1.", 3, 0 },
+	{ "l a", "C6b0.d0.", 3, 0 },
+	{ "INR b", "04b0.", 3, 0 },
+	{ "DCR b", "05b0.", 3, 0 },
+	{ "INX c", "03f0.", 3, 0 },
+	{ "DCX c", "0Bf0.", 3, 0 },
+	{ "DAD c", "09f0.", 3, 0 },
+	{ "DAA", "27.", 3, 0 },
+	{ "k", "07b0.", 3, 0 },
+	{ "CMA", "2F.", 3, 0 },
+	{ "p", "37b0.", 3, 0 },
+	{ "JMP a", "C3.e0", 3, 0 },
+	{ "f a", "C2b0.e1", 3, 0 },
+	{ "CALL a", "CD.e0", 3, 0 },
+	{ "g a", "C4b0.e1", 3, 0 },
+	{ "RET", "C9.", 3, 0 },
+	{ "h", "C0b0.", 3, 0 },
+	{ "RST a", "C7g0.", 3, 0 },
+	{ "PCHL", "E9.", 3, 0 },
+	{ "q e", "C1h0f1.", 3, 0 },
+	{ "XTHL", "E3.", 3, 0 },
+	{ "SPHL", "F9.", 3, 0 },
+	{ "o a", "D3b0.d0.", 3, 0 },
+	{ "n", "F3b0.", 3, 0 },
+	{ "HLT", "76.", 3, 0 },
+	{ "NOP", "00.", 3, 0 },
+	/* 8085 added instructions */
+	{ "RIM", "20.", 2, 0 },
+	{ "SIM", "30.", 2, 0 },
+	{ "ARHL", "10.", 2, 2 },
+	{ "DSUB", "08.", 2, 2 },
+	{ "RDEL", "18.", 2, 2 },
+	{ "LDHI a", "28.d0.", 2, 2 },
+	{ "LDSI a", "38.d0.", 2, 2 },
+	{ "RSTV", "CB.", 2, 2 },
+	{ "SHLX", "D9.", 2, 2 },
+	{ "LHLX", "ED.", 2, 2 },
+	{ "JNK a", "DD.e0", 2, 2 },
+	{ "JNX5 a", "DD.e0", 2, 2 },
+	{ "JNUI a", "DD.e0", 2, 2 },
+	{ "JK a", "FD.e0", 2, 2 },
+	{ "JX5 a", "FD.e0", 2, 2 },
+	{ "JUI a", "FD.e0", 2, 2 },
 	{ NULL, NULL },
 };
 
@@ -175,11 +192,23 @@ static const char *pat_next_str_i8080(void)
 };
 
 const struct target s_target_i8080 = {
-	"i8080",
-	"Intel 8080",
-	s_matchtab_i8080,
-	match_i8080,
-	gen_i8080,
-	pat_char_rewind_i8080,
-	pat_next_str_i8080
+	.id = "i8080",
+	.descr = "Intel 8080",
+	.matcht = s_matchtab_i8080,
+	.matchf = match_i8080,
+	.genf = gen_i8080,
+	.pat_char_rewind = pat_char_rewind_i8080,
+	.pat_next_str = pat_next_str_i8080,
+	.mask = 1
+};
+
+const struct target s_target_i8085 = {
+	.id = "i8085",
+	.descr = "Intel 8085",
+	.matcht = s_matchtab_i8080,
+	.matchf = match_i8080,
+	.genf = gen_i8080,
+	.pat_char_rewind = pat_char_rewind_i8080,
+	.pat_next_str = pat_next_str_i8080,
+	.mask = 2
 };

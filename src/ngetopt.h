@@ -8,6 +8,13 @@
 #ifndef NGETOPT_H
 #define NGETOPT_H
 
+/*
+ * Changelog:
+ *
+ * - Jul 21 2018: long options without short option character recognized.
+ *
+ */
+
 struct ngetopt_opt {
 	const char *name;
 	int has_arg;
@@ -15,8 +22,10 @@ struct ngetopt_opt {
 };
 
 struct ngetopt {
-	int optind;
+	char *optstr;
 	char *optarg;
+	/* private */
+	int optind;
 	int argc;
 	char *const *argv;
 	struct ngetopt_opt *ops;

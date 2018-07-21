@@ -48,38 +48,38 @@
  * 	b: (op << 3) | lastbyte
  * 	c: op | lastbyte
  * 	d: lastbyte = op as 8 bit value
- * 	e: output op as word (no '.' sould follow)
+ * 	e: output op as word (no '.' should follow)
  * 	f: (op << 1) + lastbyte
  * 	g: (op << 4) | lastbyte
  */
 
 const struct matchtab s_matchtab_dp2200[] = {
-	{ "HALT", "00." },
-	{ "SLC", "02." },
-	{ "SRC", "0A." },
-	{ "RETURN", "07." },
-	{ "INPUT", "41." },
-	{ "b", "80c0." },
-	{ "c", "C0c0." },
-	{ "EX d", "51f0." },
-	{ "e", "03g0." },
-	{ "f", "0Bg0." },
-	{ "g a", "04g0.d1." },
-	{ "h a", "06g0.d1." },
-	{ "i a", "0Cg0.d1." },
-	{ "j a", "0Eg0.d1." },
-	{ "k a", "40g0.e1" },
-	{ "l a", "42g0.e1" },
-	{ "m a", "48g0.e1" },
-	{ "n a", "4Ag0.e1" },
-	{ "JMP a", "44.e0" },
-	{ "CALL a", "46.e0" },
-	// { "BETA", "10." },
-	// { "DI", "20." },
-	// { "POP", "30." },
-	// { "ALPHA", "18." },
-	// { "EI", "28." },
-	// { "PUSH", "38." },
+	{ "HALT", "00.", 3, 0 },
+	{ "SLC", "02.", 3, 0 },
+	{ "SRC", "0A.", 3, 0 },
+	{ "RETURN", "07.", 3, 0 },
+	{ "INPUT", "41.", 3, 0 },
+	{ "b", "80c0.", 3, 0 },
+	{ "c", "C0c0.", 3, 0 },
+	{ "EX d", "51f0.", 3, 0 },
+	{ "e", "03g0.", 3, 0 },
+	{ "f", "0Bg0.", 3, 0 },
+	{ "g a", "04g0.d1.", 3, 0 },
+	{ "h a", "06g0.d1.", 3, 0 },
+	{ "i a", "0Cg0.d1.", 3, 0 },
+	{ "j a", "0Eg0.d1.", 3, 0 },
+	{ "k a", "40g0.e1", 3, 0 },
+	{ "l a", "42g0.e1", 3, 0 },
+	{ "m a", "48g0.e1", 3, 0 },
+	{ "n a", "4Ag0.e1", 3, 0 },
+	{ "JMP a", "44.e0", 3, 0 },
+	{ "CALL a", "46.e0", 3, 0 },
+	{ "BETA", "10.", 2, 0 },
+	{ "DI", "20.", 2, 0 },
+	{ "POP", "30.", 2, 0 },
+	{ "ALPHA", "18.", 2, 0 },
+	{ "EI", "28.", 2, 0 },
+	{ "PUSH", "38.", 2, 0 },
 	{ NULL, NULL },
 };
 
@@ -183,11 +183,23 @@ static const char *pat_next_str_dp2200(void)
 };
 
 const struct target s_target_dp2200 = {
-	"dp2200",
-	"Datapoint 2200",
-	s_matchtab_dp2200,
-	match_dp2200,
-	gen_dp2200,
-	pat_char_rewind_dp2200,
-	pat_next_str_dp2200
+	.id = "dp2200",
+	.descr = "Datapoint 2200 Version I",
+	.matcht = s_matchtab_dp2200,
+	.matchf = match_dp2200,
+	.genf = gen_dp2200,
+	.pat_char_rewind = pat_char_rewind_dp2200,
+	.pat_next_str = pat_next_str_dp2200,
+	.mask = 1
+};
+
+const struct target s_target_dp2200ii = {
+	.id = "dp2200ii",
+	.descr = "Datapoint 2200 Version II",
+	.matcht = s_matchtab_dp2200,
+	.matchf = match_dp2200,
+	.genf = gen_dp2200,
+	.pat_char_rewind = pat_char_rewind_dp2200,
+	.pat_next_str = pat_next_str_dp2200,
+	.mask = 2
 };

@@ -65,7 +65,7 @@ Opcode  Z80             GMB
  * 	b: (op << 3) | lastbyte
  * 	c: op | lastbyte
  * 	d: lastbyte = op as 8 bit value
- * 	e: output op as word (no '.' sould follow)
+ * 	e: output op as word (no '.' should follow)
  * 	f: (op << 4) | lastbyte
  * 	g: (op << 6) | lastbyte
  * 	h: if op >= FF00 output last byte and then op as 8 bit value;
@@ -80,71 +80,71 @@ Opcode  Z80             GMB
  */
 
 const struct matchtab s_matchtab_gbcpu[] = {
-	{ "LD b,b", "40b0c1." },
-	{ "LD b,(HL)", "46b0." },
-	{ "LD A,(C)", "F2." }, // * LD A,(FF00+C)
-	{ "LD A,(BC)", "0A." },
-	{ "LD A,(DE)", "1A." },
-	{ "LD A,(HLI)", "2A." }, // *
-	{ "LD A,(HLD)", "3A." }, // *
-	{ "LD A,(a)", "F0h0" }, // * LD A,(nn) & LD A,(FF00+n)
-	{ "LD b,a", "06b0.d1." },
-	{ "LD SP,HL", "F9." },
-	{ "LDHL SP,a", "F8.d0." }, // * LD HL,SP+n
-	{ "LD d,a", "01f0.e1" },
-	{ "LD (C),A", "E2." }, // * LD (FF00+C),A
-	{ "LD (HL),b", "70c0." },
-	{ "LD (HL),a", "36.d0." },
-	{ "LD (HLI),A", "22." }, // *
-	{ "LD (HLD),A", "32." }, // *
-	{ "LD (BC),A", "02." },
-	{ "LD (DE),A", "12." },
-	{ "LD (a),A", "E0h0" }, // * LD (nn),A & LD (FF00+n),A
-	{ "LD (a),SP", "08.e0" }, // *
-	{ "LDH A,(a)", "F0.d0." }, // * LD A,(FF00+n)
-	{ "LDH (a),A", "E0.d0." }, // * LD (FF00+n),A
-	{ "PUSH f", "C5f0." },
-	{ "POP f", "C1f0." },
-	{ "ADD HL,d", "09f0." },
-	{ "ADD SP,a", "E8.d0." }, // * 
-	{ "g A,b", "m080b0c1." },
-	{ "g A,(HL)", "m086b0." },
-	{ "g A,a", "m0C6b0.d1." },
-	{ "g b", "n080b0c1." },
-	{ "g (HL)", "n086b0." },
-	{ "g a", "n0C6b0.d1." },
-	{ "h b", "04b1c0." },
-	{ "h (HL)", "34c0." },
-	{ "INC d", "03f0." },
-	{ "DEC d", "0Bf0." },
-	{ "DAA", "27." },
-	{ "CPL", "2F." },
-	{ "CCF", "3F." },
-	{ "SCF", "37." },
-	{ "NOP", "00." },
-	{ "HALT", "76." },
-	{ "DI", "F3." },
-	{ "EI", "FB." },
-	{ "RLCA", "07." },
-	{ "RLA", "17." },
-	{ "RRCA", "0F." },
-	{ "RRA", "1F." },
-	{ "o b", "CB.00b0c1." },
-	{ "o (HL)", "CB.06b0." },
-	{ "l a,b", "CB.00g0b1c2." },
-	{ "l a,(HL)", "CB.06g0b1." },
-	{ "JP (HL)", "E9." },
-	{ "JP n,a", "C2b0.e1" }, // *
-	{ "JP a", "C3.e0" },
-	{ "JR n,a", "20b0.i1." },
-	{ "JR a", "18.i0." },
-	{ "STOP", "10.00." }, // *
-	{ "CALL n,a", "C4b0.e1" }, // *
-	{ "CALL a", "CD.e0" },
-	{ "RETI", "D9." }, // *
-	{ "RET n", "C0b0." },
-	{ "RET", "C9." },
-	{ "RST a", "C7j0." },
+	{ "LD b,b", "40b0c1.", 1, 0 },
+	{ "LD b,(HL)", "46b0.", 1, 0 },
+	{ "LD A,(C)", "F2.", 1, 0 }, // * LD A,(FF00+C)
+	{ "LD A,(BC)", "0A.", 1, 0 },
+	{ "LD A,(DE)", "1A.", 1, 0 },
+	{ "LD A,(HLI)", "2A.", 1, 0 }, // *
+	{ "LD A,(HLD)", "3A.", 1, 0 }, // *
+	{ "LD A,(a)", "F0h0", 1, 0 }, // * LD A,(nn) & LD A,(FF00+n)
+	{ "LD b,a", "06b0.d1.", 1, 0 },
+	{ "LD SP,HL", "F9.", 1, 0 },
+	{ "LDHL SP,a", "F8.d0.", 1, 0 }, // * LD HL,SP+n
+	{ "LD d,a", "01f0.e1", 1, 0 },
+	{ "LD (C),A", "E2.", 1, 0 }, // * LD (FF00+C),A
+	{ "LD (HL),b", "70c0.", 1, 0 },
+	{ "LD (HL),a", "36.d0.", 1, 0 },
+	{ "LD (HLI),A", "22.", 1, 0 }, // *
+	{ "LD (HLD),A", "32.", 1, 0 }, // *
+	{ "LD (BC),A", "02.", 1, 0 },
+	{ "LD (DE),A", "12.", 1, 0 },
+	{ "LD (a),A", "E0h0", 1, 0 }, // * LD (nn),A & LD (FF00+n),A
+	{ "LD (a),SP", "08.e0", 1, 0 }, // *
+	{ "LDH A,(a)", "F0.d0.", 1, 0 }, // * LD A,(FF00+n)
+	{ "LDH (a),A", "E0.d0.", 1, 0 }, // * LD (FF00+n),A
+	{ "PUSH f", "C5f0.", 1, 0 },
+	{ "POP f", "C1f0.", 1, 0 },
+	{ "ADD HL,d", "09f0.", 1, 0 },
+	{ "ADD SP,a", "E8.d0.", 1, 0 }, // * 
+	{ "g A,b", "m080b0c1.", 1, 0 },
+	{ "g A,(HL)", "m086b0.", 1, 0 },
+	{ "g A,a", "m0C6b0.d1.", 1, 0 },
+	{ "g b", "n080b0c1.", 1, 0 },
+	{ "g (HL)", "n086b0.", 1, 0 },
+	{ "g a", "n0C6b0.d1.", 1, 0 },
+	{ "h b", "04b1c0.", 1, 0 },
+	{ "h (HL)", "34c0.", 1, 0 },
+	{ "INC d", "03f0.", 1, 0 },
+	{ "DEC d", "0Bf0.", 1, 0 },
+	{ "DAA", "27.", 1, 0 },
+	{ "CPL", "2F.", 1, 0 },
+	{ "CCF", "3F.", 1, 0 },
+	{ "SCF", "37.", 1, 0 },
+	{ "NOP", "00.", 1, 0 },
+	{ "HALT", "76.", 1, 0 },
+	{ "DI", "F3.", 1, 0 },
+	{ "EI", "FB.", 1, 0 },
+	{ "RLCA", "07.", 1, 0 },
+	{ "RLA", "17.", 1, 0 },
+	{ "RRCA", "0F.", 1, 0 },
+	{ "RRA", "1F.", 1, 0 },
+	{ "o b", "CB.00b0c1.", 1, 0 },
+	{ "o (HL)", "CB.06b0.", 1, 0 },
+	{ "l a,b", "CB.00g0b1c2.", 1, 0 },
+	{ "l a,(HL)", "CB.06g0b1.", 1, 0 },
+	{ "JP (HL)", "E9.", 1, 0 },
+	{ "JP n,a", "C2b0.e1", 1, 0 }, // *
+	{ "JP a", "C3.e0", 1, 0 },
+	{ "JR n,a", "20b0.i1.", 1, 0 },
+	{ "JR a", "18.i0.", 1, 0 },
+	{ "STOP", "10.00.", 1, 0 }, // *
+	{ "CALL n,a", "C4b0.e1", 1, 0 }, // *
+	{ "CALL a", "CD.e0", 1, 0 },
+	{ "RETI", "D9.", 1, 0 }, // *
+	{ "RET n", "C0b0.", 1, 0 },
+	{ "RET", "C9.", 1, 0 },
+	{ "RST a", "C7j0.", 1, 0 },
 	{ NULL, NULL },
 };
 
@@ -290,11 +290,12 @@ static const char *pat_next_str_gbcpu(void)
 };
 
 const struct target s_target_gbcpu = {
-	"gbcpu",
-	"Sharp LR35902 (Nintendo Gameboy CPU)",
-	s_matchtab_gbcpu,
-	match_gbcpu,
-	gen_gbcpu,
-	pat_char_rewind_gbcpu,
-	pat_next_str_gbcpu,
+	.id = "gbcpu",
+	.descr = "Sharp LR35902 (Nintendo Gameboy CPU)",
+	.matcht = s_matchtab_gbcpu,
+	.matchf = match_gbcpu,
+	.genf = gen_gbcpu,
+	.pat_char_rewind = pat_char_rewind_gbcpu,
+	.pat_next_str = pat_next_str_gbcpu,
+	.mask = 1
 };

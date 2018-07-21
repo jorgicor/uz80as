@@ -197,7 +197,8 @@ static void list_targets(FILE *f)
 	}
 }
 
-static void print_inst(FILE *f, const struct target *t, int *col, int flags,
+static void print_inst(FILE *f, const struct target *t, int *col,
+		       unsigned char undoc,
 		       const char *p, char *buf, size_t bufsz, size_t bufi)
 {
 	const char *s;
@@ -213,7 +214,7 @@ static void print_inst(FILE *f, const struct target *t, int *col, int flags,
 		} else {
 			fputs("@tab ", f);
 		}
-		if (flags & MATCH_F_UNDOC) {
+		if (t->mask & undoc) {
 			fputs("* ", f);
 		}
 		fprintf(f, "%s\n", buf);
@@ -227,18 +228,18 @@ static void print_inst(FILE *f, const struct target *t, int *col, int flags,
 			if (s[0] != '\0') {
 				buf[bufi] = '\0';
 				strcat(buf, s);
-				print_inst(f, t, col, flags, p + 1, buf, bufsz,
-					   bufi + strlen(s));
+				print_inst(f, t, col, undoc, p + 1, buf,
+					   bufsz, bufi + strlen(s));
 			}
 		}
 	}
 }
 
-static void print_table(FILE *f, const char *target_id)
+static void print_table(FILE *f, const char *target_id, int delta)
 {
 	const struct target *t;
 	const struct matchtab *mt;
-	int i, col;
+	int i, col, pr;
 	char buf[64];
 	
 	t = find_target(target_id);
@@ -254,8 +255,20 @@ static void print_table(FILE *f, const char *target_id)
 	// fputs("@itemize @bullet\n", f);
 	i = 0;
 	while (mt[i].pat != NULL) {
-		print_inst(f, t, &col, mt[i].flags, mt[i].pat, buf,
-			   sizeof(buf), 0);
+		pr = 0;
+		if (t->mask == 1 && (mt[i].mask & 1)) {
+			pr = 1;
+		} else if (delta) {
+			if (!(mt[i].mask & 1)) {
+				pr = 1;
+			}
+		} else if (t->mask & mt[i].mask) {
+			pr = 1;
+		}
+		if (pr) { 
+			print_inst(f, t, &col, mt[i].undoc, mt[i].pat,
+				   buf, sizeof(buf), 0);
+		}
 		i++;
 	}
 	// fputs("@end itemize\n", f);
@@ -278,7 +291,8 @@ int main(int argc, char *argv[])
 		{ "target", 1, 't' },
 		{ "undocumented", 0, 'u' },
 		{ "version", 0, 'v' },
-		{ "print-table", 1, 'p' },
+		{ "print-table", 1, 0 },
+		{ "print-delta", 1, 0 },
 		{ NULL, 0, 0 },
 	};
 
@@ -299,10 +313,6 @@ int main(int argc, char *argv[])
 			exit(EXIT_SUCCESS);
 		case 't':
 			parse_target_id(ngo.optarg);
-			break;
-		case 'p':
-			print_table(stdout, ngo.optarg);
-			exit(EXIT_SUCCESS);
 			break;
 		case 'e':
 			list_targets(stdout);
@@ -335,6 +345,14 @@ int main(int argc, char *argv[])
 			eprint(_("%s does not allow for arguments\n"),
 				ngo.optarg);
 			exit(EXIT_FAILURE);
+		case 0:
+			if (strcmp(ngo.optstr, "print-table") == 0) {
+				print_table(stdout, ngo.optarg, 0);
+				exit(EXIT_SUCCESS);
+			} else if (strcmp(ngo.optstr, "print-delta") == 0) {
+				print_table(stdout, ngo.optarg, 1);
+				exit(EXIT_SUCCESS);
+			}
 		}
 	} while (c != -1);
 

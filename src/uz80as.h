@@ -23,14 +23,15 @@ enum {
  * 	b: (op << 3) | lastbyte
  * 	c: op | lastbyte
  * 	d: lastbyte = op as 8 bit value
- * 	e: output op as word (no '.' sould follow)
+ * 	e: output op as word (no '.' should follow)
  * 	f - z: used by target
  */
 
 struct matchtab {
 	const char *pat;
 	const char *gen;
-	unsigned char flags;
+	unsigned char mask;
+	unsigned char undoc;
 };
 
 struct target {
@@ -41,6 +42,7 @@ struct target {
 	int (*genf)(int *eb, char p, const int *vs, int i, int savepc);
 	void (*pat_char_rewind)(int c);
 	const char * (*pat_next_str)(void);
+	unsigned char mask;
 };
 
 extern const char *s_pline_ep;

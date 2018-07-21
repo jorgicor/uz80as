@@ -25,8 +25,6 @@ uz80as_SOURCES = \
 	uz80as.c uz80as.h \
 	targets.c targets.h \
 	target/z80.c \
-	target/hd64180.c \
 	target/gbcpu.c \
 	target/i8080.c \
-	target/i8085.c \
 	target/dp2200.c

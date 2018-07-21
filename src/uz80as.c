@@ -354,7 +354,9 @@ next:
 	s = mtab[n].pat;
 	if (s == NULL) {
 		return NULL;
-	} else if (!s_undocumented_op && (mtab[n].flags & MATCH_F_UNDOC)) {
+	} else if ((s_target->mask & mtab[n].mask) == 0) {
+		goto next;
+	} else if (!s_undocumented_op && (s_target->mask & mtab[n].undoc)) {
 		goto next;
 	}
 	p = pp;

@@ -5,6 +5,13 @@
  * ===========================================================================
  */
 
+/*
+ * Changelog:
+ *
+ * - Jul 21 2018: long options without short option character recognized.
+ *
+ */
+
 #include "ngetopt.h"
 
 #ifndef STRING_H
@@ -17,7 +24,7 @@ static int find_short_opt(int val, struct ngetopt_opt *ops)
 
 	i = 0;
 	while (ops[i].name != NULL) {
-		if (ops[i].val == val)
+		if (ops[i].val > 0 && ops[i].val == val)
 			return i;
 		i++;
 	}
@@ -108,6 +115,7 @@ static int get_opt(struct ngetopt *p)
 	int i;
 	char *opt, *optnext;
 
+	/* all arguments consumed */
 	if (p->optind >= p->argc)
 		return -1;
 
@@ -155,6 +163,7 @@ static int get_opt(struct ngetopt *p)
 	if (*optnext == '\0' && !p->ops[i].has_arg) {
 		/* doesn't need arguments */
 		p->optind++;
+		p->optstr = opt + 2;
 		return p->ops[i].val;
 	}
 
@@ -170,6 +179,7 @@ static int get_opt(struct ngetopt *p)
 		p->optind++;
 		if (p->optind < p->argc) {
 			p->optarg = p->argv[p->optind];
+			p->optstr = p->optarg + 2;
 			p->optind++;
 			return p->ops[i].val;
 		}
@@ -181,14 +191,22 @@ static int get_opt(struct ngetopt *p)
 	}
 
 	/* *optnext == '=' */
+	*optnext = '\0';
+	p->optstr = opt + 2;
 	p->optarg = optnext + 1;
 	p->optind++;
 	return p->ops[i].val;
 }
 
 /*
- * If ok, val is the character of the option found, optarg is the
- * option argument or NULL.
+ * If ok:
+ *
+ * 	- For a long option with a zero value single character option, 0 is
+ * 	returned, optstr is the string of the long option (without '-' or '--')
+ * 	and optarg is the option argument or NULL.
+ *
+ * 	- For anything else the single option character is returned and optarg
+ * 	is the option argument or NULL.
  *
  * If the option is not recognized, '?' is returned, and optarg is the
  * literal string of the option not recognized (already with '-' or '--'
