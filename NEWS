@@ -1,3 +1,15 @@
+1.05	2018-07-22
+
+	* New targets added:
+	  - hd64180: Hitachi HD64180.
+	  - dp2200: Datapoint 2200 version I.
+	  - dp2200ii: Datapoint 2200 version II.
+	  - i8008: Intel 8008.
+	  - i8085: Intel 8085.
+
+	* Changes to facilitate the addition of a new target that merely
+	  extends another.
+
 1.04	2018-07-15
 
 	* uz80as becomes a multitarget assembler. The default target is the

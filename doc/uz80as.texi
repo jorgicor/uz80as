@@ -89,10 +89,10 @@ Currently, uz80as can assemble for these microprocessors:
 @item Zilog Z80
 @item Hitachi HD64180
 @item Sharp LR35902 (Nintendo Gameboy CPU)
+@item Datapoint 2200 (versions I & II)
+@item Intel 8008
 @item Intel 8080
 @item Intel 8085
-@item Datapoint 2200 (version 1)
-@item Datapoint 2200 (version 2)
 @end itemize
 
 @command{uz80as} is free software.
@@ -1214,11 +1214,11 @@ These are the instructions accepted:
 
 @include z80tb.texi
 
-Where @code{*} marks undocumented instructions (selected with the @code{-u} command line option) and @code{a} is any expression, except:
+Where @code{*} marks undocumented instructions (selected with the @code{-u} command line option) and @code{a} is any expression, except that:
 
 @itemize @bullet
 @item For the RST instruction, the expression must evaluate to 0H, 8H, 10H, 18H, 20H, 28H, 30H or 38H.
-@item For IXa and IYa, this means IX or IY followed by a @code{+} or @code{-} sign and a expression.
+@item For IXa and IYa, this means IX or IY followed by a @code{+} or @code{-} sign and an expression.
 @end itemize
 
 @menu
@@ -1291,7 +1291,7 @@ These are the instructions accepted:
 
 @include gbcputb.texi
 
-Where @code{a} is any expression, except:
+Where @code{a} is any expression, except that:
 
 @itemize @bullet
 @item For the RST instruction, the expression must evaluate to 0H, 8H, 10H, 18H, 20H, 28H, 30H or 38H.
@@ -1311,18 +1311,20 @@ Where @code{a} is any expression, except:
 
 The @code{dp2200} target selects the Datapoint 2200 version I instruction set.
 
-Important: the Datapoint 2200 version I can only address 8K at maximum but @code{uz80as} at this moment accepts programs up to 64K and addressing up to 64K.
+Important: the Datapoint 2200 version I can only address 8K at maximum but @code{uz80as} at this moment only imposes a 64K limit.
 
 These are the instructions accepted:
 
 @include dp2200tb.texi
+
+Where @code{a} is any expression.
 
 @node dp2200ii instruction set
 @section dp2200ii instruction set
 
 The @code{dp2200ii} target selects the Datapoint 2200 version II instruction set.
 
-Important: the Datapoint 2200 version II can only address 16K at maximum but @code{uz80as} at this moment accepts programs up to 64K and addressing up to 64K.
+Important: the Datapoint 2200 version II can only address 16K at maximum but @code{uz80as} at this moment only imposes a 64K limit.
 
 The instruction set accepted is the same as for the @code{dp2200} target, plus these new instructions:
 
@@ -1333,13 +1335,13 @@ The instruction set accepted is the same as for the @code{dp2200} target, plus t
 
 The @code{i8008} target selects the Intel 8008 instruction set.
 
-Important: the Intel 8008 can only address 8K at maximum but @code{uz80as} at this moment accepts programs up to 64K and addressing up to 64K.
+Important: the Intel 8008 can only address 8K at maximum but @code{uz80as} at this moment only imposes a 64K limit.
 
 These are the instructions accepted:
 
 @include i8008tb.texi
 
-Where @code{a} is any expression except:
+Where @code{a} is any expression, except that:
 
 @itemize @bullet
 @item For the RST instruction it must evaluate to a value between 0 and 7.
@@ -1355,7 +1357,7 @@ These are the instructions accepted:
 
 @include i8080tb.texi
 
-Where @code{a} is any expression except:
+Where @code{a} is any expression, except that:
 
 @itemize @bullet
 @item For the RST instruction it must evaluate to a value between 0 and 7.

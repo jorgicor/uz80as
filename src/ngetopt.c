@@ -6,9 +6,9 @@
  */
 
 /*
- * Changelog:
+ * Changes:
  *
- * - Jul 21 2018: long options without short option character recognized.
+ * - Jul 22 2018: long options without short option character recognized.
  *
  */
 
@@ -178,8 +178,8 @@ static int get_opt(struct ngetopt *p)
 	if (*optnext == '\0') {
 		p->optind++;
 		if (p->optind < p->argc) {
+			p->optstr = opt + 2;
 			p->optarg = p->argv[p->optind];
-			p->optstr = p->optarg + 2;
 			p->optind++;
 			return p->ops[i].val;
 		}
