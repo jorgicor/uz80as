@@ -17,6 +17,11 @@ dist_check_SCRIPTS = main.test \
 		     i8085u.test \
 		     dp2200.test \
 		     dp2200ii.test \
+		     mos6502.test \
+		     w65c02.test \
+		     r65c02.test \
+		     r65c29.test \
+		     w65c02s.test \
 		     tasmfail.test \
 		     longlabel.test \
 		     orgbelow.test \
@@ -94,6 +99,26 @@ EXTRA_DIST = igen.sh \
 	     dp2200ii.bok \
 	     dp2200ii.lok \
 	     dp2200ii.eok \
+	     mos6502.asm \
+	     mos6502.bok \
+	     mos6502.lok \
+	     mos6502.eok \
+	     w65c02.asm \
+	     w65c02.bok \
+	     w65c02.lok \
+	     w65c02.eok \
+	     r65c02.asm \
+	     r65c02.bok \
+	     r65c02.lok \
+	     r65c02.eok \
+	     r65c29.asm \
+	     r65c29.bok \
+	     r65c29.lok \
+	     r65c29.eok \
+	     w65c02s.asm \
+	     w65c02s.bok \
+	     w65c02s.lok \
+	     w65c02s.eok \
 	     tasmfail.asm \
 	     tasmfail.bok \
 	     tasmfail.lok \

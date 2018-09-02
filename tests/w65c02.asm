@@ -1,7 +1,7 @@
 ; ===========================================================================
 ; uz80as, an assembler for the Zilog Z80 and several other microprocessors.
 ;
-; MOS Technology 6502.
+; Western Design W65C02.
 ; ===========================================================================
 
 
@@ -18,7 +18,7 @@ n:          equ 56h
 	ORA (zp,X)
 	; 2
 	; 3
-	; 4
+	TSB zp ; *
 	ORA zp
 	ASL zp
 	; 7
@@ -26,7 +26,7 @@ n:          equ 56h
 	ORA #n
 	ASL A
 	; B
-	; C
+	TSB a16 ; *
 	ORA a16
 	ASL a16
 	; F
@@ -35,17 +35,17 @@ n:          equ 56h
 
 b10:	BPL b10
 	ORA (zp),Y
-	; 2
+	ORA (zp) ; *
 	; 3
-	; 4
+	TRB zp ; *
 	ORA zp,X
 	ASL zp,X
 	; 7
 	CLC
 	ORA a16,Y
-	; A
+	INC A ; *
 	; B
-	; C
+	TRB a16 ; *
 	ORA a16,X
 	ASL a16,X
 	; F
@@ -59,7 +59,7 @@ b10:	BPL b10
 	BIT zp
 	AND zp
 	ROL zp
-	; 7
+	; *
 	PLP
 	AND #n
 	ROL A
@@ -73,17 +73,17 @@ b10:	BPL b10
 
 b30:	BMI b30
 	AND (zp),Y
-	; 2
+	AND (zp) ; *
 	; 3
-	; 4
+	BIT zp,X ; *
 	AND zp,X
 	ROL zp,X
 	; 7
 	SEC
 	AND a16,Y
-	; A
+	DEC A ; *
 	; B
-	; C
+	BIT a16,X ; *
 	AND a16,X
 	ROL a16,X
 	; F
@@ -111,7 +111,7 @@ b30:	BMI b30
 
 b50:	BVC b50
 	EOR (zp),Y
-	; 2
+	EOR (zp) ; *
 	; 3
 	; 4
 	EOR zp,X
@@ -119,7 +119,7 @@ b50:	BVC b50
 	; 7
 	CLI
 	EOR a16,Y
-	; A
+	PHY ; *
 	; B
 	; C
 	EOR a16,X
@@ -132,7 +132,7 @@ b50:	BVC b50
 	ADC (zp,X)
 	; 2
 	; 3
-	; 4
+	STZ zp ; *
 	ADC zp
 	ROR zp
 	; 7
@@ -149,24 +149,24 @@ b50:	BVC b50
 
 b70:	BVS b70
 	ADC (zp),Y
-	; 2
+	ADC (zp) ; *
 	; 3
-	; 4
+	STZ zp,X ; *
 	ADC zp,X
 	ROR zp,X
 	; 7
 	SEI
 	ADC a16,Y
-	; A
+	PLY ; *
 	; B
-	; C
+	JMP (a16,X) ; *
 	ADC a16,X
 	ROR a16,X
-	; F
+	; *
 
 ; 8x
 
-	; 0
+b80:	BRA b80 ; *
 	STA (zp,X)
 	; 2
 	; 3
@@ -175,7 +175,7 @@ b70:	BVS b70
 	STX zp
 	; 7
 	DEY
-	; 9
+	BIT #n ; *
 	TXA
 	; B
 	STY a16
@@ -187,7 +187,7 @@ b70:	BVS b70
 
 b90:	BCC b90
 	STA (zp),Y
-	; 2
+	STA (zp) ; *
 	; 3
 	STY zp,X
 	STA zp,X
@@ -199,7 +199,7 @@ b90:	BCC b90
 	; B
 	; C
 	STA a16,X
-	; E
+	STZ a16,X ; *
 	; F
 
 ; Ax
@@ -219,13 +219,13 @@ b90:	BCC b90
 	LDY a16
 	LDA a16
 	LDX a16
-	; F
+	; *
 
 ; Bx
 
 bB0:	BCS bB0
 	LDA (zp),Y
-	; 2
+	LDA (zp) ; *
 	; 3
 	LDY zp,X
 	LDA zp,X
@@ -238,7 +238,7 @@ bB0:	BCS bB0
 	LDY a16,X
 	LDA a16,X
 	LDX a16,Y
-	; F
+	; *
 
 ; Cx
 
@@ -257,13 +257,13 @@ bB0:	BCS bB0
 	CPY a16
 	CMP a16
 	DEC a16
-	; F
+	; *
 
 ; Dx
 
 bD0:	BNE bD0
 	CMP (zp),Y
-	; 2
+	CMP (zp) ; *
 	; 3
 	; 4
 	CMP zp,X
@@ -271,12 +271,12 @@ bD0:	BNE bD0
 	; 7
 	CLD
 	CMP a16,Y
-	; A
-	; B
+	PHX ; *
+	; B 
 	; C
 	CMP a16,X
 	DEC a16,X
-	; F
+	; *
 
 ; Ex
 
@@ -295,13 +295,13 @@ bD0:	BNE bD0
 	CPX a16
 	SBC a16
 	INC a16
-	; F
+	; *
 
 ; Fx
 
 bF0:	BEQ bF0
 	SBC (zp),Y
-	; 2
+	SBC (zp) ; *
 	; 3
 	; 4
 	SBC zp,X
@@ -309,11 +309,11 @@ bF0:	BEQ bF0
 	; 7
 	SED
 	SBC a16,Y
-	; A
+	PLX ; *
 	; B
 	; C
 	SBC a16,X
 	INC a16,X
-	; F
+	; *
 
 	end

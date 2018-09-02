@@ -5,6 +5,30 @@
  * ===========================================================================
  */
 
+/* mos6502, the original
+ *
+ *     w65c02 Western Design, adds to mos6502:
+ *         - zp ADC,AND,CMP,EOR,LDA,ORA,SBC,STA
+ *         - DEC A, INC A
+ *         - JMP (abs,X)
+ *         - BRA
+ *         - PHX,PHY,PLX,PLY
+ *         - STZ
+ *         - TRB
+ *         - TSB
+ *         - More addressing modes for BIT, etc
+ *
+ *         r65c02 Rockwell, adds to w65c02:
+ *             - BBR, BBS
+ *             - RMB, SMB
+ * 	
+ *             r65c29 Rockwell, adds to r65c02:
+ *                 - MUL
+ *
+ *             w65c02s Western Design, adds to r65c02:
+ *                 - STP,WAI
+ */
+
 #include "pp.h"
 #include "err.h"
 #include "options.h"
@@ -13,8 +37,8 @@
 
 /* pat:
  *	a: expr
- *	b: ORA,AND,EOR,ADC,LDA,CMP,SBC
- *	c: ORA,AND,EOR,ADC,STA,LDA,CMP,SBC
+ *	b: ORA,AND,EOR,ADC,STA,LDA,CMP,SBC
+ *	c: ORA,AND,EOR,ADC,LDA,CMP,SBC
  *	d: PHP,CLC,PLP,SEC,PHA,CLI,PLA,SEI,
  *	   DEY,TYA,TAY,CLV,INY,CLD,INX,SED
  *	e: ASL,ROL,LSR,ROR
@@ -22,6 +46,13 @@
  *	g: BPL,BMI,BVC,BVS,BCC,BCS,BNE,BEQ
  *	h: TXA,TXS,TAX,TSX,DEX,NOP
  *	i: CPY,CPX
+ *	j: TSB,TRB
+ *	k: BBR0,BBR1,BBR2,BBR3,BBR4,BBR5,BBR6,BBR6,
+ *	   BBS0,BBS1,BBS2,BBS3,BBS4,BBS5,BBS6,BBS7
+ *	l: RMB0,RMB1,RMB2,RMB3,RMB4,RMB5,EMB6,RMB7,
+ *	   SMB0,SMB1,SMB2,SMB3,SMB4,SMB5,SMB6,SMB7
+ *	m: PHY,PLY
+ *	n: PHX,PLX
  *
  * gen:
  * 	.: output lastbyte
@@ -35,6 +66,12 @@
  * 	   (no '.' should follow)
  * 	h: (op << 4) | lastbyte
  * 	i: relative jump to op
+ * 	j: if op <= $FF output $64 and op as 8 bit
+ * 	   else output $9C and op as word
+ * 	   (no '.' should follow)
+ * 	k: if op <= $FF ouput $74 and op as 8 bit
+ * 	   else output $9E and op as word
+ * 	   (no '.' should follow)
  */
 
 const struct matchtab s_matchtab_mos6502[] = {
@@ -47,6 +84,7 @@ const struct matchtab s_matchtab_mos6502[] = {
 	{ "c #a", "09f0.d1.", 1, 0 },
 	{ "b (a,X)", "01f0.d1.", 1, 0 },
 	{ "b (a),Y", "11f0.d1.", 1, 0 },
+	{ "b (a)", "12f0.d1.", 2, 0 },
 	{ "b a", "05f0g1", 1, 0 },
 	{ "b a,X", "15f0g1", 1, 0 },
 	{ "b a,Y", "19f0.e1", 1, 0 },
@@ -58,11 +96,15 @@ const struct matchtab s_matchtab_mos6502[] = {
 	{ "LDX #a", "A2.d0.", 1, 0 },
 	{ "LDX a", "A6g0", 1, 0 },
 	{ "LDX a,Y", "B6g0", 1, 0 },
+	{ "f A", "1Af0.", 2, 0 },
 	{ "f a", "C6f0g1", 1, 0 },
 	{ "f a,X", "D6f0g1", 1, 0 },
 	{ "g a", "10f0.i1.", 1, 0 },
+	{ "BIT #a", "89.d0", 2, 0 },
 	{ "BIT a", "24g0", 1, 0 },
+	{ "BIT a,X", "34g0", 2, 0 },
 	{ "JMP (a)", "6C.e0", 1, 0 },
+	{ "JMP (a,X)", "52.e0", 2, 0 },
 	{ "JMP a", "4C.e0", 1, 0 },
 	{ "STY a", "84g0", 1, 0 },
 	{ "STY a,X", "94.d0.", 1, 0 },
@@ -71,6 +113,17 @@ const struct matchtab s_matchtab_mos6502[] = {
 	{ "LDY a,X", "B4g0", 1, 0 },
 	{ "i #a", "C0f0.d1.", 1, 0 },
 	{ "i a", "C4f0g1", 1, 0 },
+	{ "j a", "04h0g1", 2, 0 },
+	{ "k a,a", "0Fh0.d1.i2.", 4, 0 },
+	{ "l a", "07h0.d1", 4, 0 },
+	{ "m", "5Af0.", 2, 0 },
+	{ "n", "DAf0.", 2, 0 },
+	{ "BRA a", "80.i0.", 2, 0 },
+	{ "STZ a,X", "k1", 2, 0 },
+	{ "STZ a", "j1", 2, 0 },
+	{ "MUL", "02.", 8, 0 },
+	{ "WAI", "CB.", 16, 0 },
+	{ "STP", "DB.", 16, 0 },
 	{ NULL, NULL },
 };
 
@@ -100,7 +153,7 @@ static const char *const eval[] = {
 };
 
 static const char *const fval[] = {
-	"DEC", "INC",
+	"INC", "DEC",
 	NULL
 };
 
@@ -121,16 +174,48 @@ static const char *const ival[] = {
 	NULL
 };
 
+static const char *const jval[] = {
+	"TSB", "TRB",
+	NULL
+};
+
+static const char *const kval[] = {
+	"BBR0", "BBR1", "BBR2", "BBR3",
+       	"BBR4", "BBR5", "BBR6", "BBR7",
+	"BBS0", "BBS1", "BBS2", "BBS3",
+       	"BBS4", "BBS5", "BBS6", "BBS7",
+	NULL
+};
+
+static const char *const lval[] = {
+	"RMB0", "RMB1", "RMB2", "RMB3",
+       	"RMB4", "RMB5", "RMB6", "RMB7",
+	"SMB0", "SMB1", "SMB2", "SMB3",
+       	"SMB4", "SMB5", "SMB6", "SMB7",
+	NULL
+};
+
+static const char *const mval[] = {
+	"PHY", "PLY",
+	NULL
+};
+
+static const char *const nval[] = {
+	"PHX", "PLX",
+	NULL
+};
+
 static const char *const *const valtab[] = { 
 	bval, cval, dval, eval, fval,
-	gval, hval, ival
+	gval, hval, ival, jval, kval,
+	lval, mval, nval
 };
 
 static int match_mos6502(char c, const char *p, const char **q)
 {
 	int v;
 
-	if (c <= 'i') {
+	if (c <= 'n') {
 		v = mreg(p, valtab[(int) (c - 'b')], q);
 	} else {
 		v = -1;
@@ -161,6 +246,30 @@ static int gen_mos6502(int *eb, char p, const int *vs, int i, int savepc)
 		  break;
 	case 'h': b |= (vs[i] << 4); break;
 	case 'i': b = (vs[i] - savepc - 2); break;
+	case 'j': w = vs[i] & 0xffff;
+		  if (w <= 0xff) {
+			genb(0x64, s_pline_ep);
+			b = 0;
+			genb(w & 0xff, s_pline_ep);
+		  } else {
+			genb(0x9C, s_pline_ep);
+			b = 0;
+			genb(w & 0xff, s_pline_ep);
+			genb(w >> 8, s_pline_ep);
+		  }
+		  break;
+	case 'k': w = vs[i] & 0xffff;
+		  if (w <= 0xff) {
+			genb(0x74, s_pline_ep);
+			b = 0;
+			genb(w & 0xff, s_pline_ep);
+		  } else {
+			genb(0x9E, s_pline_ep);
+			b = 0;
+			genb(w & 0xff, s_pline_ep);
+			genb(w >> 8, s_pline_ep);
+		  }
+		  break;
 	default:
 		  return -1;
 	}
@@ -182,7 +291,7 @@ static const char *pat_next_str_mos6502(void)
 {
 	const char *s;
 
-	if (s_pat_char >= 'b' && s_pat_char <= 'i') {
+	if (s_pat_char >= 'b' && s_pat_char <= 'n') {
 		s = valtab[(int) (s_pat_char - 'b')][s_pat_index];
 		if (s != NULL) {
 			s_pat_index++;
@@ -203,4 +312,48 @@ const struct target s_target_mos6502 = {
 	.pat_char_rewind = pat_char_rewind_mos6502,
 	.pat_next_str = pat_next_str_mos6502,
 	.mask = 1
+};
+
+const struct target s_target_w65c02 = {
+	.id = "w65c02",
+	.descr = "Western Design W65C02",
+	.matcht = s_matchtab_mos6502,
+	.matchf = match_mos6502,
+	.genf = gen_mos6502,
+	.pat_char_rewind = pat_char_rewind_mos6502,
+	.pat_next_str = pat_next_str_mos6502,
+	.mask = 3
+};
+
+const struct target s_target_r65c02 = {
+	.id = "r65c02",
+	.descr = "Rockwell R65C02",
+	.matcht = s_matchtab_mos6502,
+	.matchf = match_mos6502,
+	.genf = gen_mos6502,
+	.pat_char_rewind = pat_char_rewind_mos6502,
+	.pat_next_str = pat_next_str_mos6502,
+	.mask = 7
+};
+
+const struct target s_target_r65c29 = {
+	.id = "r65c29",
+	.descr = "Rockwell R65C00/21, R65C29",
+	.matcht = s_matchtab_mos6502,
+	.matchf = match_mos6502,
+	.genf = gen_mos6502,
+	.pat_char_rewind = pat_char_rewind_mos6502,
+	.pat_next_str = pat_next_str_mos6502,
+	.mask = 15
+};
+
+const struct target s_target_w65c02s = {
+	.id = "w65c02s",
+	.descr = "Western Design W65C02S",
+	.matcht = s_matchtab_mos6502,
+	.matchf = match_mos6502,
+	.genf = gen_mos6502,
+	.pat_char_rewind = pat_char_rewind_mos6502,
+	.pat_next_str = pat_next_str_mos6502,
+	.mask = 027
 };

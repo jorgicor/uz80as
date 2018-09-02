@@ -39,6 +39,11 @@ ugen i8008 -ti8008
 ugen i8080 -ti8080
 ugen i8085 -ti8085
 ugen i8085u -u -ti8085
+ugen mos6502 -tmos6502
+ugen w65c02 -tw65c02
+ugen r65c02 -tr65c02
+ugen r65c29 -tr65c29
+ugen w65c02s -tw65c02s
 ugen tasmfail
 ugen longlabel
 ugen orgbelow

@@ -79,6 +79,7 @@ void newerr(void)
 	if (s_nerrors >= MAXERR) {
 		eprogname();
 		fprintf(stderr, _("exiting: too many errors"));
+		enl();
 		exit(EXIT_FAILURE);
 	}
 }
