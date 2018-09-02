@@ -2,6 +2,10 @@
  * uz80as, an assembler for the Zilog Z80 and several other microprocessors.
  *
  * MOS Technology 6502.
+ * Western Design W65C02.
+ * Rockwell R65C02.
+ * Rockwell R65C29.
+ * Western Design W65C02S.
  * ===========================================================================
  */
 
@@ -53,6 +57,7 @@
  *	   SMB0,SMB1,SMB2,SMB3,SMB4,SMB5,SMB6,SMB7
  *	m: PHY,PLY
  *	n: PHX,PLX
+ *	o: INC, DEC
  *
  * gen:
  * 	.: output lastbyte
@@ -65,13 +70,14 @@
  * 	   else output (lastbyte | 0x08) and output op as word
  * 	   (no '.' should follow)
  * 	h: (op << 4) | lastbyte
- * 	i: relative jump to op
+ * 	i: relative jump to op (-2)
  * 	j: if op <= $FF output $64 and op as 8 bit
  * 	   else output $9C and op as word
  * 	   (no '.' should follow)
  * 	k: if op <= $FF ouput $74 and op as 8 bit
  * 	   else output $9E and op as word
  * 	   (no '.' should follow)
+ * 	l: relative jump to op (-3)
  */
 
 const struct matchtab s_matchtab_mos6502[] = {
@@ -96,15 +102,15 @@ const struct matchtab s_matchtab_mos6502[] = {
 	{ "LDX #a", "A2.d0.", 1, 0 },
 	{ "LDX a", "A6g0", 1, 0 },
 	{ "LDX a,Y", "B6g0", 1, 0 },
-	{ "f A", "1Af0.", 2, 0 },
+	{ "o A", "1Af0.", 2, 0 },
 	{ "f a", "C6f0g1", 1, 0 },
 	{ "f a,X", "D6f0g1", 1, 0 },
 	{ "g a", "10f0.i1.", 1, 0 },
-	{ "BIT #a", "89.d0", 2, 0 },
+	{ "BIT #a", "89.d0.", 2, 0 },
 	{ "BIT a", "24g0", 1, 0 },
 	{ "BIT a,X", "34g0", 2, 0 },
 	{ "JMP (a)", "6C.e0", 1, 0 },
-	{ "JMP (a,X)", "52.e0", 2, 0 },
+	{ "JMP (a,X)", "7C.e0", 2, 0 },
 	{ "JMP a", "4C.e0", 1, 0 },
 	{ "STY a", "84g0", 1, 0 },
 	{ "STY a,X", "94.d0.", 1, 0 },
@@ -114,8 +120,8 @@ const struct matchtab s_matchtab_mos6502[] = {
 	{ "i #a", "C0f0.d1.", 1, 0 },
 	{ "i a", "C4f0g1", 1, 0 },
 	{ "j a", "04h0g1", 2, 0 },
-	{ "k a,a", "0Fh0.d1.i2.", 4, 0 },
-	{ "l a", "07h0.d1", 4, 0 },
+	{ "k a,a", "0Fh0.d1.l2.", 4, 0 },
+	{ "l a", "07h0.d1.", 4, 0 },
 	{ "m", "5Af0.", 2, 0 },
 	{ "n", "DAf0.", 2, 0 },
 	{ "BRA a", "80.i0.", 2, 0 },
@@ -153,7 +159,7 @@ static const char *const eval[] = {
 };
 
 static const char *const fval[] = {
-	"INC", "DEC",
+	"DEC", "INC",
 	NULL
 };
 
@@ -205,17 +211,22 @@ static const char *const nval[] = {
 	NULL
 };
 
+static const char *const oval[] = {
+	"INC", "DEC",
+	NULL
+};
+
 static const char *const *const valtab[] = { 
 	bval, cval, dval, eval, fval,
 	gval, hval, ival, jval, kval,
-	lval, mval, nval
+	lval, mval, nval, oval
 };
 
 static int match_mos6502(char c, const char *p, const char **q)
 {
 	int v;
 
-	if (c <= 'n') {
+	if (c <= 'o') {
 		v = mreg(p, valtab[(int) (c - 'b')], q);
 	} else {
 		v = -1;
@@ -270,6 +281,7 @@ static int gen_mos6502(int *eb, char p, const int *vs, int i, int savepc)
 			genb(w >> 8, s_pline_ep);
 		  }
 		  break;
+	case 'l': b = (vs[i] - savepc - 3); break;
 	default:
 		  return -1;
 	}
@@ -291,7 +303,7 @@ static const char *pat_next_str_mos6502(void)
 {
 	const char *s;
 
-	if (s_pat_char >= 'b' && s_pat_char <= 'n') {
+	if (s_pat_char >= 'b' && s_pat_char <= 'o') {
 		s = valtab[(int) (s_pat_char - 'b')][s_pat_index];
 		if (s != NULL) {
 			s_pat_index++;

@@ -29,11 +29,11 @@ n:          equ 56h
 	TSB a16 ; *
 	ORA a16
 	ASL a16
-b0f:	BBR0 zp,b0f ; *
+	BBR0 zp,* ; *
 
 ; 1x
 
-b10:	BPL b10
+	BPL *
 	ORA (zp),Y
 	ORA (zp) ; *
 	; 3
@@ -48,7 +48,7 @@ b10:	BPL b10
 	TRB a16 ; *
 	ORA a16,X
 	ASL a16,X
-b1f:	BBR1 zp,b1f ; *
+	BBR1 zp,* ; *
 	
 ; 2x
 
@@ -67,11 +67,11 @@ b1f:	BBR1 zp,b1f ; *
 	BIT a16
 	AND a16
 	ROL a16
-b2f:	BBR2 zp,b2f ; *
+	BBR2 zp,* ; *
 
 ; 3x
 
-b30:	BMI b30
+	BMI *
 	AND (zp),Y
 	AND (zp) ; *
 	; 3
@@ -86,7 +86,7 @@ b30:	BMI b30
 	BIT a16,X ; *
 	AND a16,X
 	ROL a16,X
-b3f:	BBR3 zp,b3f ; *
+	BBR3 zp,* ; *
 
 ; 4x
 
@@ -105,11 +105,11 @@ b3f:	BBR3 zp,b3f ; *
 	JMP a16
 	EOR a16
 	LSR a16
-b4f:	BBR4 zp,b4f ; *
+	BBR4 zp,* ; *
 
 ; 5x
 
-b50:	BVC b50
+	BVC *
 	EOR (zp),Y
 	EOR (zp) ; *
 	; 3
@@ -124,7 +124,7 @@ b50:	BVC b50
 	; C
 	EOR a16,X
 	LSR a16,X
-b5f:	BBR5 zp,b5f ; *
+	BBR5 zp,* ; *
 
 ; 6x
 
@@ -143,11 +143,11 @@ b5f:	BBR5 zp,b5f ; *
 	JMP (a16)
 	ADC a16
 	ROR a16
-b6f:	BBR6 zp,b6f ; *
+	BBR6 zp,* ; *
 
 ; 7x
 
-b70:	BVS b70
+	BVS *
 	ADC (zp),Y
 	ADC (zp) ; *
 	; 3
@@ -162,11 +162,11 @@ b70:	BVS b70
 	JMP (a16,X) ; *
 	ADC a16,X
 	ROR a16,X
-b7f:	BBR7 zp,b7f ; *
+	BBR7 zp,* ; *
 
 ; 8x
 
-b80:	BRA b80 ; *
+	BRA * ; *
 	STA (zp,X)
 	; 2
 	; 3
@@ -181,11 +181,11 @@ b80:	BRA b80 ; *
 	STY a16
 	STA a16
 	STX a16
-b8f:	BBS0 zp,b8f ; *
+	BBS0 zp,* ; *
 
 ; 9x
 
-b90:	BCC b90
+	BCC *
 	STA (zp),Y
 	STA (zp) ; *
 	; 3
@@ -200,7 +200,7 @@ b90:	BCC b90
 	; C
 	STA a16,X
 	STZ a16,X ; *
-b9f:	BBS1 zp,b9f ; *
+	BBS1 zp,* ; *
 
 ; Ax
 
@@ -219,11 +219,11 @@ b9f:	BBS1 zp,b9f ; *
 	LDY a16
 	LDA a16
 	LDX a16
-baf:	BBS2 zp,baf ; *
+	BBS2 zp,* ; *
 
 ; Bx
 
-bB0:	BCS bB0
+	BCS * 
 	LDA (zp),Y
 	LDA (zp) ; *
 	; 3
@@ -238,7 +238,7 @@ bB0:	BCS bB0
 	LDY a16,X
 	LDA a16,X
 	LDX a16,Y
-bBF:	BBS3 zp,bBF ; *
+	BBS3 zp,* ; *
 
 ; Cx
 
@@ -257,11 +257,11 @@ bBF:	BBS3 zp,bBF ; *
 	CPY a16
 	CMP a16
 	DEC a16
-bCF:	BBS4 zp,bCF ; *
+	BBS4 zp,* ; *
 
 ; Dx
 
-bD0:	BNE bD0
+	BNE *
 	CMP (zp),Y
 	CMP (zp) ; *
 	; 3
@@ -276,7 +276,7 @@ bD0:	BNE bD0
 	; C
 	CMP a16,X
 	DEC a16,X
-bDF:	BBS5 zp,bDF ; *
+	BBS5 zp,* ; *
 
 ; Ex
 
@@ -295,11 +295,11 @@ bDF:	BBS5 zp,bDF ; *
 	CPX a16
 	SBC a16
 	INC a16
-bEF:	BBS6 zp,bEF ; *
+	BBS6 zp,* ; *
 
 ; Fx
 
-bF0:	BEQ bF0
+	BEQ *
 	SBC (zp),Y
 	SBC (zp) ; *
 	; 3
