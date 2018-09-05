@@ -1,0 +1,3 @@
+@multitable @columnfractions .25 .25 .25 .25
+@item MUL
+@end multitable

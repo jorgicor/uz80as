@@ -2,16 +2,17 @@
  * uz80as, an assembler for the Zilog Z80 and several other microprocessors.
  *
  * MOS Technology 6502.
- * Western Design W65C02.
+ * Rockwell R6501.
+ * California Micro Devices G65SC02.
  * Rockwell R65C02.
  * Rockwell R65C29.
- * Western Design W65C02S.
+ * Western Design Center W65C02S.
  * ===========================================================================
  */
 
 /* mos6502, the original
  *
- *     w65c02 Western Design, adds to mos6502:
+ *     g65sc02 California Micro Devices, adds to mos6502:
  *         - zp ADC,AND,CMP,EOR,LDA,ORA,SBC,STA
  *         - DEC A, INC A
  *         - JMP (abs,X)
@@ -22,15 +23,17 @@
  *         - TSB
  *         - More addressing modes for BIT, etc
  *
- *         r65c02 Rockwell, adds to w65c02:
- *             - BBR, BBS
- *             - RMB, SMB
- * 	
- *             r65c29 Rockwell, adds to r65c02:
- *                 - MUL
+ *     r6501 Rockwell, adds to mos6502:
+ *         - BBR, BBS
+ *         - RMB, SMB
  *
- *             w65c02s Western Design, adds to r65c02:
- *                 - STP,WAI
+ *     r65c02 Rockwell, adds the instructions of the g65sc02 and r6501
+ * 	
+ *     r65c29 Rockwell, adds to r65c02:
+ *        - MUL
+ *
+ *     w65c02s Western Design Center, adds to r65c02:
+ *        - STP,WAI
  */
 
 #include "pp.h"
@@ -326,9 +329,20 @@ const struct target s_target_mos6502 = {
 	.mask = 1
 };
 
-const struct target s_target_w65c02 = {
-	.id = "w65c02",
-	.descr = "Western Design W65C02",
+const struct target s_target_r6501 = {
+	.id = "r6501",
+	.descr = "Rockwell R6501",
+	.matcht = s_matchtab_mos6502,
+	.matchf = match_mos6502,
+	.genf = gen_mos6502,
+	.pat_char_rewind = pat_char_rewind_mos6502,
+	.pat_next_str = pat_next_str_mos6502,
+	.mask = 5
+};
+
+const struct target s_target_g65sc02 = {
+	.id = "g65sc02",
+	.descr = "California Micro Devices G65SC02",
 	.matcht = s_matchtab_mos6502,
 	.matchf = match_mos6502,
 	.genf = gen_mos6502,
@@ -350,7 +364,7 @@ const struct target s_target_r65c02 = {
 
 const struct target s_target_r65c29 = {
 	.id = "r65c29",
-	.descr = "Rockwell R65C00/21, R65C29",
+	.descr = "Rockwell R65C29, R65C00/21",
 	.matcht = s_matchtab_mos6502,
 	.matchf = match_mos6502,
 	.genf = gen_mos6502,
@@ -361,7 +375,7 @@ const struct target s_target_r65c29 = {
 
 const struct target s_target_w65c02s = {
 	.id = "w65c02s",
-	.descr = "Western Design W65C02S",
+	.descr = "Western Design Center W65C02S",
 	.matcht = s_matchtab_mos6502,
 	.matchf = match_mos6502,
 	.genf = gen_mos6502,

@@ -18,7 +18,8 @@ dist_check_SCRIPTS = main.test \
 		     dp2200.test \
 		     dp2200ii.test \
 		     mos6502.test \
-		     w65c02.test \
+		     r6501.test \
+		     g65sc02.test \
 		     r65c02.test \
 		     r65c29.test \
 		     w65c02s.test \
@@ -103,10 +104,14 @@ EXTRA_DIST = igen.sh \
 	     mos6502.bok \
 	     mos6502.lok \
 	     mos6502.eok \
-	     w65c02.asm \
-	     w65c02.bok \
-	     w65c02.lok \
-	     w65c02.eok \
+	     r6501.asm \
+	     r6501.bok \
+	     r6501.lok \
+	     r6501.eok \
+	     g65sc02.asm \
+	     g65sc02.bok \
+	     g65sc02.lok \
+	     g65sc02.eok \
 	     r65c02.asm \
 	     r65c02.bok \
 	     r65c02.lok \

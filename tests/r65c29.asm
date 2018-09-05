@@ -197,7 +197,7 @@ n:          equ 56h
 	STA a16,Y
 	TXS
 	; B
-	; C
+	STZ a16 ; *
 	STA a16,X
 	STZ a16,X ; *
 	BBS1 zp,* ; *

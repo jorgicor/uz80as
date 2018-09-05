@@ -1,0 +1,116 @@
+@multitable @columnfractions .25 .25 .25 .25
+@item BRK
+@tab JSR a
+@tab RTI
+@tab RTS
+@item TXA
+@tab TXS
+@tab TAX
+@tab TSX
+@item DEX
+@tab NOP
+@tab PHP
+@tab CLC
+@item PLP
+@tab SEC
+@tab PHA
+@tab CLI
+@item PLA
+@tab SEI
+@tab DEY
+@tab TYA
+@item TAY
+@tab CLV
+@tab INY
+@tab CLD
+@item INX
+@tab SED
+@tab ORA #a
+@tab AND #a
+@item EOR #a
+@tab ADC #a
+@tab LDA #a
+@tab CMP #a
+@item SBC #a
+@tab ORA (a,X)
+@tab AND (a,X)
+@tab EOR (a,X)
+@item ADC (a,X)
+@tab STA (a,X)
+@tab LDA (a,X)
+@tab CMP (a,X)
+@item SBC (a,X)
+@tab ORA (a),Y
+@tab AND (a),Y
+@tab EOR (a),Y
+@item ADC (a),Y
+@tab STA (a),Y
+@tab LDA (a),Y
+@tab CMP (a),Y
+@item SBC (a),Y
+@tab ORA a
+@tab AND a
+@tab EOR a
+@item ADC a
+@tab STA a
+@tab LDA a
+@tab CMP a
+@item SBC a
+@tab ORA a,X
+@tab AND a,X
+@tab EOR a,X
+@item ADC a,X
+@tab STA a,X
+@tab LDA a,X
+@tab CMP a,X
+@item SBC a,X
+@tab ORA a,Y
+@tab AND a,Y
+@tab EOR a,Y
+@item ADC a,Y
+@tab STA a,Y
+@tab LDA a,Y
+@tab CMP a,Y
+@item SBC a,Y
+@tab ASL A
+@tab ROL A
+@tab LSR A
+@item ROR A
+@tab ASL a
+@tab ROL a
+@tab LSR a
+@item ROR a
+@tab ASL a,X
+@tab ROL a,X
+@tab LSR a,X
+@item ROR a,X
+@tab STX a
+@tab STX a,Y
+@tab LDX #a
+@item LDX a
+@tab LDX a,Y
+@tab DEC a
+@tab INC a
+@item DEC a,X
+@tab INC a,X
+@tab BPL a
+@tab BMI a
+@item BVC a
+@tab BVS a
+@tab BCC a
+@tab BCS a
+@item BNE a
+@tab BEQ a
+@tab BIT a
+@tab JMP (a)
+@item JMP a
+@tab STY a
+@tab STY a,X
+@tab LDY #a
+@item LDY a
+@tab LDY a,X
+@tab CPY #a
+@tab CPX #a
+@item CPY a
+@tab CPX a
+@end multitable

@@ -1,0 +1,34 @@
+@multitable @columnfractions .25 .25 .25 .25
+@item BBR0 a,a
+@tab BBR1 a,a
+@tab BBR2 a,a
+@tab BBR3 a,a
+@item BBR4 a,a
+@tab BBR5 a,a
+@tab BBR6 a,a
+@tab BBR7 a,a
+@item BBS0 a,a
+@tab BBS1 a,a
+@tab BBS2 a,a
+@tab BBS3 a,a
+@item BBS4 a,a
+@tab BBS5 a,a
+@tab BBS6 a,a
+@tab BBS7 a,a
+@item RMB0 a
+@tab RMB1 a
+@tab RMB2 a
+@tab RMB3 a
+@item RMB4 a
+@tab RMB5 a
+@tab RMB6 a
+@tab RMB7 a
+@item SMB0 a
+@tab SMB1 a
+@tab SMB2 a
+@tab SMB3 a
+@item SMB4 a
+@tab SMB5 a
+@tab SMB6 a
+@tab SMB7 a
+@end multitable

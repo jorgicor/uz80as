@@ -237,16 +237,51 @@ static void print_inst(FILE *f, const struct target *t, int *col,
 
 static void print_table(FILE *f, const char *target_id, int delta)
 {
-	const struct target *t;
+	const struct target *t, *t2;
 	const struct matchtab *mt;
 	int i, col, pr;
+	size_t len;
 	char buf[64];
-	
-	t = find_target(target_id);
+	char target1[64];
+	const char *target2;
+	unsigned char mask2;
+
+	if ((target2 = strchr(target_id, ',')) != NULL) {
+		len = target2 - target_id;
+		if (len > sizeof(target1) - 1) {
+			len = sizeof(target1) - 1;
+		}
+		memmove(target1, target_id, len); 	
+		target1[len] = '\0';
+		target2++;
+	} else {
+		snprintf(target1, sizeof(target1), "%s", target_id);
+		target2 = NULL;
+	}
+
+	t = find_target(target1);
 	if (t == NULL) {
 		eprogname();
-		fprintf(stderr, _("invalid target '%s'\n"), target_id);
+		fprintf(stderr, _("invalid target '%s'\n"), target1);
 		exit(EXIT_FAILURE);
+	}
+
+	if (target2) {
+		t2 = find_target(target2);
+		if (t2 == NULL) {
+			eprogname();
+			fprintf(stderr, _("invalid target '%s'\n"), target2);
+			exit(EXIT_FAILURE);
+		}
+		if (t->matcht != t2->matcht) {
+			eprogname();
+			fprintf(stderr, _("unrelated targets %s,%s\n"),
+				target1, target2);
+			exit(EXIT_FAILURE);
+		}
+		mask2 = t2->mask;
+	} else {
+		mask2 = 1;
 	}
 
 	col = 0;
@@ -259,7 +294,9 @@ static void print_table(FILE *f, const char *target_id, int delta)
 		if (t->mask == 1 && (mt[i].mask & 1)) {
 			pr = 1;
 		} else if (delta) {
-			if (!(mt[i].mask & 1)) {
+			if ((mt[i].mask & t->mask) &&
+				!(mt[i].mask & mask2))
+			{
 				pr = 1;
 			}
 		} else if (t->mask & mt[i].mask) {

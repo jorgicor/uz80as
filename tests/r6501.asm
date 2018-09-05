@@ -21,7 +21,7 @@ n:          equ 56h
 	; 4
 	ORA zp
 	ASL zp
-	; 7
+	RMB0 zp ; *
 	PHP
 	ORA #n
 	ASL A
@@ -29,7 +29,7 @@ n:          equ 56h
 	; C
 	ORA a16
 	ASL a16
-	; F
+	BBR0 zp,* ; *
 
 ; 1x
 
@@ -40,7 +40,7 @@ n:          equ 56h
 	; 4
 	ORA zp,X
 	ASL zp,X
-	; 7
+	RMB1 zp ; *
 	CLC
 	ORA a16,Y
 	; A
@@ -48,7 +48,7 @@ n:          equ 56h
 	; C
 	ORA a16,X
 	ASL a16,X
-	; F
+	BBR1 zp,* ; *
 	
 ; 2x
 
@@ -59,7 +59,7 @@ n:          equ 56h
 	BIT zp
 	AND zp
 	ROL zp
-	; 7
+	RMB2 zp ; *
 	PLP
 	AND #n
 	ROL A
@@ -67,7 +67,7 @@ n:          equ 56h
 	BIT a16
 	AND a16
 	ROL a16
-	; F
+	BBR2 zp,* ; *
 
 ; 3x
 
@@ -78,7 +78,7 @@ n:          equ 56h
 	; 4
 	AND zp,X
 	ROL zp,X
-	; 7
+	RMB3 zp ; *
 	SEC
 	AND a16,Y
 	; A
@@ -86,7 +86,7 @@ n:          equ 56h
 	; C
 	AND a16,X
 	ROL a16,X
-	; F
+	BBR3 zp,* ; *
 
 ; 4x
 
@@ -97,7 +97,7 @@ n:          equ 56h
 	; 4
 	EOR zp
 	LSR zp
-	; 7
+	RMB4 zp ; *
 	PHA
 	EOR #n
 	LSR A
@@ -105,7 +105,7 @@ n:          equ 56h
 	JMP a16
 	EOR a16
 	LSR a16
-	; F
+	BBR4 zp,* ; *
 
 ; 5x
 
@@ -116,7 +116,7 @@ n:          equ 56h
 	; 4
 	EOR zp,X
 	LSR zp,X
-	; 7
+	RMB5 zp ; *
 	CLI
 	EOR a16,Y
 	; A
@@ -124,7 +124,7 @@ n:          equ 56h
 	; C
 	EOR a16,X
 	LSR a16,X
-	; F
+	BBR5 zp,* ; *
 
 ; 6x
 
@@ -135,7 +135,7 @@ n:          equ 56h
 	; 4
 	ADC zp
 	ROR zp
-	; 7
+	RMB6 zp ; *
 	PLA
 	ADC #n
 	ROR A
@@ -143,7 +143,7 @@ n:          equ 56h
 	JMP (a16)
 	ADC a16
 	ROR a16
-	; F
+	BBR6 zp,* ; *
 
 ; 7x
 
@@ -154,7 +154,7 @@ n:          equ 56h
 	; 4
 	ADC zp,X
 	ROR zp,X
-	; 7
+	RMB7 zp ; *
 	SEI
 	ADC a16,Y
 	; A
@@ -162,7 +162,7 @@ n:          equ 56h
 	; C
 	ADC a16,X
 	ROR a16,X
-	; F
+	BBR7 zp,* ; *
 
 ; 8x
 
@@ -173,7 +173,7 @@ n:          equ 56h
 	STY zp
 	STA zp
 	STX zp
-	; 7
+	SMB0 zp ; *
 	DEY
 	; 9
 	TXA
@@ -181,7 +181,7 @@ n:          equ 56h
 	STY a16
 	STA a16
 	STX a16
-	; F
+	BBS0 zp,* ; *
 
 ; 9x
 
@@ -192,7 +192,7 @@ n:          equ 56h
 	STY zp,X
 	STA zp,X
 	STX zp,Y
-	; 7
+	SMB1 zp ; *
 	TYA
 	STA a16,Y
 	TXS
@@ -200,7 +200,7 @@ n:          equ 56h
 	; C
 	STA a16,X
 	; E
-	; F
+	BBS1 zp,* ; *
 
 ; Ax
 
@@ -211,7 +211,7 @@ n:          equ 56h
 	LDY zp
 	LDA zp
 	LDX zp
-	; 7
+	SMB2 zp ; *
 	TAY
 	LDA #n
 	TAX
@@ -219,7 +219,7 @@ n:          equ 56h
 	LDY a16
 	LDA a16
 	LDX a16
-	; F
+	BBS2 zp,* ; *
 
 ; Bx
 
@@ -230,7 +230,7 @@ n:          equ 56h
 	LDY zp,X
 	LDA zp,X
 	LDX zp,Y
-	; 7
+	SMB3 zp ; *
 	CLV
 	LDA a16,Y
 	TSX
@@ -238,7 +238,7 @@ n:          equ 56h
 	LDY a16,X
 	LDA a16,X
 	LDX a16,Y
-	; F
+	BBS3 zp,* ; *
 
 ; Cx
 
@@ -249,7 +249,7 @@ n:          equ 56h
 	CPY zp
 	CMP zp
 	DEC zp
-	; 7
+	SMB4 zp ; *
 	INY
 	CMP #n
 	DEX
@@ -257,7 +257,7 @@ n:          equ 56h
 	CPY a16
 	CMP a16
 	DEC a16
-	; F
+	BBS4 zp,* ; *
 
 ; Dx
 
@@ -268,7 +268,7 @@ n:          equ 56h
 	; 4
 	CMP zp,X
 	DEC zp,X
-	; 7
+	SMB5 zp ; *
 	CLD
 	CMP a16,Y
 	; A
@@ -276,7 +276,7 @@ n:          equ 56h
 	; C
 	CMP a16,X
 	DEC a16,X
-	; F
+	BBS5 zp,* ; *
 
 ; Ex
 
@@ -287,7 +287,7 @@ n:          equ 56h
 	CPX zp
 	SBC zp
 	INC zp
-	; 7
+	SMB6 zp ; *
 	INX
 	SBC #n
 	NOP
@@ -295,7 +295,7 @@ n:          equ 56h
 	CPX a16
 	SBC a16
 	INC a16
-	; F
+	BBS6 zp,* ; *
 
 ; Fx
 
@@ -306,7 +306,7 @@ n:          equ 56h
 	; 4
 	SBC zp,X
 	INC zp,X
-	; 7
+	SMB7 zp ; *
 	SED
 	SBC a16,Y
 	; A
@@ -314,6 +314,6 @@ n:          equ 56h
 	; C
 	SBC a16,X
 	INC a16,X
-	; F
+	BBS7 zp,* ; *
 
 	end

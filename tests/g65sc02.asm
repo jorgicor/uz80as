@@ -33,7 +33,7 @@ n:          equ 56h
 
 ; 1x
 
-b10:	BPL b10
+	BPL *
 	ORA (zp),Y
 	ORA (zp) ; *
 	; 3
@@ -59,7 +59,7 @@ b10:	BPL b10
 	BIT zp
 	AND zp
 	ROL zp
-	; *
+	; 4
 	PLP
 	AND #n
 	ROL A
@@ -71,7 +71,7 @@ b10:	BPL b10
 
 ; 3x
 
-b30:	BMI b30
+	BMI *
 	AND (zp),Y
 	AND (zp) ; *
 	; 3
@@ -109,7 +109,7 @@ b30:	BMI b30
 
 ; 5x
 
-b50:	BVC b50
+	BVC *
 	EOR (zp),Y
 	EOR (zp) ; *
 	; 3
@@ -147,7 +147,7 @@ b50:	BVC b50
 
 ; 7x
 
-b70:	BVS b70
+	BVS *
 	ADC (zp),Y
 	ADC (zp) ; *
 	; 3
@@ -162,11 +162,11 @@ b70:	BVS b70
 	JMP (a16,X) ; *
 	ADC a16,X
 	ROR a16,X
-	; *
+	; F
 
 ; 8x
 
-b80:	BRA b80 ; *
+	BRA * ; *
 	STA (zp,X)
 	; 2
 	; 3
@@ -185,7 +185,7 @@ b80:	BRA b80 ; *
 
 ; 9x
 
-b90:	BCC b90
+	BCC *
 	STA (zp),Y
 	STA (zp) ; *
 	; 3
@@ -197,7 +197,7 @@ b90:	BCC b90
 	STA a16,Y
 	TXS
 	; B
-	; C
+	STZ a16 ; *
 	STA a16,X
 	STZ a16,X ; *
 	; F
@@ -219,11 +219,11 @@ b90:	BCC b90
 	LDY a16
 	LDA a16
 	LDX a16
-	; *
+	; F
 
 ; Bx
 
-bB0:	BCS bB0
+	BCS *
 	LDA (zp),Y
 	LDA (zp) ; *
 	; 3
@@ -238,7 +238,7 @@ bB0:	BCS bB0
 	LDY a16,X
 	LDA a16,X
 	LDX a16,Y
-	; *
+	; F
 
 ; Cx
 
@@ -257,11 +257,11 @@ bB0:	BCS bB0
 	CPY a16
 	CMP a16
 	DEC a16
-	; *
+	; F
 
 ; Dx
 
-bD0:	BNE bD0
+	BNE *
 	CMP (zp),Y
 	CMP (zp) ; *
 	; 3
@@ -276,7 +276,7 @@ bD0:	BNE bD0
 	; C
 	CMP a16,X
 	DEC a16,X
-	; *
+	; F
 
 ; Ex
 
@@ -295,11 +295,11 @@ bD0:	BNE bD0
 	CPX a16
 	SBC a16
 	INC a16
-	; *
+	; F
 
 ; Fx
 
-bF0:	BEQ bF0
+	BEQ *
 	SBC (zp),Y
 	SBC (zp) ; *
 	; 3
@@ -314,6 +314,6 @@ bF0:	BEQ bF0
 	; C
 	SBC a16,X
 	INC a16,X
-	; *
+	; F
 
 	end
