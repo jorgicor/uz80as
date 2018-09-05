@@ -1,0 +1,24 @@
+@multitable @columnfractions .25 .25 .25 .25
+@item ORA (a)
+@tab AND (a)
+@tab EOR (a)
+@tab ADC (a)
+@item STA (a)
+@tab LDA (a)
+@tab CMP (a)
+@tab SBC (a)
+@item INC A
+@tab DEC A
+@tab BIT #a
+@tab BIT a,X
+@item JMP (a,X)
+@tab TSB a
+@tab TRB a
+@tab PHY
+@item PLY
+@tab PHX
+@tab PLX
+@tab BRA a
+@item STZ a,X
+@tab STZ a
+@end multitable

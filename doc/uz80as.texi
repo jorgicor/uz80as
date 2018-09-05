@@ -94,10 +94,11 @@ Currently, uz80as can assemble for these microprocessors:
 @item Intel 8080
 @item Intel 8085
 @item MOS Technology 6502
-@item Western Design W65C02
+@item Rockwell R6501
+@item California Micro Devices G65SC02
 @item Rockwell R65C02
-@item Rockwell R65C00/21, R65C29
-@item Western Design W65C02S
+@item Rockwell R65C29, R65C00/21
+@item Western Design Center W65C02S
 @end itemize
 
 @command{uz80as} is free software.
@@ -1210,10 +1211,11 @@ We do not allow for trailing commas, you should write:
 * i8080 instruction set::		Intel 8080 instruction set.
 * i8085 instruction set::		Intel 8085 instruction set.
 * mos6502 instruction set::		MOS 6502 instruction set.
-* w65c02 instruction set::		Western Design W65C02 instruction set.
+* r6501 instruction set::		Rockwell R6501 instruction set.
+* g65sc02 instruction set::		California Micro Devices G65SC02.
 * r65c02 instruction set::		Rockwell R65C02 instruction set.
 * r65c29 instruction set::		Rockewll R65C29 instruction set.
-* w65c02s instruction set::		Western Design W65C02S instruction set.
+* w65c02s instruction set::		Western Design Center W65C02S.
 @end menu
 
 @node z80 instruction set
@@ -1397,26 +1399,32 @@ These are the instructions accepted:
 
 @include mos6502tb.texi
 
-@node w65c02 instruction set
-@section w65c02 instruction set
+@node r6501 instruction set
+@section r6501 instruction set
 
-The @code{w65c02} target selects the Western Design W65C02.
+The @code{r6501} target selects the Rockwell R6501.
 The instruction set accepted is the same as for the @code{mos6502} target, plus these new instructions:
 
-@include w65c02tb.texi
+@include r6501tb.texi
+
+@node g65sc02 instruction set
+@section g65sc02 instruction set
+
+The @code{g65sc02} target selects the California Micro Devices G65SC02.
+The instruction set accepted is the same as for the @code{mos6502} target, plus these new instructions:
+
+@include g65sc02tb.texi
 
 @node r65c02 instruction set
 @section r65c02 instruction set
 
 The @code{r65c02} target selects the Rockwell R65C02.
-The instruction set accepted is the same as for the @code{w65c02} target, plus these new instructions:
-
-@include r65c02tb.texi
+The instruction set accepted is the same as for the @code{mos6502} target, plus the added instructions of the @code{r6501} and @code{g65sc02} targets.
 
 @node r65c29 instruction set
 @section r65c29 instruction set
 
-The @code{r65c29} target selects the Rockwell R65C00/21, R65C29.
+The @code{r65c29} target selects the Rockwell R65C29, R65C00/21.
 The instruction set accepted is the same as for the @code{r65c02} target, plus these new instructions:
 
 @include r65c29tb.texi
@@ -1424,7 +1432,7 @@ The instruction set accepted is the same as for the @code{r65c02} target, plus t
 @node w65c02s instruction set
 @section w65c02s instruction set
 
-The @code{w65c02s} target selects the Western Design W65C02S.
+The @code{w65c02s} target selects the Western Design Center W65C02S.
 The instruction set accepted is the same as for the @code{r65c02} target, plus these new instructions:
 
 @include w65c02stb.texi
