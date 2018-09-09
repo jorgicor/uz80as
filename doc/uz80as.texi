@@ -1,7 +1,7 @@
 \input texinfo
 
 @c ==========================================================================
-@c uz80as, a macro assembler for Z80 based microprocessors.
+@c uz80as, an assembler for the Zilog Z80 and several other microprocessors.
 @c ==========================================================================
 
 @c %**start of header
@@ -86,19 +86,28 @@ It accepts source files with the same syntax accepted by the Telemark Cross Asse
 
 Currently, uz80as can assemble for these microprocessors:
 @itemize @bullet
+@item Z80 family
+@itemize @bullet
 @item Zilog Z80
 @item Hitachi HD64180
 @item Sharp LR35902 (Nintendo Gameboy CPU)
-@item Datapoint 2200 (versions I & II)
-@item Intel 8008
-@item Intel 8080
-@item Intel 8085
+@end itemize
+@item 6502 family
+@itemize @bullet
 @item MOS Technology 6502
 @item Rockwell R6501
 @item California Micro Devices G65SC02
 @item Rockwell R65C02
 @item Rockwell R65C29, R65C00/21
 @item Western Design Center W65C02S
+@end itemize
+@item Intel 8008
+@item 8080 family
+@itemize @bullet
+@item Intel 8080
+@item Intel 8085
+@end itemize
+@item Datapoint 2200 (versions I & II)
 @end itemize
 
 @command{uz80as} is free software.
@@ -139,10 +148,10 @@ Everything that starts with an alphabetic character at the first column is consi
 
 A label must be separated by the rest of fields on the line by a space, tab or a colon @samp{:}.
 
-The operation can be a Z80 instruction or an assembler directive (assembler directives start with a dot @samp{.}).
+The operation can be a microprocessor instruction or an assembler directive (assembler directives start with a dot @samp{.}).
 
 Assembler directives can start at column 1, as they start with a dot @samp{.} and cannot be taken for a label.
-But a Z80 instruction cannot start at column 1, or it would be taken as a label.
+But a microprocessor instruction cannot start at column 1, or it would be taken as a label.
 
 The operation must be separated by the operands (if any) with a space.
 
@@ -205,8 +214,8 @@ Otherwise, the value of the label is the current program counter.
 @node Operation field
 @subsection Operation field
 
-The operation field is a Z80 instruction opcode (like @code{ADD}, @code{SUB}, @code{CALL}, etc) or an assembler directive (like @code{.ORG}, @code{.EQU}, etc).
-If it is a Z80 instruction, it cannot start at the first column of the line, because in that case it would be considered a label.
+The operation field is a microprocessor instruction opcode (like @code{ADD}, @code{SUB}, @code{CALL}, etc) or an assembler directive (like @code{.ORG}, @code{.EQU}, etc).
+If it is a microprocessor instruction, it cannot start at the first column of the line, because in that case it would be considered a label.
 Assembler directives can start at any column as they start with a dot @samp{.}.
 
 @node Operands field
@@ -304,7 +313,7 @@ Examples:
 @node Program counter
 @subsection Program counter
 
-In an expression you can use the value of the current program counter which is the Z80 address that will be assigned to the line we are assembling.
+In an expression you can use the value of the current program counter which is the memory address that will be assigned to the line we are assembling.
 You can use the dollar character @samp{$} or the asterisk @samp{*} to represent the current program counter.
 
 For example:
@@ -387,7 +396,7 @@ For the shift operators @code{>>} and @code{<<}, the second operand specifies th
 @node Assembler directives
 @section Assembler directives
 
-The assembler directives are distinguished from the Z80 instructions because they begin with a dot character @samp{.}.
+The assembler directives are distinguished from the microprocessor instructions because they begin with a dot character @samp{.}.
 They are commands to control the assembly process.
 
 @menu
@@ -1015,7 +1024,7 @@ Display usage information and exit.
 Display version information and exit.
 
 @item -f nn, --fill n
-By default, the entire memory addressable by the Z80 (64K) is filled by zero.
+By default, the entire memory addressable (64K) is filled by zero.
 You can specify a different value to fill the memory.
 @code{'nn'} must be formed by two hexadecimal digits.
 For example, to fill the memory with the value 255 decimal, use @code{'-f FF'}.
@@ -1123,7 +1132,7 @@ For a system where an integer is 32 bits, @code{N} is 31.
 This seems compatible with @command{TASM}.
 
 @item
-We allow the program counter to reach the address 65536 which is outside the address range of the Z80 ([0, 65535]). But if some object is generated after that address, we will issue an error and terminate.
+We allow the program counter to reach the address 65536 which is outside the address range ([0, 65535]). But if some object is generated after that address, we will issue an error and terminate.
 
 @command{TASM}, on the other hand, shows a strange behavior. For example, this generates an object code of 256 bytes (?) without error:
 
