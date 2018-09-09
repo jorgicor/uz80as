@@ -1,18 +1,18 @@
 @multitable @columnfractions .25 .25 .25 .25
-@item IN0 B,(a)
-@tab IN0 C,(a)
-@tab IN0 D,(a)
-@tab IN0 E,(a)
-@item IN0 H,(a)
-@tab IN0 L,(a)
-@tab IN0 A,(a)
-@tab OUT0 (a),B
-@item OUT0 (a),C
-@tab OUT0 (a),D
-@tab OUT0 (a),E
-@tab OUT0 (a),H
-@item OUT0 (a),L
-@tab OUT0 (a),A
+@item IN0 B,(e8)
+@tab IN0 C,(e8)
+@tab IN0 D,(e8)
+@tab IN0 E,(e8)
+@item IN0 H,(e8)
+@tab IN0 L,(e8)
+@tab IN0 A,(e8)
+@tab OUT0 (e8),B
+@item OUT0 (e8),C
+@tab OUT0 (e8),D
+@tab OUT0 (e8),E
+@tab OUT0 (e8),H
+@item OUT0 (e8),L
+@tab OUT0 (e8),A
 @tab OTDM
 @tab OTDMR
 @item OTIM
@@ -30,6 +30,6 @@
 @item TST L
 @tab TST A
 @tab TST (HL)
-@tab TST a
-@item TSTIO a
+@tab TST e8
+@item TSTIO e8
 @end multitable

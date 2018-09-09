@@ -4,15 +4,15 @@
 @tab * ARHL
 @tab * DSUB
 @item * RDEL
-@tab * LDHI a
-@tab * LDSI a
+@tab * LDHI e8
+@tab * LDSI e8
 @tab * RSTV
 @item * SHLX
 @tab * LHLX
-@tab * JNK a
-@tab * JNX5 a
-@item * JNUI a
-@tab * JK a
-@tab * JX5 a
-@tab * JUI a
+@tab * JNK e
+@tab * JNX5 e
+@item * JNUI e
+@tab * JK e
+@tab * JX5 e
+@tab * JUI e
 @end multitable

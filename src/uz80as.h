@@ -25,6 +25,11 @@ enum {
  * 	d: lastbyte = op as 8 bit value
  * 	e: output op as word (no '.' should follow)
  * 	f - z: used by target
+ *
+ * pr:
+ * 	8: e8
+ *	f: e16
+ *	r: relative jump
  */
 
 struct matchtab {
@@ -32,6 +37,7 @@ struct matchtab {
 	const char *gen;
 	unsigned char mask;
 	unsigned char undoc;
+	const char *pr;
 };
 
 struct target {

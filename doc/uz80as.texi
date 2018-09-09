@@ -1210,6 +1210,16 @@ We do not allow for trailing commas, you should write:
 @node Targets
 @chapter Targets
 
+For every instruction accepted for every target:
+
+@itemize @bullet
+@item @code{*} marks undocumented instructions (selected with the @code{-u} command line option).
+@item @code{e} is an expression.
+@item @code{e8} is an expression, but only the least significant byte is used.
+@item @code{r8} is an expression. The distance from the program counter is calculated and only the least significant byte used.
+@item @code{b} is an expression which evaluates to a value between 0 and 7.
+@end itemize
+
 @menu
 * z80 instruction set::			Zilog Z80 instruction set.
 * hd64180 instruction set::		Hitachi HD64180 instruction set.
@@ -1235,11 +1245,12 @@ These are the instructions accepted:
 
 @include z80tb.texi
 
-Where @code{*} marks undocumented instructions (selected with the @code{-u} command line option) and @code{a} is any expression, except that:
+Where:
 
 @itemize @bullet
-@item For the RST instruction, the expression must evaluate to 0H, 8H, 10H, 18H, 20H, 28H, 30H or 38H.
-@item For IXa and IYa, this means IX or IY followed by a @code{+} or @code{-} sign and an expression.
+@item @code{t} is an expression which must evaluate to 0H, 8H, 10H, 18H, 20H, 28H, 30H or 38H.
+@item @code{s} is an expression which must evaluate to 0, 1, or 2.
+@item For IXi and IYi, this means IX or IY followed by a @code{+} or @code{-} sign and an expression.
 @end itemize
 
 @menu
@@ -1312,10 +1323,10 @@ These are the instructions accepted:
 
 @include gbcputb.texi
 
-Where @code{a} is any expression, except that:
+Where:
 
 @itemize @bullet
-@item For the RST instruction, the expression must evaluate to 0H, 8H, 10H, 18H, 20H, 28H, 30H or 38H.
+@item @code{s} is an expression which must evaluate to 0H, 8H, 10H, 18H, 20H, 28H, 30H or 38H.
 @end itemize
 
 @menu
@@ -1337,8 +1348,6 @@ Important: the Datapoint 2200 version I can only address 8K at maximum but @code
 These are the instructions accepted:
 
 @include dp2200tb.texi
-
-Where @code{a} is any expression.
 
 @node dp2200ii instruction set
 @section dp2200ii instruction set
@@ -1362,12 +1371,10 @@ These are the instructions accepted:
 
 @include i8008tb.texi
 
-Where @code{a} is any expression, except that:
+Where:
 
 @itemize @bullet
-@item For the RST instruction it must evaluate to a value between 0 and 7.
-@item For the INP instruction it must evaluate to a value between 0 and 7.
-@item For the OUT instruction it must evaluate to a value between 8 and 31.
+@item @code{k} is an expression which must evaluate to a value between 8 and 31.
 @end itemize
 
 @node i8080 instruction set
@@ -1377,12 +1384,6 @@ The @code{i8080} target selects the Intel 8080.
 These are the instructions accepted:
 
 @include i8080tb.texi
-
-Where @code{a} is any expression, except that:
-
-@itemize @bullet
-@item For the RST instruction it must evaluate to a value between 0 and 7.
-@end itemize
 
 @node i8085 instruction set
 @section i8085 instruction set
@@ -1395,7 +1396,6 @@ The instruction set accepted is the same as for the @code{i8080} target, plus th
 Where:
 
 @itemize @bullet
-@item @code{*} marks undocumented instructions (selected with the @code{-u} command line option).
 @item @code{JNX5} and @code{JNUI} are alternative names for the @code{JNK} instruction.
 @item @code{JX5}  and @code{JUI} are alternative names for the @code{JK} instruction.
 @end itemize

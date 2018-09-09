@@ -1,130 +1,130 @@
 @multitable @columnfractions .25 .25 .25 .25
-@item HALT
-@tab SLC
+@item SLC
 @tab SRC
 @tab RETURN
-@item INPUT
-@tab ADA
+@tab INPUT
+@item ADA
 @tab ADB
 @tab ADC
-@item ADD
-@tab ADE
+@tab ADD
+@item ADE
 @tab ADH
 @tab ADL
-@item ADM
-@tab ACA
+@tab ADM
+@item ACA
 @tab ACB
 @tab ACC
-@item ACD
-@tab ACE
+@tab ACD
+@item ACE
 @tab ACH
 @tab ACL
-@item ACM
-@tab SUA
+@tab ACM
+@item SUA
 @tab SUB
 @tab SUC
-@item SUD
-@tab SUE
+@tab SUD
+@item SUE
 @tab SUH
 @tab SUL
-@item SUM
-@tab SBA
+@tab SUM
+@item SBA
 @tab SBB
 @tab SBC
-@item SBD
-@tab SBE
+@tab SBD
+@item SBE
 @tab SBH
 @tab SBL
-@item SBM
-@tab NDA
+@tab SBM
+@item NDA
 @tab NDB
 @tab NDC
-@item NDD
-@tab NDE
+@tab NDD
+@item NDE
 @tab NDH
 @tab NDL
-@item NDM
-@tab XRA
+@tab NDM
+@item XRA
 @tab XRB
 @tab XRC
-@item XRD
-@tab XRE
+@tab XRD
+@item XRE
 @tab XRH
 @tab XRL
-@item XRM
-@tab ORA
+@tab XRM
+@item ORA
 @tab ORB
 @tab ORC
-@item ORD
-@tab ORE
+@tab ORD
+@item ORE
 @tab ORH
 @tab ORL
-@item ORM
-@tab CPA
+@tab ORM
+@item CPA
 @tab CPB
 @tab CPC
-@item CPD
-@tab CPE
+@tab CPD
+@item CPE
 @tab CPH
 @tab CPL
-@item CPM
-@tab NOP
+@tab CPM
+@item NOP
 @tab LAB
 @tab LAC
-@item LAD
-@tab LAE
+@tab LAD
+@item LAE
 @tab LAH
 @tab LAL
-@item LAM
-@tab LBA
+@tab LAM
+@item LBA
 @tab LBC
 @tab LBD
-@item LBE
-@tab LBH
+@tab LBE
+@item LBH
 @tab LBL
 @tab LBM
-@item LCA
-@tab LCB
+@tab LCA
+@item LCB
 @tab LCD
 @tab LCE
-@item LCH
-@tab LCL
+@tab LCH
+@item LCL
 @tab LCM
 @tab LDA
-@item LDB
-@tab LDC
+@tab LDB
+@item LDC
 @tab LDE
 @tab LDH
-@item LDL
-@tab LDM
+@tab LDL
+@item LDM
 @tab LEA
 @tab LEB
-@item LEC
-@tab LED
+@tab LEC
+@item LED
 @tab LEH
 @tab LEL
-@item LEM
-@tab LHA
+@tab LEM
+@item LHA
 @tab LHB
 @tab LHC
-@item LHD
-@tab LHE
+@tab LHD
+@item LHE
 @tab LHL
 @tab LHM
-@item LLA
-@tab LLB
+@tab LLA
+@item LLB
 @tab LLC
 @tab LLD
-@item LLE
-@tab LLH
+@tab LLE
+@item LLH
 @tab LLM
 @tab LMA
-@item LMB
-@tab LMC
+@tab LMB
+@item LMC
 @tab LMD
 @tab LME
-@item LMH
-@tab LML
+@tab LMH
+@item LML
+@tab HALT
 @tab EX ADR
 @tab EX STATUS
 @item EX DATA
@@ -145,44 +145,44 @@
 @tab EX REWND
 @item EX TSTOP
 @tab RFC
-@tab RFS
-@tab RTC
-@item RTS
 @tab RFZ
-@tab RFP
+@tab RFS
+@item RFP
+@tab RTC
 @tab RTZ
+@tab RTS
 @item RTP
-@tab AD a
-@tab SU a
-@tab ND a
-@item OR a
-@tab LA a
-@tab LC a
-@tab LE a
-@item LL a
-@tab AC a
-@tab SB a
-@tab XR a
-@item CP a
-@tab LB a
-@tab LD a
-@tab LH a
-@item JFC a
-@tab JFS a
-@tab JTC a
-@tab JTS a
-@item CFC a
-@tab CFS a
-@tab CTC a
-@tab CTS a
-@item JFZ a
-@tab JFP a
-@tab JTZ a
-@tab JTP a
-@item CFZ a
-@tab CFP a
-@tab CTZ a
-@tab CTP a
-@item JMP a
-@tab CALL a
+@tab AD e8
+@tab AC e8
+@tab SU e8
+@item SB e8
+@tab ND e8
+@tab XR e8
+@tab OR e8
+@item CP e8
+@tab LA e8
+@tab LB e8
+@tab LC e8
+@item LD e8
+@tab LE e8
+@tab LH e8
+@tab LL e8
+@item JFC e
+@tab JFZ e
+@tab JFS e
+@tab JFP e
+@item JTC e
+@tab JTZ e
+@tab JTS e
+@tab JTP e
+@item CFC e
+@tab CFZ e
+@tab CFS e
+@tab CFP e
+@item CTC e
+@tab CTZ e
+@tab CTS e
+@tab CTP e
+@item JMP e
+@tab CALL e
 @end multitable

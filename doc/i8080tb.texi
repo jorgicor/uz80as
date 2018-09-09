@@ -20,22 +20,22 @@
 @tab MOV B,H
 @tab MOV B,L
 @item MOV B,A
-@tab MVI B,a
-@tab MVI C,a
-@tab MVI D,a
-@item MVI E,a
-@tab MVI H,a
-@tab MVI L,a
-@tab MVI M,a
-@item MVI A,a
-@tab LXI B,a
-@tab LXI D,a
-@tab LXI H,a
-@item LXI SP,a
-@tab SHLD a
-@tab LHLD a
-@tab STA a
-@item LDA a
+@tab MVI B,e8
+@tab MVI C,e8
+@tab MVI D,e8
+@item MVI E,e8
+@tab MVI H,e8
+@tab MVI L,e8
+@tab MVI M,e8
+@item MVI A,e8
+@tab LXI B,e
+@tab LXI D,e
+@tab LXI H,e
+@item LXI SP,e
+@tab SHLD e
+@tab LHLD e
+@tab STA e
+@item LDA e
 @tab STAX B
 @tab STAX D
 @tab XCHG
@@ -47,14 +47,14 @@
 @tab ADD L
 @tab ADD M
 @tab ADD A
-@item ADI a
-@tab ACI a
-@tab SUI a
-@tab SBI a
-@item ANI a
-@tab XRI a
-@tab ORI a
-@tab CPI a
+@item ADI e8
+@tab ACI e8
+@tab SUI e8
+@tab SBI e8
+@item ANI e8
+@tab XRI e8
+@tab ORI e8
+@tab CPI e8
 @item INR B
 @tab INR C
 @tab INR D
@@ -91,24 +91,24 @@
 @tab CMA
 @tab STC
 @tab CMC
-@item JMP a
-@tab JNZ a
-@tab JZ a
-@tab JNC a
-@item JC a
-@tab JPO a
-@tab JPE a
-@tab JP a
-@item JM a
-@tab CALL a
-@tab CNZ a
-@tab CZ a
-@item CNC a
-@tab CC a
-@tab CPO a
-@tab CPE a
-@item CP a
-@tab CM a
+@item JMP e
+@tab JNZ e
+@tab JZ e
+@tab JNC e
+@item JC e
+@tab JPO e
+@tab JPE e
+@tab JP e
+@item JM e
+@tab CALL e
+@tab CNZ e
+@tab CZ e
+@item CNC e
+@tab CC e
+@tab CPO e
+@tab CPE e
+@item CP e
+@tab CM e
 @tab RET
 @tab RNZ
 @item RZ
@@ -118,7 +118,7 @@
 @item RPE
 @tab RP
 @tab RM
-@tab RST a
+@tab RST b
 @item PCHL
 @tab POP B
 @tab POP D
@@ -126,8 +126,8 @@
 @item POP PSW
 @tab XTHL
 @tab SPHL
-@tab OUT a
-@item IN a
+@tab OUT e8
+@item IN e8
 @tab DI
 @tab EI
 @tab HLT

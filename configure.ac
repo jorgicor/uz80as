@@ -6,7 +6,7 @@
 # ===========================================================================
 
 AC_INIT([uz80as],
-	[1.05],
+	[1.06],
 	[jorge.giner@hotmail.com],
 	uz80as,
 	[http://jorgicor.sdfeu.org/uz80as])

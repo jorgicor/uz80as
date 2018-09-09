@@ -12,22 +12,22 @@
 @tab RTZ
 @tab RTS
 @item RTP
-@tab LAI a
-@tab LBI a
-@tab LCI a
-@item LDI a
-@tab LEI a
-@tab LHI a
-@tab LLI a
-@item LMI a
-@tab ADI a
-@tab ACI a
-@tab SUI a
-@item SBI a
-@tab NDI a
-@tab XRI a
-@tab ORI a
-@item CPI a
+@tab LAI e8
+@tab LBI e8
+@tab LCI e8
+@item LDI e8
+@tab LEI e8
+@tab LHI e8
+@tab LLI e8
+@item LMI e8
+@tab ADI e8
+@tab ACI e8
+@tab SUI e8
+@item SBI e8
+@tab NDI e8
+@tab XRI e8
+@tab ORI e8
+@item CPI e8
 @tab INB
 @tab INC
 @tab IND
@@ -40,27 +40,27 @@
 @tab DCE
 @tab DCH
 @item DCL
-@tab RST a
-@tab JFC a
-@tab CFC a
-@item JMP a
-@tab CAL a
-@tab JFZ a
-@tab CFZ a
-@item JFS a
-@tab CFS a
-@tab JFP a
-@tab CFP a
-@item JTC a
-@tab CTC a
-@tab JTZ a
-@tab CTZ a
-@item JTS a
-@tab CTS a
-@tab JTP a
-@tab CTP a
-@item INP a
-@tab OUT a
+@tab RST b
+@tab JFC e
+@tab CFC e
+@item JMP e
+@tab CAL e
+@tab JFZ e
+@tab CFZ e
+@item JFS e
+@tab CFS e
+@tab JFP e
+@tab CFP e
+@item JTC e
+@tab CTC e
+@tab JTZ e
+@tab CTZ e
+@item JTS e
+@tab CTS e
+@tab JTP e
+@tab CTP e
+@item INP b
+@tab OUT k
 @tab ADA
 @tab ADB
 @item ADC

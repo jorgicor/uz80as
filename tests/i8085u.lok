@@ -254,7 +254,7 @@
 0254   00DF C3 34 12    	JMP a16
 0255   00E2 C4 34 12    	CNZ a16
 0256   00E5 C5          	PUSH B
-0257   00E6 C6 00       	ADI n
+0257   00E6 C6 20       	ADI n
 0258   00E8 C7          	RST 0
 0259   00E9 C8          	RZ
 0260   00EA C9          	RET
@@ -262,7 +262,7 @@
 0262   00EE CB          	RSTV ; *
 0263   00EF CC 34 12    	CZ a16
 0264   00F2 CD 34 12    	CALL a16
-0265   00F5 CE 01       	ACI n
+0265   00F5 CE 20       	ACI n
 0266   00F7 CF          	RST 1
 0267   00F8             
 0268   00F8             ; Dx
@@ -270,20 +270,20 @@
 0270   00F8 D0          	RNC
 0271   00F9 D1          	POP D
 0272   00FA D2 34 12    	JNC a16
-0273   00FD D3 00       	OUT n
+0273   00FD D3 20       	OUT n
 0274   00FF D4 34 12    	CNC a16
 0275   0102 D5          	PUSH D
-0276   0103 D6 02       	SUI n
+0276   0103 D6 20       	SUI n
 0277   0105 D7          	RST 2
 0278   0106 D8          	RC
 0279   0107 D9          	SHLX ; *
 0280   0108 DA 34 12    	JC a16
-0281   010B DB 01       	IN n
+0281   010B DB 20       	IN n
 0282   010D DC 34 12    	CC a16
 0283   0110 DD 34 12    	JNK a16 ; *
 0284   0113 DD 34 12    	JNX5 a16 ; *
 0285   0116 DD 34 12    	JNUI a16 ; *
-0286   0119 DE 03       	SBI n
+0286   0119 DE 20       	SBI n
 0287   011B DF          	RST 3
 0288   011C             
 0289   011C             ; Ex
@@ -294,7 +294,7 @@
 0294   0121 E3          	XTHL
 0295   0122 E4 34 12    	CPO a16
 0296   0125 E5          	PUSH H
-0297   0126 E6 04       	ANI n
+0297   0126 E6 20       	ANI n
 0298   0128 E7          	RST 4
 0299   0129 E8          	RPE
 0300   012A E9          	PCHL
@@ -302,7 +302,7 @@
 0302   012E EB          	XCHG
 0303   012F EC 34 12    	CPE a16
 0304   0132 ED          	LHLX ; *
-0305   0133 EE 05       	XRI n
+0305   0133 EE 20       	XRI n
 0306   0135 EF          	RST 5
 0307   0136             
 0308   0136             ; Fx
@@ -313,7 +313,7 @@
 0313   013B F3          	DI
 0314   013C F4 34 12    	CP a16
 0315   013F F5          	PUSH PSW
-0316   0140 F6 06       	ORI n
+0316   0140 F6 20       	ORI n
 0317   0142 F7          	RST 6
 0318   0143 F8          	RM
 0319   0144 F9          	SPHL
@@ -323,7 +323,7 @@
 0323   014C FD 34 12    	JK a16 ; *
 0324   014F FD 34 12    	JX5 a16 ; *
 0325   0152 FD 34 12    	JUI a16 ; *
-0326   0155 FE 07       	CPI n
+0326   0155 FE 20       	CPI n
 0327   0157 FF          	RST 7
 0328   0158             
 0329   0158             	end

@@ -27,34 +27,34 @@
 @tab LD H,(HL)
 @tab LD L,(HL)
 @tab LD A,(HL)
-@item LD B,(IXa)
-@tab LD B,(IYa)
+@item LD B,(IXi)
+@tab LD B,(IYi)
 @tab LD A,I
 @tab LD A,R
 @item LD A,(BC)
 @tab LD A,(DE)
-@tab LD A,(a)
-@tab LD B,a
-@item LD C,a
-@tab LD D,a
-@tab LD E,a
-@tab LD H,a
-@item LD L,a
-@tab LD A,a
-@tab * LD B,a
-@tab * LD C,a
-@item * LD D,a
-@tab * LD E,a
-@tab * LD IXH,a
-@tab * LD IXL,a
-@item * LD A,a
-@tab * LD B,a
-@tab * LD C,a
-@tab * LD D,a
-@item * LD E,a
-@tab * LD IYH,a
-@tab * LD IYL,a
-@tab * LD A,a
+@tab LD A,(e)
+@tab LD B,e8
+@item LD C,e8
+@tab LD D,e8
+@tab LD E,e8
+@tab LD H,e8
+@item LD L,e8
+@tab LD A,e8
+@tab * LD B,e8
+@tab * LD C,e8
+@item * LD D,e8
+@tab * LD E,e8
+@tab * LD IXH,e8
+@tab * LD IXL,e8
+@item * LD A,e8
+@tab * LD B,e8
+@tab * LD C,e8
+@tab * LD D,e8
+@item * LD E,e8
+@tab * LD IYH,e8
+@tab * LD IYL,e8
+@tab * LD A,e8
 @item LD I,A
 @tab LD R,A
 @tab LD SP,HL
@@ -62,23 +62,23 @@
 @item LD SP,DE
 @tab LD SP,HL
 @tab LD SP,SP
-@tab LD HL,(a)
-@item LD BC,(a)
-@tab LD DE,(a)
-@tab LD HL,(a)
-@tab LD SP,(a)
-@item LD BC,a
-@tab LD DE,a
-@tab LD HL,a
-@tab LD SP,a
-@item LD BC,(a)
-@tab LD DE,(a)
-@tab LD HL,(a)
-@tab LD SP,(a)
-@item LD BC,a
-@tab LD DE,a
-@tab LD HL,a
-@tab LD SP,a
+@tab LD HL,(e)
+@item LD BC,(e)
+@tab LD DE,(e)
+@tab LD HL,(e)
+@tab LD SP,(e)
+@item LD BC,e
+@tab LD DE,e
+@tab LD HL,e
+@tab LD SP,e
+@item LD BC,(e)
+@tab LD DE,(e)
+@tab LD HL,(e)
+@tab LD SP,(e)
+@item LD BC,e
+@tab LD DE,e
+@tab LD HL,e
+@tab LD SP,e
 @item LD (HL),B
 @tab LD (HL),C
 @tab LD (HL),D
@@ -86,28 +86,28 @@
 @item LD (HL),H
 @tab LD (HL),L
 @tab LD (HL),A
-@tab LD (HL),a
+@tab LD (HL),e8
 @item LD (BC),A
 @tab LD (DE),A
-@tab LD (IXa),B
-@tab LD (IXa),C
-@item LD (IXa),D
-@tab LD (IXa),E
-@tab LD (IXa),H
-@tab LD (IXa),L
-@item LD (IXa),A
-@tab LD (IXa),a
-@tab LD (IYa),a
-@tab LD (a),A
-@item LD (a),HL
-@tab LD (a),BC
-@tab LD (a),DE
-@tab LD (a),HL
-@item LD (a),SP
-@tab LD (a),BC
-@tab LD (a),DE
-@tab LD (a),HL
-@item LD (a),SP
+@tab LD (IXi),B
+@tab LD (IXi),C
+@item LD (IXi),D
+@tab LD (IXi),E
+@tab LD (IXi),H
+@tab LD (IXi),L
+@item LD (IXi),A
+@tab LD (IXi),e8
+@tab LD (IYi),e8
+@tab LD (e),A
+@item LD (e),HL
+@tab LD (e),BC
+@tab LD (e),DE
+@tab LD (e),HL
+@item LD (e),SP
+@tab LD (e),BC
+@tab LD (e),DE
+@tab LD (e),HL
+@item LD (e),SP
 @tab PUSH BC
 @tab PUSH DE
 @tab PUSH HL
@@ -189,16 +189,16 @@
 @tab XOR A,(HL)
 @item OR A,(HL)
 @tab CP A,(HL)
-@tab ADD A,(IXa)
-@tab ADD A,(IYa)
-@item ADD A,a
-@tab ADC A,a
-@tab SUB A,a
-@tab SBC A,a
-@item AND A,a
-@tab XOR A,a
-@tab OR A,a
-@tab CP A,a
+@tab ADD A,(IXi)
+@tab ADD A,(IYi)
+@item ADD A,e8
+@tab ADC A,e8
+@tab SUB A,e8
+@tab SBC A,e8
+@item AND A,e8
+@tab XOR A,e8
+@tab OR A,e8
+@tab CP A,e8
 @item ADD B
 @tab ADD C
 @tab ADD D
@@ -228,16 +228,16 @@
 @tab XOR (HL)
 @tab OR (HL)
 @item CP (HL)
-@tab ADD (IXa)
-@tab ADD (IYa)
-@tab ADD a
-@item ADC a
-@tab SUB a
-@tab SBC a
-@tab AND a
-@item XOR a
-@tab OR a
-@tab CP a
+@tab ADD (IXi)
+@tab ADD (IYi)
+@tab ADD e8
+@item ADC e8
+@tab SUB e8
+@tab SBC e8
+@tab AND e8
+@item XOR e8
+@tab OR e8
+@tab CP e8
 @tab INC B
 @item INC C
 @tab INC D
@@ -261,8 +261,8 @@
 @tab * INC A
 @item INC (HL)
 @tab DEC (HL)
-@tab INC (IXa)
-@tab INC (IYa)
+@tab INC (IXi)
+@tab INC (IYi)
 @item INC BC
 @tab INC DE
 @tab INC HL
@@ -288,7 +288,7 @@
 @tab HALT
 @tab DI
 @item EI
-@tab IM a
+@tab IM t
 @tab RLCA
 @tab RLA
 @item RRCA
@@ -301,15 +301,15 @@
 @tab * SLL L
 @item * SLL A
 @tab * SLL (HL)
-@tab * SLL (IXa)
-@tab * SLL (IYa)
-@item * SLL (IXa),B
-@tab * SLL (IXa),C
-@tab * SLL (IXa),D
-@tab * SLL (IXa),E
-@item * SLL (IXa),H
-@tab * SLL (IXa),L
-@tab * SLL (IXa),A
+@tab * SLL (IXi)
+@tab * SLL (IYi)
+@item * SLL (IXi),B
+@tab * SLL (IXi),C
+@tab * SLL (IXi),D
+@tab * SLL (IXi),E
+@item * SLL (IXi),H
+@tab * SLL (IXi),L
+@tab * SLL (IXi),A
 @tab RLC B
 @item RLC C
 @tab RLC D
@@ -324,72 +324,72 @@
 @tab SLA (HL)
 @tab SRA (HL)
 @item SRL (HL)
-@tab RLC (IXa)
-@tab RLC (IYa)
-@tab * RLC (IXa),B
-@item * RLC (IXa),C
-@tab * RLC (IXa),D
-@tab * RLC (IXa),E
-@tab * RLC (IXa),H
-@item * RLC (IXa),L
-@tab * RLC (IXa),A
+@tab RLC (IXi)
+@tab RLC (IYi)
+@tab * RLC (IXi),B
+@item * RLC (IXi),C
+@tab * RLC (IXi),D
+@tab * RLC (IXi),E
+@tab * RLC (IXi),H
+@item * RLC (IXi),L
+@tab * RLC (IXi),A
 @tab RLD
 @tab RRD
-@item BIT a,B
-@tab BIT a,C
-@tab BIT a,D
-@tab BIT a,E
-@item BIT a,H
-@tab BIT a,L
-@tab BIT a,A
-@tab BIT a,(HL)
-@item RES a,(HL)
-@tab SET a,(HL)
-@tab BIT a,(IXa)
-@tab BIT a,(IYa)
-@item * RES a,(IXa),B
-@tab * RES a,(IXa),C
-@tab * RES a,(IXa),D
-@tab * RES a,(IXa),E
-@item * RES a,(IXa),H
-@tab * RES a,(IXa),L
-@tab * RES a,(IXa),A
-@tab * SET a,(IXa),B
-@item * SET a,(IXa),C
-@tab * SET a,(IXa),D
-@tab * SET a,(IXa),E
-@tab * SET a,(IXa),H
-@item * SET a,(IXa),L
-@tab * SET a,(IXa),A
+@item BIT b,B
+@tab BIT b,C
+@tab BIT b,D
+@tab BIT b,E
+@item BIT b,H
+@tab BIT b,L
+@tab BIT b,A
+@tab BIT b,(HL)
+@item RES b,(HL)
+@tab SET b,(HL)
+@tab BIT b,(IXi)
+@tab BIT b,(IYi)
+@item * RES b,(IXi),B
+@tab * RES b,(IXi),C
+@tab * RES b,(IXi),D
+@tab * RES b,(IXi),E
+@item * RES b,(IXi),H
+@tab * RES b,(IXi),L
+@tab * RES b,(IXi),A
+@tab * SET b,(IXi),B
+@item * SET b,(IXi),C
+@tab * SET b,(IXi),D
+@tab * SET b,(IXi),E
+@tab * SET b,(IXi),H
+@item * SET b,(IXi),L
+@tab * SET b,(IXi),A
 @tab JP (HL)
 @tab JP (BC)
 @item JP (DE)
 @tab JP (HL)
 @tab JP (SP)
-@tab JP NZ,a
-@item JP Z,a
-@tab JP NC,a
-@tab JP C,a
-@tab JP PO,a
-@item JP PE,a
-@tab JP P,a
-@tab JP M,a
-@tab JP a
-@item JR NZ,a
-@tab JR Z,a
-@tab JR NC,a
-@tab JR C,a
-@item JR a
-@tab DJNZ a
-@tab CALL NZ,a
-@tab CALL Z,a
-@item CALL NC,a
-@tab CALL C,a
-@tab CALL PO,a
-@tab CALL PE,a
-@item CALL P,a
-@tab CALL M,a
-@tab CALL a
+@tab JP NZ,e
+@item JP Z,e
+@tab JP NC,e
+@tab JP C,e
+@tab JP PO,e
+@item JP PE,e
+@tab JP P,e
+@tab JP M,e
+@tab JP e
+@item JR NZ,r8
+@tab JR Z,r8
+@tab JR NC,r8
+@tab JR C,r8
+@item JR r8
+@tab DJNZ r8
+@tab CALL NZ,e
+@tab CALL Z,e
+@item CALL NC,e
+@tab CALL C,e
+@tab CALL PO,e
+@tab CALL PE,e
+@item CALL P,e
+@tab CALL M,e
+@tab CALL e
 @tab RETI
 @item RETN
 @tab RET NZ
@@ -401,7 +401,7 @@
 @tab RET P
 @item RET M
 @tab RET
-@tab RST a
+@tab RST s
 @tab IN B,(C)
 @item IN C,(C)
 @tab IN D,(C)
@@ -409,8 +409,8 @@
 @tab IN H,(C)
 @item IN L,(C)
 @tab IN A,(C)
-@tab IN A,(a)
-@tab IN F,(a)
+@tab IN A,(e8)
+@tab IN F,(e)
 @item * IN (C)
 @tab INI
 @tab INIR
@@ -424,7 +424,7 @@
 @tab OUT (C),H
 @tab OUT (C),L
 @item OUT (C),A
-@tab OUT (a),A
+@tab OUT (e8),A
 @tab OUTI
 @tab OTIR
 @item OUTD

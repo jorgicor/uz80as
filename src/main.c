@@ -199,12 +199,40 @@ static void list_targets(FILE *f)
 
 static void print_inst(FILE *f, const struct target *t, int *col,
 		       unsigned char undoc,
-		       const char *p, char *buf, size_t bufsz, size_t bufi)
+		       const char *p, char *buf, size_t bufsz, size_t bufi,
+		       const char *pr)
 {
 	const char *s;
 
+	/*
 	while (*p && (*p == 'a' || !islower(*p))) {
 		buf[bufi++] = *p++;
+	}
+	*/
+	while (*p) {
+		if (!islower(*p)) {
+			buf[bufi++] = *p++;
+		} else if (*p == 'a') {
+			if (pr == NULL) {
+				buf[bufi++] = 'e';
+			} else if (*pr == '8') {
+				buf[bufi++] = 'e';
+				buf[bufi++] = '8';
+				pr++;
+			} else if (*pr == 'r') {
+				buf[bufi++] = 'r';
+				buf[bufi++] = '8';
+				pr++;
+			} else if (pr == '\0') {
+				buf[bufi++] = 'e';
+			} else {
+				buf[bufi++] = *pr;
+				pr++;
+			}
+			p++;
+		} else {
+			break;
+		}
 	}
 
 	if (*p == '\0') {
@@ -229,7 +257,7 @@ static void print_inst(FILE *f, const struct target *t, int *col,
 				buf[bufi] = '\0';
 				strcat(buf, s);
 				print_inst(f, t, col, undoc, p + 1, buf,
-					   bufsz, bufi + strlen(s));
+					   bufsz, bufi + strlen(s), pr);
 			}
 		}
 	}
@@ -304,7 +332,7 @@ static void print_table(FILE *f, const char *target_id, int delta)
 		}
 		if (pr) { 
 			print_inst(f, t, &col, mt[i].undoc, mt[i].pat,
-				   buf, sizeof(buf), 0);
+				   buf, sizeof(buf), 0, mt[i].pr);
 		}
 		i++;
 	}

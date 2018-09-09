@@ -1,3 +1,13 @@
+1.06	2018-09-09
+
+	* 6502 family added:
+	  - mos6502: MOS Technology 6502
+	  - r6501: Rockwell R6501
+	  - g65sc02: California Micro Devices G65SC02
+	  - r65c02: Rockwell R65C02
+	  - r65c29: Rockwell R65C29
+	  - w65c02s: Western Design Center W65C02S
+
 1.05	2018-07-22
 
 	* New targets added:
