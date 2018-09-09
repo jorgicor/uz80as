@@ -8,6 +8,9 @@
 	  - r65c29: Rockwell R65C29
 	  - w65c02s: Western Design Center W65C02S
 
+	* Fixed some instructions for the i8080 and i8085 (ADI, ACI, SUI, SBI,
+	  ANI, XRI, ORI, CPI, IN, OUT).
+
 1.05	2018-07-22
 
 	* New targets added:
