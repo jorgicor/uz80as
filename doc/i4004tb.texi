@@ -1,0 +1,49 @@
+@multitable @columnfractions .25 .25 .25 .25
+@item NOP
+@tab JCN e,e
+@tab FIM e,e
+@tab SRC e
+@item FIN e
+@tab JIN e
+@tab JUN e
+@tab JMS e
+@item INC e
+@tab ISZ e,e
+@tab LDM e
+@tab ADD e
+@item SUB e
+@tab LD e
+@tab XCH e
+@tab BBL e
+@item LDM e
+@tab WRM
+@tab WMP
+@tab WRR
+@item WPM
+@tab WR0
+@tab WR1
+@tab WR2
+@item WR3
+@tab SBM
+@tab RDM
+@tab RDR
+@item ADM
+@tab RD0
+@tab RD1
+@tab RD2
+@item RD3
+@tab CLB
+@tab CLC
+@tab IAC
+@item CMC
+@tab CMA
+@tab RAL
+@tab RAR
+@item TCC
+@tab DAC
+@tab TCS
+@tab STC
+@item DAA
+@tab KBP
+@tab DCL
+@end multitable

@@ -10,7 +10,7 @@ Currently, uz80as can assemble for these microprocessors:
     - Zilog Z80
     - Hitachi HD64180
     - Sharp LR35902 (Nintendo Gameboy CPU)
-  - 6502 family
+  - 6500 family
     - MOS Technology 6502
     - Rockwell R6501
     - California Micro Devices G65SC02
@@ -18,10 +18,11 @@ Currently, uz80as can assemble for these microprocessors:
     - Rockwell R65C29
     - Western Design Center W65C02S
   - Datapoint 2200 (versions I & II)
+  - Intel 4004
+  - Intel 4040
   - Intel 8008
-  - 8080 family
-    - Intel 8080
-    - Intel 8085
+  - Intel 8080
+  - Intel 8085
 
 uz80as is free software. See the file `COPYING` for copying conditions.
 

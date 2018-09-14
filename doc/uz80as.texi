@@ -92,7 +92,7 @@ Currently, uz80as can assemble for these microprocessors:
 @item Hitachi HD64180
 @item Sharp LR35902 (Nintendo Gameboy CPU)
 @end itemize
-@item 6502 family
+@item 6500 family
 @itemize @bullet
 @item MOS Technology 6502
 @item Rockwell R6501
@@ -101,12 +101,11 @@ Currently, uz80as can assemble for these microprocessors:
 @item Rockwell R65C29, R65C00/21
 @item Western Design Center W65C02S
 @end itemize
+@item Intel 4004
+@item Intel 4040
 @item Intel 8008
-@item 8080 family
-@itemize @bullet
 @item Intel 8080
 @item Intel 8085
-@end itemize
 @item Datapoint 2200 (versions I & II)
 @end itemize
 
@@ -1226,6 +1225,8 @@ For every instruction accepted for every target:
 * gbcpu instruction set::		Sharp LR35902 instruction set.
 * dp2200 instruction set::		Datapoint 2200 version I.
 * dp2200ii instruction set::		Datapoint 2200 version II.
+* i4004 instruction set::		Intel 4004 instruction set.
+* i4040 instruction set::		Intel 4040 instruction set.
 * i8008 instruction set::		Intel 8008 instruction set.
 * i8080 instruction set::		Intel 8080 instruction set.
 * i8085 instruction set::		Intel 8085 instruction set.
@@ -1360,12 +1361,34 @@ The instruction set accepted is the same as for the @code{dp2200} target, plus t
 
 @include dp2200iitb.texi
 
+@node i4004 instruction set
+@section i4004 instruction set
+
+The @code{i4004} target selects the Intel 4004 instruction set.
+
+Important: the Intel 4004 can only address 4K at maximum but @code{uz80as} at this moment only imposes a 64K limit.
+
+These are the instructions accepted:
+
+@include i4004tb.texi
+
+@node i4040 instruction set
+@section i4040 instruction set
+
+The @code{i4040} target selects the Intel 4040 instruction set.
+
+Important: the Intel 4040 can only address 8K at maximum but @code{uz80as} at this moment only imposes a 64K limit.
+
+The instruction set accepted is the same as for the @code{i4004} target, plus these new instructions:
+
+@include i4040tb.texi
+
 @node i8008 instruction set
 @section i8008 instruction set
 
 The @code{i8008} target selects the Intel 8008 instruction set.
 
-Important: the Intel 8008 can only address 8K at maximum but @code{uz80as} at this moment only imposes a 64K limit.
+Important: the Intel 8008 can only address 16K at maximum but @code{uz80as} at this moment only imposes a 64K limit.
 
 These are the instructions accepted:
 

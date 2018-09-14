@@ -35,6 +35,8 @@ ugen hd64180 -thd64180
 ugen gbcpu -tgbcpu
 ugen dp2200 -tdp2200
 ugen dp2200ii -tdp2200ii
+ugen i4004 -ti4004
+ugen i4040 -ti4040
 ugen i8008 -ti8008
 ugen i8080 -ti8080
 ugen i8085 -ti8085

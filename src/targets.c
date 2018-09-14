@@ -17,6 +17,8 @@ extern const struct target s_target_hd64180;
 extern const struct target s_target_gbcpu;
 extern const struct target s_target_dp2200;
 extern const struct target s_target_dp2200ii;
+extern const struct target s_target_i4004;
+extern const struct target s_target_i4040;
 extern const struct target s_target_i8008;
 extern const struct target s_target_i8080;
 extern const struct target s_target_i8085;
@@ -33,6 +35,8 @@ static const struct target *s_targets[] = {
 	&s_target_gbcpu,
 	&s_target_dp2200,
 	&s_target_dp2200ii,
+	&s_target_i4004,
+	&s_target_i4040,
 	&s_target_i8008,
 	&s_target_i8080,
 	&s_target_i8085,

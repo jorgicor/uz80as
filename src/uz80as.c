@@ -239,8 +239,12 @@ int mreg(const char *p, const char *const list[], const char **r)
 		q = p;
 		while (toupper(*q++) == *s++) {
 			if (*s == '\0') {
-				*r = q;
-				return i - 1;
+				if (!isalnum(*q)) {
+					*r = q;
+					return i - 1;
+				} else {
+					break;
+				}
 			}
 		}
 	}
