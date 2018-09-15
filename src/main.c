@@ -197,6 +197,14 @@ static void list_targets(FILE *f)
 	}
 }
 
+/*
+ * Substitutes 'a' in pattern for 'e' or takes each 2 chars (c1,c2) of pr
+ * and substitutes 'a' for:
+ * c1 if c1 == c2
+ * c1c2 otherwise
+ *
+ * If no more characters in pr substitutes 'a' for 'e'.
+ */
 static void print_inst(FILE *f, const struct target *t, int *col,
 		       unsigned char undoc,
 		       const char *p, char *buf, size_t bufsz, size_t bufi,
@@ -204,30 +212,22 @@ static void print_inst(FILE *f, const struct target *t, int *col,
 {
 	const char *s;
 
-	/*
-	while (*p && (*p == 'a' || !islower(*p))) {
-		buf[bufi++] = *p++;
-	}
-	*/
 	while (*p) {
 		if (!islower(*p)) {
 			buf[bufi++] = *p++;
 		} else if (*p == 'a') {
 			if (pr == NULL) {
 				buf[bufi++] = 'e';
-			} else if (*pr == '8') {
-				buf[bufi++] = 'e';
-				buf[bufi++] = '8';
-				pr++;
-			} else if (*pr == 'r') {
-				buf[bufi++] = 'r';
-				buf[bufi++] = '8';
-				pr++;
-			} else if (pr == '\0') {
-				buf[bufi++] = 'e';
+			} else if (pr[0] && pr[1]) {
+				if (pr[0] == pr[1]) {
+					buf[bufi++] = pr[0];
+				} else {
+					buf[bufi++] = pr[0];
+					buf[bufi++] = pr[1];
+				}
+				pr += 2;
 			} else {
-				buf[bufi++] = *pr;
-				pr++;
+				buf[bufi++] = 'e';
 			}
 			p++;
 		} else {

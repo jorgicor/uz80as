@@ -59,14 +59,14 @@ const struct matchtab s_matchtab_i8008[] = {
 	{ "RET", "07.", 1, 0 },
 	{ "j", "02b0.", 1, 0 },
 	{ "i", "03b0.", 1, 0 },
-	{ "h a", "06b0.d1.", 1, 0, "8" },
-	{ "g a", "04b0.d1.", 1, 0, "8" },
+	{ "h a", "06b0.d1.", 1, 0, "e8" },
+	{ "g a", "04b0.d1.", 1, 0, "e8" },
 	{ "e", "00b0.", 1, 0 },
 	{ "f", "01b0.", 1, 0 },
-	{ "RST a", "05j0.", 1, 0, "b" },
+	{ "RST a", "05j0.", 1, 0, "b3" },
 	{ "d a", "40i0.e1", 1, 0 },
-	{ "INP a", "41f0.", 1, 0, "b" },
-	{ "OUT a", "41g0.", 1, 0, "k" },
+	{ "INP a", "41f0.", 1, 0, "b3" },
+	{ "OUT a", "41g0.", 1, 0, "kk" },
 	{ "b", "80c0.", 1, 0 },
 	{ "c", "C0c0.", 1, 0 },
 	{ NULL, NULL },
@@ -148,7 +148,7 @@ static int gen_i8008(int *eb, char p, const int *vs, int i, int savepc)
        
 	b = *eb;
 	switch (p) {
-	case 'f': if (vs[i] < 0 || vs[i] > 7) {
+	case 'f': if (s_pass > 0 && (vs[i] < 0 || vs[i] > 7)) {
 			  eprint(_("argument (%d) must be in range [0-7]\n"),
 				vs[i]);
 			  eprcol(s_pline, s_pline_ep);
@@ -156,7 +156,7 @@ static int gen_i8008(int *eb, char p, const int *vs, int i, int savepc)
 		  }
 	          b |= (vs[i] << 1);
 		  break;
-	case 'g': if (vs[i] < 8 || vs[i] > 31) {
+	case 'g': if (s_pass > 0 && (vs[i] < 8 || vs[i] > 31)) {
 			  eprint(_("argument (%d) must be in range [8-31]\n"),
 				vs[i]);
 			  eprcol(s_pline, s_pline_ep);
@@ -166,7 +166,7 @@ static int gen_i8008(int *eb, char p, const int *vs, int i, int savepc)
 		  break;
 	case 'h': b |= (vs[i] << 4); break;
 	case 'i': b |= (vs[i] << 1); break;
-	case 'j': if (vs[i] < 0 || vs[i] > 7) {
+	case 'j': if (s_pass > 0 && (vs[i] < 0 || vs[i] > 7)) {
 			  eprint(_("argument (%d) must be in range [0-7]\n"),
 				vs[i]);
 			  eprcol(s_pline, s_pline_ep);

@@ -118,7 +118,7 @@
 @item RPE
 @tab RP
 @tab RM
-@tab RST b
+@tab RST b3
 @item PCHL
 @tab POP B
 @tab POP D

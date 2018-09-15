@@ -47,45 +47,76 @@ n:     equ 56h
 	JCN 13,*
 	JCN 14,*
 	JCN 15,*
-	
+
 ; 2x
 
 	FIM 0,n
+	FIM 0P,n
 	SRC 0
+	SRC 0P
 	FIM 2,n
+	FIM 1P,n
 	SRC 2
+	SRC 1P
 	FIM 4,n
+	FIM 2P,n
 	SRC 4
+	SRC 2P
 	FIM 6,n
+	FIM 3P,n
 	SRC 6
+	SRC 3P
 	FIM 8,n
+	FIM 4P,n
 	SRC 8
+	SRC 4P
 	FIM 10,n
+	FIM 5P,n
 	SRC 10
+	SRC 5P
 	FIM 12,n
+	FIM 6P,n
 	SRC 12
+	SRC 6P
 	FIM 14,n
+	FIM 7P,n
 	SRC 14
+	SRC 7P
 
 ; 3x
 
 	FIN 0
+	FIN 0P
 	JIN 0
+	JIN 0P
 	FIN 2
+	FIN 1P
 	JIN 2
+	JIN 1P
 	FIN 4
+	FIN 2P
 	JIN 4
+	JIN 2P
 	FIN 6
+	FIN 3P
 	JIN 6
+	JIN 3P
 	FIN 8
+	FIN 4P
 	JIN 8
+	JIN 4P
 	FIN 10
+	FIN 5P
 	JIN 10
+	JIN 5P
 	FIN 12
+	FIN 6P
 	JIN 12
+	JIN 6P
 	FIN 14
+	FIN 7P
 	JIN 14
-
+	JIN 7P
 ; 4x
 
 	JUN $077

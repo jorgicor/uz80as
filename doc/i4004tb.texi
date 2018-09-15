@@ -1,49 +1,80 @@
 @multitable @columnfractions .25 .25 .25 .25
 @item NOP
-@tab JCN e,e
-@tab FIM e,e
-@tab SRC e
-@item FIN e
-@tab JIN e
+@tab JCN b4,e8
+@tab FIM 0P,e8
+@tab FIM 1P,e8
+@item FIM 2P,e8
+@tab FIM 3P,e8
+@tab FIM 4P,e8
+@tab FIM 5P,e8
+@item FIM 6P,e8
+@tab FIM 7P,e8
+@tab FIM p,e8
+@tab SRC 0P
+@item SRC 1P
+@tab SRC 2P
+@tab SRC 3P
+@tab SRC 4P
+@item SRC 5P
+@tab SRC 6P
+@tab SRC 7P
+@tab SRC p
+@item FIN 0P
+@tab FIN 1P
+@tab FIN 2P
+@tab FIN 3P
+@item FIN 4P
+@tab FIN 5P
+@tab FIN 6P
+@tab FIN 7P
+@item FIN p
+@tab JIN 0P
+@tab JIN 1P
+@tab JIN 2P
+@item JIN 3P
+@tab JIN 4P
+@tab JIN 5P
+@tab JIN 6P
+@item JIN 7P
+@tab JIN p
 @tab JUN e
 @tab JMS e
-@item INC e
-@tab ISZ e,e
-@tab LDM e
-@tab ADD e
-@item SUB e
-@tab LD e
-@tab XCH e
-@tab BBL e
-@item LDM e
-@tab WRM
+@item INC b4
+@tab ISZ b4,e8
+@tab ADD b4
+@tab SUB b4
+@item LD b4
+@tab XCH b4
+@tab BBL b4
+@tab LDM b4
+@item WRM
 @tab WMP
 @tab WRR
-@item WPM
-@tab WR0
+@tab WPM
+@item WR0
 @tab WR1
 @tab WR2
-@item WR3
-@tab SBM
+@tab WR3
+@item SBM
 @tab RDM
 @tab RDR
-@item ADM
-@tab RD0
+@tab ADM
+@item RD0
 @tab RD1
 @tab RD2
-@item RD3
-@tab CLB
+@tab RD3
+@item CLB
 @tab CLC
 @tab IAC
-@item CMC
-@tab CMA
+@tab CMC
+@item CMA
 @tab RAL
 @tab RAR
-@item TCC
-@tab DAC
+@tab TCC
+@item DAC
 @tab TCS
 @tab STC
-@item DAA
-@tab KBP
+@tab DAA
+@item KBP
 @tab DCL
 @end multitable

@@ -40,7 +40,7 @@
 @tab DCE
 @tab DCH
 @item DCL
-@tab RST b
+@tab RST b3
 @tab JFC e
 @tab CFC e
 @item JMP e
@@ -59,7 +59,7 @@
 @tab CTS e
 @tab JTP e
 @tab CTP e
-@item INP b
+@item INP b3
 @tab OUT k
 @tab ADA
 @tab ADB

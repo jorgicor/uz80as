@@ -335,32 +335,32 @@
 @tab * RLC (IXi),A
 @tab RLD
 @tab RRD
-@item BIT b,B
-@tab BIT b,C
-@tab BIT b,D
-@tab BIT b,E
-@item BIT b,H
-@tab BIT b,L
-@tab BIT b,A
-@tab BIT b,(HL)
-@item RES b,(HL)
-@tab SET b,(HL)
-@tab BIT b,(IXi)
-@tab BIT b,(IYi)
-@item * RES b,(IXi),B
-@tab * RES b,(IXi),C
-@tab * RES b,(IXi),D
-@tab * RES b,(IXi),E
-@item * RES b,(IXi),H
-@tab * RES b,(IXi),L
-@tab * RES b,(IXi),A
-@tab * SET b,(IXi),B
-@item * SET b,(IXi),C
-@tab * SET b,(IXi),D
-@tab * SET b,(IXi),E
-@tab * SET b,(IXi),H
-@item * SET b,(IXi),L
-@tab * SET b,(IXi),A
+@item BIT b3,B
+@tab BIT b3,C
+@tab BIT b3,D
+@tab BIT b3,E
+@item BIT b3,H
+@tab BIT b3,L
+@tab BIT b3,A
+@tab BIT b3,(HL)
+@item RES b3,(HL)
+@tab SET b3,(HL)
+@tab BIT b3,(IXi)
+@tab BIT b3,(IYi)
+@item * RES b3,(IXi),B
+@tab * RES b3,(IXi),C
+@tab * RES b3,(IXi),D
+@tab * RES b3,(IXi),E
+@item * RES b3,(IXi),H
+@tab * RES b3,(IXi),L
+@tab * RES b3,(IXi),A
+@tab * SET b3,(IXi),B
+@item * SET b3,(IXi),C
+@tab * SET b3,(IXi),D
+@tab * SET b3,(IXi),E
+@tab * SET b3,(IXi),H
+@item * SET b3,(IXi),L
+@tab * SET b3,(IXi),A
 @tab JP (HL)
 @tab JP (BC)
 @item JP (DE)

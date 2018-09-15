@@ -1213,10 +1213,10 @@ For every instruction accepted for every target:
 
 @itemize @bullet
 @item @code{*} marks undocumented instructions (selected with the @code{-u} command line option).
-@item @code{e} is an expression.
-@item @code{e8} is an expression, but only the least significant byte is used.
+@item @code{e} is an expression. The number of bits actually used of the value depends on the instruction.
+@item @code{eN} where N is a number, is an expression but only the N least significant bits are used.
+@item @code{bN} where N is a number, is an expression which @emph{must} evaluate to a value representable with N bits.
 @item @code{r8} is an expression. The distance from the program counter is calculated and only the least significant byte used.
-@item @code{b} is an expression which evaluates to a value between 0 and 7.
 @end itemize
 
 @menu
@@ -1368,9 +1368,27 @@ The @code{i4004} target selects the Intel 4004 instruction set.
 
 Important: the Intel 4004 can only address 4K at maximum but @code{uz80as} at this moment only imposes a 64K limit.
 
-These are the instructions accepted:
+Note that the original Intel syntax was something like this:
+
+@example
+LAB,   ISZ 5 255   \ this is a comment
+@end example
+
+At this moment, you will need to translate that to a syntax acceptable by @code{uz80as}, for instance:
+
+@example
+LAB:   ISZ 5,255   ; this is a comment
+@end example
+
+However, we do accept the 0P, 1P, etc. notation to specify a register pair. These are the instructions accepted:
 
 @include i4004tb.texi
+
+Where:
+
+@itemize @bullet
+@item @code{p} is an expression which must evaluate to 0,2,4,6,8,10,12 or 14.
+@end itemize
 
 @node i4040 instruction set
 @section i4040 instruction set
