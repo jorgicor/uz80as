@@ -1,0 +1,12 @@
+@multitable @columnfractions .25 .25 .25 .25
+@item DIS I
+@tab DIS TCNTI
+@tab EN I
+@tab EN TCNTI
+@item JNT0 e8
+@tab JT0 e8
+@tab RAD
+@tab RETI
+@item SEL AN0
+@tab SEL AN1
+@end multitable

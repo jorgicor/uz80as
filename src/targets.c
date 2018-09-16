@@ -21,6 +21,7 @@ extern const struct target s_target_i4004;
 extern const struct target s_target_i4040;
 extern const struct target s_target_i8008;
 extern const struct target s_target_i8021;
+extern const struct target s_target_i8022;
 extern const struct target s_target_i8048;
 extern const struct target s_target_i8080;
 extern const struct target s_target_i8085;
@@ -41,6 +42,7 @@ static const struct target *s_targets[] = {
 	&s_target_i4040,
 	&s_target_i8008,
 	&s_target_i8021,
+	&s_target_i8022,
 	&s_target_i8048,
 	&s_target_i8080,
 	&s_target_i8085,

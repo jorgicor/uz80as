@@ -100,7 +100,7 @@ Currently, uz80as can assemble for these microprocessors:
 @item Western Design Center W65C02S
 @end itemize
 @item Datapoint 2200 (versions I & II)
-@item Intel 4004, 4040, 8008, 8021, 8048, 8080, 8085
+@item Intel 4004, 4040, 8008, 8021, 8022, 8048, 8080, 8085
 @end itemize
 
 @command{uz80as} is free software.
@@ -1223,6 +1223,7 @@ For every instruction accepted for every target:
 * i4040 instruction set::		Intel 4040 instruction set.
 * i8008 instruction set::		Intel 8008 instruction set.
 * i8021 instruction set::		Intel 8021 instruction set.
+* i8022 instruction set::		Intel 8022 instruction set.
 * i8048 instruction set::		Intel 8048 instruction set.
 * i8080 instruction set::		Intel 8080 instruction set.
 * i8085 instruction set::		Intel 8085 instruction set.
@@ -1422,6 +1423,15 @@ The @code{i8021} target selects the Intel 8021 instruction set.
 These are the instructions accepted:
 
 @include i8021tb.texi
+
+@node i8022 instruction set
+@section i8022 instruction set
+
+The @code{i8022} target selects the Intel 8022 instruction set.
+The instruction set accepted is the same as for the @code{i8021} target, plus
+these new instrucions:
+
+@include i8022tb.texi
 
 @node i8048 instruction set
 @section i8048 instruction set
