@@ -42,7 +42,7 @@
  * 	h: (op << 2) | lastbyte
  */
 
-const struct matchtab s_matchtab_i8080[] = {
+static const struct matchtab s_matchtab_i8080[] = {
 	{ "MOV M,i", "70c0.", 3, 0 },
 	{ "MOV i,M", "46b0.", 3, 0 },
 	{ "MOV i,i", "40b0c1.", 3, 0 },

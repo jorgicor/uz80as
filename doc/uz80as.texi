@@ -95,18 +95,12 @@ Currently, uz80as can assemble for these microprocessors:
 @item 6500 family
 @itemize @bullet
 @item MOS Technology 6502
-@item Rockwell R6501
 @item California Micro Devices G65SC02
-@item Rockwell R65C02
-@item Rockwell R65C29, R65C00/21
+@item Rockwell R6501, Rockwell R65C02, R65C29
 @item Western Design Center W65C02S
 @end itemize
-@item Intel 4004
-@item Intel 4040
-@item Intel 8008
-@item Intel 8080
-@item Intel 8085
 @item Datapoint 2200 (versions I & II)
+@item Intel 4004, 4040, 8008, 8021, 8048, 8080, 8085
 @end itemize
 
 @command{uz80as} is free software.
@@ -1228,6 +1222,8 @@ For every instruction accepted for every target:
 * i4004 instruction set::		Intel 4004 instruction set.
 * i4040 instruction set::		Intel 4040 instruction set.
 * i8008 instruction set::		Intel 8008 instruction set.
+* i8021 instruction set::		Intel 8021 instruction set.
+* i8048 instruction set::		Intel 8048 instruction set.
 * i8080 instruction set::		Intel 8080 instruction set.
 * i8085 instruction set::		Intel 8085 instruction set.
 * mos6502 instruction set::		MOS 6502 instruction set.
@@ -1417,6 +1413,30 @@ Where:
 @itemize @bullet
 @item @code{k} is an expression which must evaluate to a value between 8 and 31.
 @end itemize
+
+@node i8021 instruction set
+@section i8021 instruction set
+
+The @code{i8021} target selects the Intel 8021 instruction set.
+
+These are the instructions accepted:
+
+@include i8021tb.texi
+
+@node i8048 instruction set
+@section i8048 instruction set
+
+The @code{i8048} target selects the Intel 8048 instruction set.
+The instruction set accepted is the same as for the @code{i8021} target, except that these instructions are removed:
+
+@multitable @columnfractions .25 .25 .25 .25
+@item IN A,P0
+@tab OUTL P0,A
+@end multitable
+
+And these instructions are added:
+
+@include i8048tb.texi
 
 @node i8080 instruction set
 @section i8080 instruction set

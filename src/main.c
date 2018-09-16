@@ -198,12 +198,13 @@ static void list_targets(FILE *f)
 }
 
 /*
- * Substitutes 'a' in pattern for 'e' or takes each 2 chars (c1,c2) of pr
- * and substitutes 'a' for:
- * c1 if c1 == c2
- * c1c2 otherwise
- *
- * If no more characters in pr substitutes 'a' for 'e'.
+ * Finds 'a' in instruction and takes character c1 in pr:
+ * - If no char in pr, substitutes 'a' for 'e'.
+ * - If is a valid char, takes next char c2 in pr:
+ *   - If it is a digit, output 'e' + c2 + any digit following c2 in pr
+ *   - If c1 == c2, output c1
+ *   - Else output c1c2.
+ * - Else outputs 'e'.
  */
 static void print_inst(FILE *f, const struct target *t, int *col,
 		       unsigned char undoc,
@@ -214,6 +215,9 @@ static void print_inst(FILE *f, const struct target *t, int *col,
 
 	while (*p) {
 		if (!islower(*p)) {
+			if (*p == '@') {
+				buf[bufi++] = '@';
+			}
 			buf[bufi++] = *p++;
 		} else if (*p == 'a') {
 			if (pr == NULL) {
@@ -221,11 +225,17 @@ static void print_inst(FILE *f, const struct target *t, int *col,
 			} else if (pr[0] && pr[1]) {
 				if (pr[0] == pr[1]) {
 					buf[bufi++] = pr[0];
+					pr += 2;
+				} else if (isdigit(pr[1])) {
+					buf[bufi++] = *pr++;
+					while (isdigit(*pr)) {
+						buf[bufi++] = *pr++;
+					}
 				} else {
 					buf[bufi++] = pr[0];
 					buf[bufi++] = pr[1];
+					pr += 2;
 				}
-				pr += 2;
 			} else {
 				buf[bufi++] = 'e';
 			}

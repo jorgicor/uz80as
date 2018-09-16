@@ -29,5 +29,6 @@ uz80as_SOURCES = \
 	target/dp2200.c \
 	target/i4004.c \
 	target/i8008.c \
+	target/i8048.c \
 	target/i8080.c \
 	target/mos6502.c

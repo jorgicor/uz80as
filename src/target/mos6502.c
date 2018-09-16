@@ -83,7 +83,7 @@
  * 	l: relative jump to op (-3)
  */
 
-const struct matchtab s_matchtab_mos6502[] = {
+static const struct matchtab s_matchtab_mos6502[] = {
 	{ "BRK", "00.", 1, 0 },
 	{ "JSR a", "20.e0", 1, 0 },
 	{ "RTI", "40.", 1, 0 },
@@ -249,12 +249,12 @@ static int gen_mos6502(int *eb, char p, const int *vs, int i, int savepc)
 		  if (w <= 0xff) {
 			genb(b, s_pline_ep);
 			b = 0;
-			genb(w & 0xff, s_pline_ep);
+			genb(w, s_pline_ep);
 		  } else {
 			b |= 0x08; 
 			genb(b, s_pline_ep);
 			b = 0;
-			genb(w & 0xff, s_pline_ep);
+			genb(w, s_pline_ep);
 			genb(w >> 8, s_pline_ep);
 		  }
 		  break;
@@ -264,11 +264,11 @@ static int gen_mos6502(int *eb, char p, const int *vs, int i, int savepc)
 		  if (w <= 0xff) {
 			genb(0x64, s_pline_ep);
 			b = 0;
-			genb(w & 0xff, s_pline_ep);
+			genb(w, s_pline_ep);
 		  } else {
 			genb(0x9C, s_pline_ep);
 			b = 0;
-			genb(w & 0xff, s_pline_ep);
+			genb(w, s_pline_ep);
 			genb(w >> 8, s_pline_ep);
 		  }
 		  break;
@@ -276,11 +276,11 @@ static int gen_mos6502(int *eb, char p, const int *vs, int i, int savepc)
 		  if (w <= 0xff) {
 			genb(0x74, s_pline_ep);
 			b = 0;
-			genb(w & 0xff, s_pline_ep);
+			genb(w, s_pline_ep);
 		  } else {
 			genb(0x9E, s_pline_ep);
 			b = 0;
-			genb(w & 0xff, s_pline_ep);
+			genb(w, s_pline_ep);
 			genb(w >> 8, s_pline_ep);
 		  }
 		  break;

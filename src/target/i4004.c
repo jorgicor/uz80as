@@ -41,7 +41,7 @@
  * 	j: (op << 1) | lastbyte
  */
 
-const struct matchtab s_matchtab_i4004[] = {
+static const struct matchtab s_matchtab_i4004[] = {
 	{ "NOP", "00.", 1, 0 },
 	{ "JCN a,a", "10f0.d1.", 1, 0, "b4e8" },
 	{ "FIM f,a", "20j0.d1.", 1, 0, "e8" },
@@ -128,7 +128,7 @@ static int gen_i4004(int *eb, char p, const int *vs, int i, int savepc)
 		  break;
 	case 'h': b |= ((vs[i] >> 8) & 0x0f);
 		  genb(b, s_pline_ep);
-		  genb(vs[i] & 0xff, s_pline_ep);
+		  genb(vs[i], s_pline_ep);
 		  break;
 	case 'i': b |= (vs[i] << 4); break;
 	case 'j': b |= (vs[i] << 1); break;

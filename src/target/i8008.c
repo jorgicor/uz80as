@@ -55,7 +55,7 @@
  * 	j: (op << 3) | lastbyte, op in [0-7]
  */
 
-const struct matchtab s_matchtab_i8008[] = {
+static const struct matchtab s_matchtab_i8008[] = {
 	{ "RET", "07.", 1, 0 },
 	{ "j", "02b0.", 1, 0 },
 	{ "i", "03b0.", 1, 0 },
