@@ -77,6 +77,7 @@ n:	equ 77
 	DIS TCNTI
 	JT0 *
 	CPL A
+	; 8
 	OUTL P1,A
 	OUTL P2,A
 	; B
@@ -192,6 +193,7 @@ n:	equ 77
 	; 8
 	; 9
 	; A
+	; B
 	ANLD P4,A
 	ANLD P5,A
 	ANLD P6,A
