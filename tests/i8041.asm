@@ -1,7 +1,7 @@
 ; ===========================================================================
 ; uz80as, an assembler for the Zilog Z80 and several other microprocessors.
 ;
-; Intel 8048.
+; Intel 8041.
 ; ===========================================================================
 
 
@@ -14,13 +14,13 @@ n:	equ 77
 
 	NOP
 	; 1
-	OUTL BUS,A
+	OUT DBB,A ; *
 	ADD A,#n
 	JMP $0FF
 	EN I
 	; 6
 	DEC A
-	INS A,BUS
+	; 7
 	IN A,P1
 	IN A,P2
 	; B
@@ -52,7 +52,7 @@ n:	equ 77
 
 	XCH A,@R0
 	XCH A,@R1
-	; 2
+	IN A,DBB ; *
 	MOV A,#n
 	JMP $1FF
 	EN TCNTI
@@ -149,7 +149,7 @@ n:	equ 77
 	JB3 *
 	; 3
 	CALL $3FF
-	ENT0 CLK
+	; 5
 	JF1 *
 	RR A
 	ADDC A,R0
@@ -163,15 +163,15 @@ n:	equ 77
 
 ; 8x
 
-	MOVX A,@R0
-	MOVX A,@R1
+	; 0
+	; 1
 	; 2
 	RET
 	JMP $4FF
 	CLR F0
-	JNI *
+	JOBF * ; *
 	; 7
-	ORL BUS,#n
+	; 8
 	ORL P1,#n
 	ORL P2,#n
 	; B
@@ -182,15 +182,15 @@ n:	equ 77
 
 ; 9x
 
-	MOVX @R0,A
-	MOVX @R1,A
+	MOV STS,A ; *
+	; 1
 	JB4 *
 	RETR
 	CALL $4FF
 	CPL F0	
 	JNZ *
 	CLR C
-	ANL BUS,#n
+	; 7
 	ANL P1,#n
 	ANL P2,#n
 	; B
@@ -263,7 +263,7 @@ n:	equ 77
 	XRL A,#n
 	CALL $6FF
 	SEL RB1
-	; 6
+	JNIBF * ; *
 	MOV PSW,A
 	XRL A,R0
 	XRL A,R1
@@ -281,7 +281,7 @@ n:	equ 77
 	; 2
 	MOVP3 A,@A
 	JMP $7FF
-	SEL MB0
+	EN DMA ; *
 	JNC *
 	RL A
 	DJNZ R0,*
@@ -299,7 +299,7 @@ n:	equ 77
 	JB7 *
 	; 3
 	CALL $7FF
-	SEL MB1
+	EN FLAGS ; *
 	JC *
 	RLC A
 	MOV A,R0

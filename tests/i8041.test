@@ -1,0 +1,4 @@
+#!/bin/sh
+nom=i8041
+uz80as="$uz80as -ti8041"
+. "$srcdir"/chkall.inc

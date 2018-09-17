@@ -16,6 +16,7 @@ dist_check_SCRIPTS = main.test \
 		     i8008.test \
 		     i8021.test \
 		     i8022.test \
+		     i8041.test \
 		     i8048.test \
 		     i8080.test \
 		     i8085.test \
@@ -101,6 +102,10 @@ EXTRA_DIST = igen.sh \
 	     i8022.bok \
 	     i8022.lok \
 	     i8022.eok \
+	     i8041.asm \
+	     i8041.bok \
+	     i8041.lok \
+	     i8041.eok \
 	     i8048.asm \
 	     i8048.bok \
 	     i8048.lok \

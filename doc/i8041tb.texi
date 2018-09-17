@@ -1,0 +1,47 @@
+@multitable @columnfractions .25 .25 .25 .25
+@item ANL P1,#e8
+@tab ANL P2,#e8
+@tab CLR F1
+@tab CLR F0
+@item CPL F0
+@tab CPL F1
+@tab DEC R0
+@tab DEC R1
+@item DEC R2
+@tab DEC R3
+@tab DEC R4
+@tab DEC R5
+@item DEC R6
+@tab DEC R7
+@tab DIS I
+@tab DIS TCNTI
+@item EN DMA
+@tab EN FLAGS
+@tab EN I
+@tab EN TCNTI
+@item IN A,DBB
+@tab JB0 e8
+@tab JB1 e8
+@tab JB2 e8
+@item JB3 e8
+@tab JB4 e8
+@tab JB5 e8
+@tab JB6 e8
+@item JB7 e8
+@tab JF0 e8
+@tab JF1 e8
+@tab JNIBF e8
+@item JNT0 e8
+@tab JOBF e8
+@tab JT0 e8
+@tab MOV A,PSW
+@item MOV PSW,A
+@tab MOV STS,A
+@tab MOVP3 A,@@A
+@tab ORL P1,#e8
+@item ORL P2,#e8
+@tab OUT DBB,A
+@tab RETR
+@tab SEL RB0
+@item SEL RB1
+@end multitable
