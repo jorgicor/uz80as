@@ -292,23 +292,24 @@
 0292   010A ED 0A       	DJNZ R5,*
 0293   010C EE 0C       	DJNZ R6,*
 0294   010E EF 0E       	DJNZ R7,*
-0295   0110             ; Fx
-0296   0110             
-0297   0110 F0          	MOV A,@R0
-0298   0111 F1          	MOV A,@R1
-0299   0112 F2 12       	JB7 *
-0300   0114             	; 3
-0301   0114 F4 FF       	CALL $7FF
-0302   0116 F5          	EN FLAGS ; *
-0303   0117 F6 17       	JC *
-0304   0119 F7          	RLC A
-0305   011A F8          	MOV A,R0
-0306   011B F9          	MOV A,R1
-0307   011C FA          	MOV A,R2
-0308   011D FB          	MOV A,R3
-0309   011E FC          	MOV A,R4
-0310   011F FD          	MOV A,R5
-0311   0120 FE          	MOV A,R6
-0312   0121 FF          	MOV A,R7
-0313   0122             
-0314   0122             	end
+0295   0110             
+0296   0110             ; Fx
+0297   0110             
+0298   0110 F0          	MOV A,@R0
+0299   0111 F1          	MOV A,@R1
+0300   0112 F2 12       	JB7 *
+0301   0114             	; 3
+0302   0114 F4 FF       	CALL $7FF
+0303   0116 F5          	EN FLAGS ; *
+0304   0117 F6 17       	JC *
+0305   0119 F7          	RLC A
+0306   011A F8          	MOV A,R0
+0307   011B F9          	MOV A,R1
+0308   011C FA          	MOV A,R2
+0309   011D FB          	MOV A,R3
+0310   011E FC          	MOV A,R4
+0311   011F FD          	MOV A,R5
+0312   0120 FE          	MOV A,R6
+0313   0121 FF          	MOV A,R7
+0314   0122             
+0315   0122             	end
