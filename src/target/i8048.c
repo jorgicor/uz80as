@@ -29,7 +29,7 @@
  * 	d: lastbyte = op as 8 bit value
  * 	e: output op as word (no '.' should follow)
  * 	f: output lastbyte | ((op & 0x700) >> 3)
- * 	   output op as 8 but value
+ * 	   output op as 8 bit value
  * 	   (no '.' should follow)
  * 	g: (op << 5) | lastbyte
  */

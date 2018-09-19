@@ -1,0 +1,321 @@
+0001   0000             ; ===========================================================================
+0002   0000             ; uz80as, an assembler for the Zilog Z80 and several other microprocessors.
+0003   0000             ;
+0004   0000             ; Intel 8051.
+0005   0000             ; ===========================================================================
+0006   0000             
+0007   0000             
+0008   0000             #define equ .equ
+0009   0000             #define end .end
+0010   0000             
+0011   0000             n:	equ 77
+0012   0000             da: 	equ 66
+0013   0000             ba:	equ 55
+0014   0000             
+0015   0000             ; 0x
+0016   0000             
+0017   0000 00          	NOP
+0018   0001 01 77       	AJMP $077
+0019   0003 02 12 34    	LJMP $1234
+0020   0006 03          	RR A
+0021   0007 04          	INC A
+0022   0008 05 42       	INC da
+0023   000A 06          	INC @R0
+0024   000B 07          	INC @R1
+0025   000C 08          	INC R0
+0026   000D 09          	INC R1
+0027   000E 0A          	INC R2
+0028   000F 0B          	INC R3
+0029   0010 0C          	INC R4
+0030   0011 0D          	INC R5
+0031   0012 0E          	INC R6
+0032   0013 0F          	INC R7
+0033   0014             
+0034   0014             ; 1x
+0035   0014             
+0036   0014 10 37 FD    	JBC ba,*
+0037   0017 11 77       	ACALL $077
+0038   0019 12 12 34    	LCALL $1234
+0039   001C 13          	RRC A
+0040   001D 14          	DEC A
+0041   001E 15 42       	DEC da
+0042   0020 16          	DEC @R0
+0043   0021 17          	DEC @R1
+0044   0022 18          	DEC R0
+0045   0023 19          	DEC R1
+0046   0024 1A          	DEC R2
+0047   0025 1B          	DEC R3
+0048   0026 1C          	DEC R4
+0049   0027 1D          	DEC R5
+0050   0028 1E          	DEC R6
+0051   0029 1F          	DEC R7
+0052   002A             
+0053   002A             ; 2x
+0054   002A             
+0055   002A 20 37 FD    	JB ba,*
+0056   002D 21 77       	AJMP $177
+0057   002F 22          	RET
+0058   0030 23          	RL A
+0059   0031 24 4D       	ADD A,#n
+0060   0033 25 42       	ADD A,da
+0061   0035 26          	ADD A,@R0
+0062   0036 27          	ADD A,@R1
+0063   0037 28          	ADD A,R0
+0064   0038 29          	ADD A,R1
+0065   0039 2A          	ADD A,R2
+0066   003A 2B          	ADD A,R3
+0067   003B 2C          	ADD A,R4
+0068   003C 2D          	ADD A,R5
+0069   003D 2E          	ADD A,R6
+0070   003E 2F          	ADD A,R7
+0071   003F             
+0072   003F             ; 3x
+0073   003F             
+0074   003F 30 37 FD    	JNB ba,*
+0075   0042 31 77       	ACALL $177
+0076   0044 32          	RETI
+0077   0045 33          	RLC A
+0078   0046 34 4D       	ADDC A,#n
+0079   0048 35 42       	ADDC A,da
+0080   004A 36          	ADDC A,@R0
+0081   004B 37          	ADDC A,@R1
+0082   004C 38          	ADDC A,R0
+0083   004D 39          	ADDC A,R1
+0084   004E 3A          	ADDC A,R2
+0085   004F 3B          	ADDC A,R3
+0086   0050 3C          	ADDC A,R4
+0087   0051 3D          	ADDC A,R5
+0088   0052 3E          	ADDC A,R6
+0089   0053 3F          	ADDC A,R7
+0090   0054             
+0091   0054             ; 4x
+0092   0054             
+0093   0054 40 FE       	JC *
+0094   0056 41 77       	AJMP $277
+0095   0058 42 42       	ORL da,A
+0096   005A 43 42 4D    	ORL da,#n
+0097   005D 44 4D       	ORL A,#n
+0098   005F 45 42       	ORL A,da
+0099   0061 46          	ORL A,@R0
+0100   0062 47          	ORL A,@R1
+0101   0063 48          	ORL A,R0
+0102   0064 49          	ORL A,R1
+0103   0065 4A          	ORL A,R2
+0104   0066 4B          	ORL A,R3
+0105   0067 4C          	ORL A,R4
+0106   0068 4D          	ORL A,R5
+0107   0069 4E          	ORL A,R6
+0108   006A 4F          	ORL A,R7
+0109   006B             
+0110   006B             ; 5x
+0111   006B             
+0112   006B 50 FE       	JNC *
+0113   006D 51 77       	ACALL $277
+0114   006F 52 42       	ANL da,A
+0115   0071 53 42 4D    	ANL da,#n
+0116   0074 54 4D       	ANL A,#n
+0117   0076 55 42       	ANL A,da
+0118   0078 56          	ANL A,@R0
+0119   0079 57          	ANL A,@R1
+0120   007A 58          	ANL A,R0
+0121   007B 59          	ANL A,R1
+0122   007C 5A          	ANL A,R2
+0123   007D 5B          	ANL A,R3
+0124   007E 5C          	ANL A,R4
+0125   007F 5D          	ANL A,R5
+0126   0080 5E          	ANL A,R6
+0127   0081 5F          	ANL A,R7
+0128   0082             
+0129   0082             ; 6x
+0130   0082             
+0131   0082 60 FE       	JZ *
+0132   0084 61 77       	AJMP $377
+0133   0086 62 42       	XRL da,A
+0134   0088 63 42 4D    	XRL da,#n
+0135   008B 64 4D       	XRL A,#n
+0136   008D 65 42       	XRL A,da
+0137   008F 66          	XRL A,@R0
+0138   0090 67          	XRL A,@R1
+0139   0091 68          	XRL A,R0
+0140   0092 69          	XRL A,R1
+0141   0093 6A          	XRL A,R2
+0142   0094 6B          	XRL A,R3
+0143   0095 6C          	XRL A,R4
+0144   0096 6D          	XRL A,R5
+0145   0097 6E          	XRL A,R6
+0146   0098 6F          	XRL A,R7
+0147   0099             
+0148   0099             ; 7x
+0149   0099             
+0150   0099 70 FE       	JNZ *
+0151   009B 71 77       	ACALL $377
+0152   009D 72 37       	ORL C,ba
+0153   009F 73          	JMP @A+DPTR
+0154   00A0 74 4D       	MOV A,#n
+0155   00A2 75 42 4D    	MOV da,#n
+0156   00A5 76 4D       	MOV @R0,#n
+0157   00A7 77 4D       	MOV @R1,#n
+0158   00A9 78 4D       	MOV R0,#n
+0159   00AB 79 4D       	MOV R1,#n
+0160   00AD 7A 4D       	MOV R2,#n
+0161   00AF 7B 4D       	MOV R3,#n
+0162   00B1 7C 4D       	MOV R4,#n
+0163   00B3 7D 4D       	MOV R5,#n
+0164   00B5 7E 4D       	MOV R6,#n
+0165   00B7 7F 4D       	MOV R7,#n
+0166   00B9             
+0167   00B9             ; 8x
+0168   00B9             
+0169   00B9 80 FE       	SJMP *
+0170   00BB 81 77       	AJMP $477
+0171   00BD 82 37       	ANL C,ba
+0172   00BF 83          	MOVC A,@A+PC
+0173   00C0 84          	DIV AB
+0174   00C1 85 42 42    	MOV da,da
+0175   00C4 86 42       	MOV da,@R0
+0176   00C6 87 42       	MOV da,@R1
+0177   00C8 88 42       	MOV da,R0
+0178   00CA 89 42       	MOV da,R1
+0179   00CC 8A 42       	MOV da,R2
+0180   00CE 8B 42       	MOV da,R3
+0181   00D0 8C 42       	MOV da,R4
+0182   00D2 8D 42       	MOV da,R5
+0183   00D4 8E 42       	MOV da,R6
+0184   00D6 8F 42       	MOV da,R7
+0185   00D8             
+0186   00D8             ; 9x
+0187   00D8             
+0188   00D8 90 12 34    	MOV DPTR,#$1234
+0189   00DB 91 77       	ACALL $477
+0190   00DD 92 37       	MOV ba,C
+0191   00DF 93          	MOVC A,@A+DPTR
+0192   00E0 94 4D       	SUBB A,#n
+0193   00E2 95 42       	SUBB A,da
+0194   00E4 96          	SUBB A,@R0
+0195   00E5 97          	SUBB A,@R1
+0196   00E6 98          	SUBB A,R0
+0197   00E7 99          	SUBB A,R1
+0198   00E8 9A          	SUBB A,R2
+0199   00E9 9B          	SUBB A,R3
+0200   00EA 9C          	SUBB A,R4
+0201   00EB 9D          	SUBB A,R5
+0202   00EC 9E          	SUBB A,R6
+0203   00ED 9F          	SUBB A,R7
+0204   00EE             
+0205   00EE             ; Ax
+0206   00EE             
+0207   00EE A0 37       	ORL C,/ba
+0208   00F0 A1 77       	AJMP $577
+0209   00F2 A2 37       	MOV C,ba
+0210   00F4 A3          	INC DPTR
+0211   00F5 A4          	MUL AB
+0212   00F6             	; 5
+0213   00F6 A6 42       	MOV @R0,da
+0214   00F8 A7 42       	MOV @R1,da
+0215   00FA A8 42       	MOV R0,da
+0216   00FC A9 42       	MOV R1,da
+0217   00FE AA 42       	MOV R2,da
+0218   0100 AB 42       	MOV R3,da
+0219   0102 AC 42       	MOV R4,da
+0220   0104 AD 42       	MOV R5,da
+0221   0106 AE 42       	MOV R6,da
+0222   0108 AF 42       	MOV R7,da
+0223   010A             
+0224   010A             ; Bx
+0225   010A             
+0226   010A B0 37       	ANL C,/ba
+0227   010C B1 77       	ACALL $577
+0228   010E B2 37       	CPL ba
+0229   0110 B3          	CPL C
+0230   0111 B4 4D FD    	CJNE A,#n,*
+0231   0114 B5 42 FD    	CJNE A,da,*
+0232   0117 B6 4D FD    	CJNE @R0,#n,*
+0233   011A B7 4D FD    	CJNE @R1,#n,*
+0234   011D B8 4D FD    	CJNE R0,#n,*
+0235   0120 B9 4D FD    	CJNE R1,#n,*
+0236   0123 BA 4D FD    	CJNE R2,#n,*
+0237   0126 BB 4D FD    	CJNE R3,#n,*
+0238   0129 BC 4D FD    	CJNE R4,#n,*
+0239   012C BD 4D FD    	CJNE R5,#n,*
+0240   012F BE 4D FD    	CJNE R6,#n,*
+0241   0132 BF 4D FD    	CJNE R7,#n,*
+0242   0135             
+0243   0135             ; Cx
+0244   0135             
+0245   0135 C0 42       	PUSH da
+0246   0137 C1 77       	AJMP $677
+0247   0139 C2 37       	CLR ba
+0248   013B C3          	CLR C
+0249   013C C4          	SWAP A
+0250   013D C5 42       	XCH A,da
+0251   013F C6          	XCH A,@R0
+0252   0140 C7          	XCH A,@R1
+0253   0141 C8          	XCH A,R0
+0254   0142 C9          	XCH A,R1
+0255   0143 CA          	XCH A,R2
+0256   0144 CB          	XCH A,R3
+0257   0145 CC          	XCH A,R4
+0258   0146 CD          	XCH A,R5
+0259   0147 CE          	XCH A,R6
+0260   0148 CF          	XCH A,R7
+0261   0149             
+0262   0149             ; Dx
+0263   0149             
+0264   0149 D0 42       	POP da
+0265   014B D1 77       	ACALL $677
+0266   014D D2 37       	SETB ba
+0267   014F D3          	SETB C
+0268   0150 D4          	DA A
+0269   0151 D5 42 FD    	DJNZ da,*
+0270   0154 D6          	XCHD A,@R0
+0271   0155 D7          	XCHD A,@R1
+0272   0156 D8 FE       	DJNZ R0,*
+0273   0158 D9 FE       	DJNZ R1,*
+0274   015A DA FE       	DJNZ R2,*
+0275   015C DB FE       	DJNZ R3,*
+0276   015E DC FE       	DJNZ R4,*
+0277   0160 DD FE       	DJNZ R5,*
+0278   0162 DE FE       	DJNZ R6,*
+0279   0164 DF FE       	DJNZ R7,*
+0280   0166             
+0281   0166             ; Ex
+0282   0166             
+0283   0166 E0          	MOVX A,@DPTR
+0284   0167 E1 77       	AJMP $777
+0285   0169 E2          	MOVX A,@R0
+0286   016A E3          	MOVX A,@R1
+0287   016B E4          	CLR A
+0288   016C E5 42       	MOV A,da
+0289   016E E6          	MOV A,@R0
+0290   016F E7          	MOV A,@R1
+0291   0170 E8          	MOV A,R0
+0292   0171 E9          	MOV A,R1
+0293   0172 EA          	MOV A,R2
+0294   0173 EB          	MOV A,R3
+0295   0174 EC          	MOV A,R4
+0296   0175 ED          	MOV A,R5
+0297   0176 EE          	MOV A,R6
+0298   0177 EF          	MOV A,R7
+0299   0178             
+0300   0178             ; Fx
+0301   0178             
+0302   0178 F0          	MOVX @DPTR,A
+0303   0179 F1 77       	ACALL $777
+0304   017B F2          	MOVX @R0,A
+0305   017C F3          	MOVX @R1,A
+0306   017D F4          	CPL A
+0307   017E F5 42       	MOV da,A
+0308   0180 F6          	MOV @R0,A
+0309   0181 F7          	MOV @R1,A
+0310   0182 F8          	MOV R0,A
+0311   0183 F9          	MOV R1,A
+0312   0184 FA          	MOV R2,A
+0313   0185 FB          	MOV R3,A
+0314   0186 FC          	MOV R4,A
+0315   0187 FD          	MOV R5,A
+0316   0188 FE          	MOV R6,A
+0317   0189 FF          	MOV R7,A
+0318   018A             
+0319   018A 34 12       	.DW $1234
+0320   018C             
+0321   018C             	end

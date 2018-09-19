@@ -42,6 +42,7 @@ ugen i8021 -ti8021
 ugen i8022 -ti8022
 ugen i8041 -ti8041
 ugen i8048 -ti8048
+ugen i8051 -ti8051
 ugen i8080 -ti8080
 ugen i8085 -ti8085
 ugen i8085u -u -ti8085
