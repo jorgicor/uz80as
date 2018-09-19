@@ -1170,7 +1170,7 @@ So our @code{.CHK} directive can generate a value completely different than @com
 
 @item
 We allow to write the instructions @code{ADD}, @code{ADC}, @code{SUB}, @code{SBC}, @code{AND}, @code{OR}, @code{XOR} and @code{CP} with the @code{A} register as the first argument or without it (if the @code{-x} option is specified).
-@command{TASM} sticks to the official Zilog syntax. @xref{z80 instruction set}.
+@command{TASM} sticks to the official Zilog syntax. @xref{z80 target}.
 
 @item
 @command{TASM} accepts including files without enclosing them in double quotes:
@@ -1214,30 +1214,31 @@ For every instruction accepted for every target:
 @end itemize
 
 @menu
-* z80 instruction set::			Zilog Z80 instruction set.
-* hd64180 instruction set::		Hitachi HD64180 instruction set.
-* gbcpu instruction set::		Sharp LR35902 instruction set.
-* dp2200 instruction set::		Datapoint 2200 version I.
-* dp2200ii instruction set::		Datapoint 2200 version II.
-* i4004 instruction set::		Intel 4004 instruction set.
-* i4040 instruction set::		Intel 4040 instruction set.
-* i8008 instruction set::		Intel 8008 instruction set.
-* i8021 instruction set::		Intel 8021 instruction set.
-* i8022 instruction set::		Intel 8022 instruction set.
-* i8041 instruction set::		Intel 8041 instruction set.
-* i8048 instruction set::		Intel 8048 instruction set.
-* i8080 instruction set::		Intel 8080 instruction set.
-* i8085 instruction set::		Intel 8085 instruction set.
-* mos6502 instruction set::		MOS 6502 instruction set.
-* r6501 instruction set::		Rockwell R6501 instruction set.
-* g65sc02 instruction set::		California Micro Devices G65SC02.
-* r65c02 instruction set::		Rockwell R65C02 instruction set.
-* r65c29 instruction set::		Rockewll R65C29 instruction set.
-* w65c02s instruction set::		Western Design Center W65C02S.
+* z80 target::			Zilog Z80.
+* hd64180 target::		Hitachi HD64180.
+* gbcpu target::		Sharp LR35902.
+* dp2200 target::		Datapoint 2200 version I.
+* dp2200ii target::		Datapoint 2200 version II.
+* i4004 target::		Intel 4004.
+* i4040 target::		Intel 4040.
+* i8008 target::		Intel 8008.
+* i8021 target::		Intel 8021.
+* i8022 target::		Intel 8022.
+* i8041 target::		Intel 8041.
+* i8048 target::		Intel 8048.
+* i8051 target::		Intel 8051.
+* i8080 target::		Intel 8080.
+* i8085 target::		Intel 8085.
+* mos6502 target::		MOS 6502.
+* r6501 target::		Rockwell R6501.
+* g65sc02 target::		California Micro Devices G65SC02.
+* r65c02 target::		Rockwell R65C02.
+* r65c29 target::		Rockewll R65C29.
+* w65c02s target::		Western Design Center W65C02S.
 @end menu
 
-@node z80 instruction set
-@section z80 instruction set
+@node z80 target
+@section z80 target
 
 The @code{z80} target selects the Zilog Z80 instruction set.
 These are the instructions accepted:
@@ -1297,8 +1298,8 @@ With this option enabled, you can write any of these instructions with or withou
 
 For compatibility with other assemblers, it is better to keep the official syntax.
 
-@node hd64180 instruction set
-@section hd64180 instruction set
+@node hd64180 target
+@section hd64180 target
 
 The @code{hd64180} target selects the Hitachi HD64180 instruction set.
 The instructions accepted are the same as for the @code{z80} target (except undocumented instructions) plus these new instructions:
@@ -1314,8 +1315,8 @@ The instructions accepted are the same as for the @code{z80} target (except undo
 
 @xref{z80 extended syntax}.
 
-@node gbcpu instruction set
-@section gbcpu instruction set
+@node gbcpu target
+@section gbcpu target
 
 The @code{gbcpu} target selects the Sharp LR35902 CPU used in the Nintendo Gameboy.
 These are the instructions accepted:
@@ -1337,8 +1338,8 @@ Where:
 
 @xref{z80 extended syntax}.
 
-@node dp2200 instruction set
-@section dp2200 instruction set
+@node dp2200 target
+@section dp2200 target
 
 The @code{dp2200} target selects the Datapoint 2200 version I instruction set.
 
@@ -1348,8 +1349,8 @@ These are the instructions accepted:
 
 @include dp2200tb.texi
 
-@node dp2200ii instruction set
-@section dp2200ii instruction set
+@node dp2200ii target
+@section dp2200ii target
 
 The @code{dp2200ii} target selects the Datapoint 2200 version II instruction set.
 
@@ -1359,8 +1360,8 @@ The instruction set accepted is the same as for the @code{dp2200} target, plus t
 
 @include dp2200iitb.texi
 
-@node i4004 instruction set
-@section i4004 instruction set
+@node i4004 target
+@section i4004 target
 
 The @code{i4004} target selects the Intel 4004 instruction set.
 
@@ -1388,8 +1389,8 @@ Where:
 @item @code{p} is an expression which must evaluate to 0,2,4,6,8,10,12 or 14.
 @end itemize
 
-@node i4040 instruction set
-@section i4040 instruction set
+@node i4040 target
+@section i4040 target
 
 The @code{i4040} target selects the Intel 4040 instruction set.
 
@@ -1399,8 +1400,8 @@ The instruction set accepted is the same as for the @code{i4004} target, plus th
 
 @include i4040tb.texi
 
-@node i8008 instruction set
-@section i8008 instruction set
+@node i8008 target
+@section i8008 target
 
 The @code{i8008} target selects the Intel 8008 instruction set.
 
@@ -1416,8 +1417,8 @@ Where:
 @item @code{k} is an expression which must evaluate to a value between 8 and 31.
 @end itemize
 
-@node i8021 instruction set
-@section i8021 instruction set
+@node i8021 target
+@section i8021 target
 
 The @code{i8021} target selects the Intel 8021 instruction set.
 
@@ -1425,8 +1426,8 @@ These are the instructions accepted:
 
 @include i8021tb.texi
 
-@node i8022 instruction set
-@section i8022 instruction set
+@node i8022 target
+@section i8022 target
 
 The @code{i8022} target selects the Intel 8022 instruction set.
 The instruction set accepted is the same as for the @code{i8021} target, plus
@@ -1434,8 +1435,8 @@ these new instrucions:
 
 @include i8022tb.texi
 
-@node i8041 instruction set
-@section i8041 instruction set
+@node i8041 target
+@section i8041 target
 
 The @code{i8041} target selects the Intel 8041 instruction set.
 The instruction set accepted is the same as for the @code{i8021} target, except that these instructions are removed:
@@ -1449,8 +1450,8 @@ And these instructions are added:
 
 @include i8041tb.texi
 
-@node i8048 instruction set
-@section i8048 instruction set
+@node i8048 target
+@section i8048 target
 
 The @code{i8048} target selects the Intel 8048 instruction set.
 The instruction set accepted is the same as for the @code{i8041} target, except that these instructions are removed:
@@ -1469,16 +1470,25 @@ And these instructions are added:
 
 @include i8048tb.texi
 
-@node i8080 instruction set
-@section i8080 instruction set
+@node i8051 target
+@section i8051 target
+
+The @code{i8051} target selects the Intel 8021 instruction set.
+
+These are the instructions accepted:
+
+@include i8051tb.texi
+
+@node i8080 target
+@section i8080 target
 
 The @code{i8080} target selects the Intel 8080.
 These are the instructions accepted:
 
 @include i8080tb.texi
 
-@node i8085 instruction set
-@section i8085 instruction set
+@node i8085 target
+@section i8085 target
 
 The @code{i8085} target selects the Intel 8085.
 The instruction set accepted is the same as for the @code{i8080} target, plus these new instructions:
@@ -1492,46 +1502,46 @@ Where:
 @item @code{JX5}  and @code{JUI} are alternative names for the @code{JK} instruction.
 @end itemize
 
-@node mos6502 instruction set
-@section mos6502 instruction set
+@node mos6502 target
+@section mos6502 target
 
 The @code{mos6502} target selects the MOS Technology 6502.
 These are the instructions accepted:
 
 @include mos6502tb.texi
 
-@node r6501 instruction set
-@section r6501 instruction set
+@node r6501 target
+@section r6501 target
 
 The @code{r6501} target selects the Rockwell R6501.
 The instruction set accepted is the same as for the @code{mos6502} target, plus these new instructions:
 
 @include r6501tb.texi
 
-@node g65sc02 instruction set
-@section g65sc02 instruction set
+@node g65sc02 target
+@section g65sc02 target
 
 The @code{g65sc02} target selects the California Micro Devices G65SC02.
 The instruction set accepted is the same as for the @code{mos6502} target, plus these new instructions:
 
 @include g65sc02tb.texi
 
-@node r65c02 instruction set
-@section r65c02 instruction set
+@node r65c02 target
+@section r65c02 target
 
 The @code{r65c02} target selects the Rockwell R65C02.
 The instruction set accepted is the same as for the @code{mos6502} target, plus the added instructions of the @code{r6501} and @code{g65sc02} targets.
 
-@node r65c29 instruction set
-@section r65c29 instruction set
+@node r65c29 target
+@section r65c29 target
 
 The @code{r65c29} target selects the Rockwell R65C29, R65C00/21.
 The instruction set accepted is the same as for the @code{r65c02} target, plus these new instructions:
 
 @include r65c29tb.texi
 
-@node w65c02s instruction set
-@section w65c02s instruction set
+@node w65c02s target
+@section w65c02s target
 
 The @code{w65c02s} target selects the Western Design Center W65C02S.
 The instruction set accepted is the same as for the @code{r65c02} target, plus these new instructions:
