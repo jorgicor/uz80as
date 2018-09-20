@@ -10,7 +10,8 @@ uz80as_TEXINFOS = z80tb.texi hd64180tb.texi gbcputb.texi \
 		  i8021tb.texi i8022tb.texi i8041tb.texi i8048tb.texi \
 		  i8051tb.texi i8080tb.texi i8085tb.texi \
 		  mos6502tb.texi r6501tb.texi g65sc02tb.texi \
-		  r65c29tb.texi w65c02stb.texi
+		  r65c29tb.texi w65c02stb.texi \
+		  mc6800tb.texi
 dist_man_MANS = uz80as.1
 
 uz80as.1: $(top_srcdir)/src/main.c $(top_srcdir)/configure.ac

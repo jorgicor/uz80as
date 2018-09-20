@@ -1,0 +1,172 @@
+@multitable @columnfractions .25 .25 .25 .25
+@item NOP
+@tab TAP
+@tab TPA
+@tab INX
+@item DEX
+@tab CLV
+@tab SEV
+@tab CLC
+@item SEC
+@tab CLI
+@tab SEI
+@tab SBA
+@item CBA
+@tab TAB
+@tab TBA
+@tab DAA
+@item ABA
+@tab TSX
+@tab INS
+@tab PULA
+@item PULB
+@tab DES
+@tab TXS
+@tab PSHA
+@item PSHB
+@tab RTS
+@tab RTI
+@tab WAI
+@item SWI
+@tab BRA r8
+@tab BHI r8
+@tab BLS r8
+@item BCC r8
+@tab BCS r8
+@tab BNE r8
+@tab BEQ r8
+@item BVC r8
+@tab BVS r8
+@tab BPL r8
+@tab BMI r8
+@item BGE r8
+@tab BLT r8
+@tab BGT r8
+@tab BLE r8
+@item NEGA
+@tab COMA
+@tab LSRA
+@tab RORA
+@item ASRA
+@tab ASLA
+@tab ROLA
+@tab DECA
+@item INCA
+@tab TSTA
+@tab CLRA
+@tab NEGB
+@item COMB
+@tab LSRB
+@tab RORB
+@tab ASRB
+@item ASLB
+@tab ROLB
+@tab DECB
+@tab INCB
+@item TSTB
+@tab CLRB
+@tab NEG e8,X
+@tab COM e8,X
+@item LSR e8,X
+@tab ROR e8,X
+@tab ASR e8,X
+@tab ASL e8,X
+@item ROL e8,X
+@tab DEC e8,X
+@tab INC e8,X
+@tab TST e8,X
+@item JMP e8,X
+@tab CLR e8,X
+@tab NEG e16
+@tab COM e16
+@item LSR e16
+@tab ROR e16
+@tab ASR e16
+@tab ASL e16
+@item ROL e16
+@tab DEC e16
+@tab INC e16
+@tab TST e16
+@item JMP e16
+@tab CLR e16
+@tab SUBA #e8
+@tab CMPA #e8
+@item SBCA #e8
+@tab ANDA #e8
+@tab BITA #e8
+@tab LDAA #e8
+@item EORA #e8
+@tab ADCA #e8
+@tab ORAA #e8
+@tab ADDA #e8
+@item SUBB #e8
+@tab CMPB #e8
+@tab SBCB #e8
+@tab ANDB #e8
+@item BITB #e8
+@tab LDAB #e8
+@tab EORB #e8
+@tab ADCB #e8
+@item ORAB #e8
+@tab ADDB #e8
+@tab SUBA e8,X
+@tab CMPA e8,X
+@item SBCA e8,X
+@tab ANDA e8,X
+@tab BITA e8,X
+@tab LDAA e8,X
+@item EORA e8,X
+@tab ADCA e8,X
+@tab ORAA e8,X
+@tab ADDA e8,X
+@item SUBB e8,X
+@tab CMPB e8,X
+@tab SBCB e8,X
+@tab ANDB e8,X
+@item BITB e8,X
+@tab LDAB e8,X
+@tab EORB e8,X
+@tab ADCB e8,X
+@item ORAB e8,X
+@tab ADDB e8,X
+@tab SUBA e
+@tab CMPA e
+@item SBCA e
+@tab ANDA e
+@tab BITA e
+@tab LDAA e
+@item EORA e
+@tab ADCA e
+@tab ORAA e
+@tab ADDA e
+@item SUBB e
+@tab CMPB e
+@tab SBCB e
+@tab ANDB e
+@item BITB e
+@tab LDAB e
+@tab EORB e
+@tab ADCB e
+@item ORAB e
+@tab ADDB e
+@tab STAA e8,X
+@tab STAA e
+@item STAB e8,X
+@tab STAB e
+@tab CPX #e16
+@tab CPX e8,X
+@item CPX e
+@tab LDS #e16
+@tab LDS e8,X
+@tab LDS e
+@item STS e8,X
+@tab STS e
+@tab LDX #e16
+@tab LDX e8,X
+@item LDX e
+@tab STX e8,X
+@tab STX e
+@tab BSR r8
+@item JSR e8,X
+@tab JSR e16
+@end multitable

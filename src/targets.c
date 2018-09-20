@@ -33,6 +33,7 @@ extern const struct target s_target_g65sc02;
 extern const struct target s_target_r65c02;
 extern const struct target s_target_r65c29;
 extern const struct target s_target_w65c02s;
+extern const struct target s_target_mc6800;
 
 static const struct target *s_targets[] = {
 	&s_target_z80,
@@ -56,6 +57,7 @@ static const struct target *s_targets[] = {
 	&s_target_r65c02,
 	&s_target_r65c29,
 	&s_target_w65c02s,
+	&s_target_mc6800,
 	NULL,
 };
 

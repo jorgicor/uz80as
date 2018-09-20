@@ -100,7 +100,8 @@ Currently, uz80as can assemble for these microprocessors:
 @item Western Design Center W65C02S
 @end itemize
 @item Datapoint 2200 (versions I & II)
-@item Intel 4004, 4040, 8008, 8021, 8022, 8041, 8048, 8080, 8085
+@item Intel 4004, 4040, 8008, 8021, 8022, 8041, 8048, 8051, 8080, 8085
+@item Motorola 6800
 @end itemize
 
 @command{uz80as} is free software.
@@ -1235,6 +1236,7 @@ For every instruction accepted for every target:
 * r65c02 target::		Rockwell R65C02.
 * r65c29 target::		Rockewll R65C29.
 * w65c02s target::		Western Design Center W65C02S.
+* mc6800 target::		Motorola 6800.
 @end menu
 
 @node z80 target
@@ -1547,6 +1549,14 @@ The @code{w65c02s} target selects the Western Design Center W65C02S.
 The instruction set accepted is the same as for the @code{r65c02} target, plus these new instructions:
 
 @include w65c02stb.texi
+
+@node mc6800 target
+@section mc6800 target
+
+The @code{mc6800} target selects the Motorola 6800.
+These are the instructions accepted:
+
+@include mc6800tb.texi
 
 @node Source guide
 @chapter Source guide

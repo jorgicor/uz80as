@@ -32,4 +32,6 @@ uz80as_SOURCES = \
 	target/i8048.c \
 	target/i8051.c \
 	target/i8080.c \
-	target/mos6502.c
+	target/mos6502.c \
+	target/mc6800.c
+
