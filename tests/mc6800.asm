@@ -10,7 +10,7 @@
 
 .MSFIRST
 
-n:	equ 77
+n:	equ $77
 nn:	equ $1234
 
 ; 0x

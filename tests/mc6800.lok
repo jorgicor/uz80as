@@ -10,7 +10,7 @@
 0010   0000             
 0011   0000             .MSFIRST
 0012   0000             
-0013   0000             n:	equ 77
+0013   0000             n:	equ $77
 0014   0000             nn:	equ $1234
 0015   0000             
 0016   0000             ; 0x
@@ -129,22 +129,22 @@
 0129   0051             
 0130   0051             ; 6x
 0131   0051             
-0132   0051 60 4D       	NEG n,X
+0132   0051 60 77       	NEG n,X
 0133   0053             	; 1
 0134   0053             	; 2
-0135   0053 63 4D       	COM n,X
-0136   0055 64 4D       	LSR n,X
+0135   0053 63 77       	COM n,X
+0136   0055 64 77       	LSR n,X
 0137   0057             	; 5
-0138   0057 66 4D       	ROR n,X
-0139   0059 67 4D       	ASR n,X
-0140   005B 68 4D       	ASL n,X
-0141   005D 69 4D       	ROL n,X
-0142   005F 6A 4D       	DEC n,X
+0138   0057 66 77       	ROR n,X
+0139   0059 67 77       	ASR n,X
+0140   005B 68 77       	ASL n,X
+0141   005D 69 77       	ROL n,X
+0142   005F 6A 77       	DEC n,X
 0143   0061             	; B
-0144   0061 6C 4D       	INC n,X
-0145   0063 6D 4D       	TST n,X
+0144   0061 6C 77       	INC n,X
+0145   0063 6D 77       	TST n,X
 0146   0065             	; E
-0147   0065 6F 4D       	CLR n,X
+0147   0065 6F 77       	CLR n,X
 0148   0067             
 0149   0067             ; 7x
 0150   0067             
@@ -167,18 +167,18 @@
 0167   0088             
 0168   0088             ; 8x
 0169   0088             
-0170   0088 80 4D       	SUBA #n
-0171   008A 81 4D       	CMPA #n
-0172   008C 82 4D       	SBCA #n
+0170   0088 80 77       	SUBA #n
+0171   008A 81 77       	CMPA #n
+0172   008C 82 77       	SBCA #n
 0173   008E             	; 3
-0174   008E 84 4D       	ANDA #n
-0175   0090 85 4D       	BITA #n
-0176   0092 86 4D       	LDAA #n
+0174   008E 84 77       	ANDA #n
+0175   0090 85 77       	BITA #n
+0176   0092 86 77       	LDAA #n
 0177   0094             	; 7
-0178   0094 88 4D       	EORA #n
-0179   0096 89 4D       	ADCA #n
-0180   0098 8A 4D       	ORAA #n
-0181   009A 8B 4D       	ADDA #n
+0178   0094 88 77       	EORA #n
+0179   0096 89 77       	ADCA #n
+0180   0098 8A 77       	ORAA #n
+0181   009A 8B 77       	ADDA #n
 0182   009C 8C 12 34    	CPX #nn
 0183   009F 8D FE       	BSR *
 0184   00A1 8E 12 34    	LDS #nn
@@ -186,41 +186,41 @@
 0186   00A4             
 0187   00A4             ; 9x
 0188   00A4             
-0189   00A4 90 4D       	SUBA n
-0190   00A6 91 4D       	CMPA n
-0191   00A8 92 4D       	SBCA n
+0189   00A4 90 77       	SUBA n
+0190   00A6 91 77       	CMPA n
+0191   00A8 92 77       	SBCA n
 0192   00AA             	; 3
-0193   00AA 94 4D       	ANDA n
-0194   00AC 95 4D       	BITA n
-0195   00AE 96 4D       	LDAA n
-0196   00B0 97 4D       	STAA n
-0197   00B2 98 4D       	EORA n
-0198   00B4 99 4D       	ADCA n
-0199   00B6 9A 4D       	ORAA n
-0200   00B8 9B 4D       	ADDA n
-0201   00BA 9C 4D       	CPX n
+0193   00AA 94 77       	ANDA n
+0194   00AC 95 77       	BITA n
+0195   00AE 96 77       	LDAA n
+0196   00B0 97 77       	STAA n
+0197   00B2 98 77       	EORA n
+0198   00B4 99 77       	ADCA n
+0199   00B6 9A 77       	ORAA n
+0200   00B8 9B 77       	ADDA n
+0201   00BA 9C 77       	CPX n
 0202   00BC             	; D
-0203   00BC 9E 4D       	LDS n
-0204   00BE 9F 4D       	STS n
+0203   00BC 9E 77       	LDS n
+0204   00BE 9F 77       	STS n
 0205   00C0             
 0206   00C0             ; Ax
 0207   00C0             
-0208   00C0 A0 4D       	SUBA n,X
-0209   00C2 A1 4D       	CMPA n,X
-0210   00C4 A2 4D       	SBCA n,X
+0208   00C0 A0 77       	SUBA n,X
+0209   00C2 A1 77       	CMPA n,X
+0210   00C4 A2 77       	SBCA n,X
 0211   00C6             	; 3
-0212   00C6 A4 4D       	ANDA n,X
-0213   00C8 A5 4D       	BITA n,X
-0214   00CA A6 4D       	LDAA n,X
-0215   00CC A7 4D       	STAA n,X
-0216   00CE A8 4D       	EORA n,X
-0217   00D0 A9 4D       	ADCA n,X
-0218   00D2 AA 4D       	ORAA n,X
-0219   00D4 AB 4D       	ADDA n,X
-0220   00D6 AC 4D       	CPX n,X
-0221   00D8 AD 4D       	JSR n,X
-0222   00DA AE 4D       	LDS n,X
-0223   00DC AF 4D       	STS n,X
+0212   00C6 A4 77       	ANDA n,X
+0213   00C8 A5 77       	BITA n,X
+0214   00CA A6 77       	LDAA n,X
+0215   00CC A7 77       	STAA n,X
+0216   00CE A8 77       	EORA n,X
+0217   00D0 A9 77       	ADCA n,X
+0218   00D2 AA 77       	ORAA n,X
+0219   00D4 AB 77       	ADDA n,X
+0220   00D6 AC 77       	CPX n,X
+0221   00D8 AD 77       	JSR n,X
+0222   00DA AE 77       	LDS n,X
+0223   00DC AF 77       	STS n,X
 0224   00DE             
 0225   00DE             
 0226   00DE             ; Bx
@@ -244,18 +244,18 @@
 0244   010B             
 0245   010B             ; Cx
 0246   010B             
-0247   010B C0 4D       	SUBB #n
-0248   010D C1 4D       	CMPB #n
-0249   010F C2 4D       	SBCB #n
+0247   010B C0 77       	SUBB #n
+0248   010D C1 77       	CMPB #n
+0249   010F C2 77       	SBCB #n
 0250   0111             	; 3
-0251   0111 C4 4D       	ANDB #n
-0252   0113 C5 4D       	BITB #n
-0253   0115 C6 4D       	LDAB #n
+0251   0111 C4 77       	ANDB #n
+0252   0113 C5 77       	BITB #n
+0253   0115 C6 77       	LDAB #n
 0254   0117             	; 7
-0255   0117 C8 4D       	EORB #n
-0256   0119 C9 4D       	ADCB #n
-0257   011B CA 4D       	ORAB #n
-0258   011D CB 4D       	ADDB #n
+0255   0117 C8 77       	EORB #n
+0256   0119 C9 77       	ADCB #n
+0257   011B CA 77       	ORAB #n
+0258   011D CB 77       	ADDB #n
 0259   011F             	; C
 0260   011F             	; D
 0261   011F CE 12 34    	LDX #nn
@@ -263,41 +263,41 @@
 0263   0122             
 0264   0122             ; Dx
 0265   0122             
-0266   0122 D0 4D       	SUBB n
-0267   0124 D1 4D       	CMPB n
-0268   0126 D2 4D       	SBCB n
+0266   0122 D0 77       	SUBB n
+0267   0124 D1 77       	CMPB n
+0268   0126 D2 77       	SBCB n
 0269   0128             	; 3
-0270   0128 D4 4D       	ANDB n
-0271   012A D5 4D       	BITB n
-0272   012C D6 4D       	LDAB n
-0273   012E D7 4D       	STAB n
-0274   0130 D8 4D       	EORB n
-0275   0132 D9 4D       	ADCB n
-0276   0134 DA 4D       	ORAB n
-0277   0136 DB 4D       	ADDB n
+0270   0128 D4 77       	ANDB n
+0271   012A D5 77       	BITB n
+0272   012C D6 77       	LDAB n
+0273   012E D7 77       	STAB n
+0274   0130 D8 77       	EORB n
+0275   0132 D9 77       	ADCB n
+0276   0134 DA 77       	ORAB n
+0277   0136 DB 77       	ADDB n
 0278   0138             	; C
 0279   0138             	; D
-0280   0138 DE 4D       	LDX n
-0281   013A DF 4D       	STX n
+0280   0138 DE 77       	LDX n
+0281   013A DF 77       	STX n
 0282   013C             
 0283   013C             ; Ex
 0284   013C             
-0285   013C E0 4D       	SUBB n,X
-0286   013E E1 4D       	CMPB n,X
-0287   0140 E2 4D       	SBCB n,X
+0285   013C E0 77       	SUBB n,X
+0286   013E E1 77       	CMPB n,X
+0287   0140 E2 77       	SBCB n,X
 0288   0142             	; 3
-0289   0142 E4 4D       	ANDB n,X
-0290   0144 E5 4D       	BITB n,X
-0291   0146 E6 4D       	LDAB n,X
-0292   0148 E7 4D       	STAB n,X
-0293   014A E8 4D       	EORB n,X
-0294   014C E9 4D       	ADCB n,X
-0295   014E EA 4D       	ORAB n,X
-0296   0150 EB 4D       	ADDB n,X
+0289   0142 E4 77       	ANDB n,X
+0290   0144 E5 77       	BITB n,X
+0291   0146 E6 77       	LDAB n,X
+0292   0148 E7 77       	STAB n,X
+0293   014A E8 77       	EORB n,X
+0294   014C E9 77       	ADCB n,X
+0295   014E EA 77       	ORAB n,X
+0296   0150 EB 77       	ADDB n,X
 0297   0152             	; C
 0298   0152             	; D
-0299   0152 EE 4D       	LDX n,X
-0300   0154 EF 4D       	STX n,X
+0299   0152 EE 77       	LDX n,X
+0300   0154 EF 77       	STX n,X
 0301   0156             
 0302   0156             
 0303   0156             ; Fx
@@ -323,41 +323,41 @@
 0323   017D             
 0324   017D             ; Bx >
 0325   017D             
-0326   017D B0 00 4D    	SUBA >n
-0327   0180 B1 00 4D    	CMPA >n
-0328   0183 B2 00 4D    	SBCA >n
+0326   017D B0 00 77    	SUBA >n
+0327   0180 B1 00 77    	CMPA >n
+0328   0183 B2 00 77    	SBCA >n
 0329   0186             	; 3
-0330   0186 B4 00 4D    	ANDA >n
-0331   0189 B5 00 4D    	BITA >n
-0332   018C B6 00 4D    	LDAA >n
-0333   018F B7 00 4D    	STAA >n
-0334   0192 B8 00 4D    	EORA >n
-0335   0195 B9 00 4D    	ADCA >n
-0336   0198 BA 00 4D    	ORAA >n
-0337   019B BB 00 4D    	ADDA >n
-0338   019E BC 00 4D    	CPX >n
+0330   0186 B4 00 77    	ANDA >n
+0331   0189 B5 00 77    	BITA >n
+0332   018C B6 00 77    	LDAA >n
+0333   018F B7 00 77    	STAA >n
+0334   0192 B8 00 77    	EORA >n
+0335   0195 B9 00 77    	ADCA >n
+0336   0198 BA 00 77    	ORAA >n
+0337   019B BB 00 77    	ADDA >n
+0338   019E BC 00 77    	CPX >n
 0339   01A1 BD 12 34    	JSR nn
-0340   01A4 BE 00 4D    	LDS >n
-0341   01A7 BF 00 4D    	STS >n
+0340   01A4 BE 00 77    	LDS >n
+0341   01A7 BF 00 77    	STS >n
 0342   01AA             
 0343   01AA             ; Fx >
 0344   01AA             
-0345   01AA F0 00 4D    	SUBB >n
-0346   01AD F1 00 4D    	CMPB >n
-0347   01B0 F2 00 4D    	SBCB >n
+0345   01AA F0 00 77    	SUBB >n
+0346   01AD F1 00 77    	CMPB >n
+0347   01B0 F2 00 77    	SBCB >n
 0348   01B3             	; 3
-0349   01B3 F4 00 4D    	ANDB >n
-0350   01B6 F5 00 4D    	BITB >n
-0351   01B9 F6 00 4D    	LDAB >n
-0352   01BC F7 00 4D    	STAB >n
-0353   01BF F8 00 4D    	EORB >n
-0354   01C2 F9 00 4D    	ADCB >n
-0355   01C5 FA 00 4D    	ORAB >n
-0356   01C8 FB 00 4D    	ADDB >n
+0349   01B3 F4 00 77    	ANDB >n
+0350   01B6 F5 00 77    	BITB >n
+0351   01B9 F6 00 77    	LDAB >n
+0352   01BC F7 00 77    	STAB >n
+0353   01BF F8 00 77    	EORB >n
+0354   01C2 F9 00 77    	ADCB >n
+0355   01C5 FA 00 77    	ORAB >n
+0356   01C8 FB 00 77    	ADDB >n
 0357   01CB             	; C
 0358   01CB             	; D
-0359   01CB FE 00 4D    	LDX >n
-0360   01CE FF 00 4D    	STX >n
+0359   01CB FE 00 77    	LDX >n
+0360   01CE FF 00 77    	STX >n
 0361   01D1             
 0362   01D1             #endif
 0363   01D1             
