@@ -31,6 +31,7 @@ dist_check_SCRIPTS = main.test \
 		     r65c29.test \
 		     w65c02s.test \
 		     mc6800.test \
+		     mc6801.test \
 		     tasmfail.test \
 		     longlabel.test \
 		     orgbelow.test \
@@ -164,6 +165,10 @@ EXTRA_DIST = igen.sh \
 	     mc6800.bok \
 	     mc6800.lok \
 	     mc6800.eok \
+	     mc6801.asm \
+	     mc6801.bok \
+	     mc6801.lok \
+	     mc6801.eok \
 	     tasmfail.asm \
 	     tasmfail.bok \
 	     tasmfail.lok \
