@@ -175,7 +175,7 @@ nn:	equ $1234
 	SUBA #n
 	CMPA #n
 	SBCA #n
-	SUBD #n ; *
+	SUBD #nn ; *
 	ANDA #n
 	BITA #n
 	LDAA #n
@@ -252,7 +252,7 @@ nn:	equ $1234
 	SUBB #n
 	CMPB #n
 	SBCB #n
-	ADDD #n ; *
+	ADDD #nn ; *
 	ANDB #n
 	BITB #n
 	LDAB #n
@@ -261,7 +261,7 @@ nn:	equ $1234
 	ADCB #n
 	ORAB #n
 	ADDB #n
-	LDD #n ; *
+	LDD #nn ; *
 	; D
 	LDX #nn
 	; F
