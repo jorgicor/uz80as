@@ -15,6 +15,7 @@
  *	a: expr
  *	b: R0,R1,R2,R3,R4,R5,R6,R7
  *	c: R0,R1
+ * 	d: ADD,ADDC,ORL,ANL,XRL,SUBB,XCH,MOV
  *
  * gen:
  * 	.: output lastbyte
@@ -28,23 +29,31 @@
  * 	g: relative jump -2
  * 	h: relative jump -3
  * 	i: ouput op as big endian word
+ * 	j: b + (op << 4)
  */
 
 static const struct matchtab s_matchtab_i8051[] = {
 	{ "ACALL a", "11f0", 1, 0, "e11" },
-	{ "ADD A,b", "28c0.", 1, 0 },
-	{ "ADD A,@c", "26c0.", 1, 0 },
+	{ "d A,b", "08j0c1.", 1, 0 },
+	{ "d A,@c", "06j0c1.", 1, 0 },
 	{ "ADD A,#a", "24.d0.", 1, 0, "e8" },
-	{ "ADD A,a", "25.d0.", 1, 0, "e8" },
-	{ "ADDC A,b", "38c0.", 1, 0 },
-	{ "ADDC A,@c", "36c0.", 1, 0 },
 	{ "ADDC A,#a", "34.d0.", 1, 0, "e8" },
-	{ "ADDC A,a", "35.d0.", 1, 0, "e8" },
-	{ "AJMP a", "01f0", 1, 0, "e11" },
-	{ "ANL A,b", "58c0.", 1, 0 },
-	{ "ANL A,@c", "56c0.", 1, 0 },
+	{ "ORL A,#a", "44.d0.", 1, 0, "e8" },
 	{ "ANL A,#a", "54.d0.", 1, 0, "e8" },
-	{ "ANL A,a", "55.d0.", 1, 0, "e8" },
+	{ "XRL A,#a", "64.d0.", 1, 0, "e8" },
+	{ "SUBB A,#a", "94.d0.", 1, 0, "e8" },
+	{ "MOV A,#a", "74.d0.", 1, 0, "e8" },
+	{ "d A,a", "05j0.d1.", 1, 0, "e8" },
+	// { "ADD A,b", "28c0.", 1, 0 },
+	// { "ADD A,@c", "26c0.", 1, 0 },
+	// { "ADD A,a", "25.d0.", 1, 0, "e8" },
+	// { "ADDC A,b", "38c0.", 1, 0 },
+	// { "ADDC A,@c", "36c0.", 1, 0 },
+	// { "ADDC A,a", "35.d0.", 1, 0, "e8" },
+	{ "AJMP a", "01f0", 1, 0, "e11" },
+	// { "ANL A,b", "58c0.", 1, 0 },
+	// { "ANL A,@c", "56c0.", 1, 0 },
+	// { "ANL A,a", "55.d0.", 1, 0, "e8" },
 	{ "ANL C,/a", "B0.d0.", 1, 0, "e8" },
 	{ "ANL C,a", "82.d0.", 1, 0, "e8" },
 	{ "ANL a,A", "52.d0.", 1, 0 },
@@ -82,10 +91,9 @@ static const struct matchtab s_matchtab_i8051[] = {
 	{ "JZ a", "60.g0.", 1, 0, "r8" },
 	{ "LCALL a", "12.i0", 1, 0 }, 
 	{ "LJMP a", "02.i0", 1, 0 },
-	{ "MOV A,b", "E8c0.", 1, 0 },
-	{ "MOV A,@c", "E6c0.", 1, 0 },
-	{ "MOV A,#a", "74.d0.", 1, 0, "e8" },
-	{ "MOV A,a", "E5.d0.", 1, 0, "e8" }, // MOV A,ACC not valid?
+	// { "MOV A,b", "E8c0.", 1, 0 },
+	// { "MOV A,@c", "E6c0.", 1, 0 },
+	// { "MOV A,a", "E5.d0.", 1, 0, "e8" }, // MOV A,ACC not valid?
 	{ "MOV b,A", "F8c0.", 1, 0 },
 	{ "MOV b,#a", "78c0.d1.", 1, 0, "e8" },
 	{ "MOV b,a", "A8c0.d1.", 1, 0, "e8" },
@@ -108,10 +116,9 @@ static const struct matchtab s_matchtab_i8051[] = {
 	{ "MOVX @DPTR,A", "F0.", 1, 0 },
 	{ "MUL AB", "A4.", 1, 0 },
 	{ "NOP", "00.", 1, 0 },
-	{ "ORL A,b", "48c0.", 1, 0 },
-	{ "ORL A,@c", "46c0.", 1, 0 },
-	{ "ORL A,#a", "44.d0.", 1, 0, "e8" },
-	{ "ORL A,a", "45.d0.", 1, 0, "e8" },
+	// { "ORL A,b", "48c0.", 1, 0 },
+	// { "ORL A,@c", "46c0.", 1, 0 },
+	// { "ORL A,a", "45.d0.", 1, 0, "e8" },
 	{ "ORL C,/a", "A0.d0.", 1, 0, "e8" },
 	{ "ORL C,a", "72.d0.", 1, 0, "e8" },
 	{ "ORL a,A", "42.d0.", 1, 0, "e8" },
@@ -127,19 +134,17 @@ static const struct matchtab s_matchtab_i8051[] = {
 	{ "SETB C", "D3.", 1, 0 },
 	{ "SETB a", "D2.d0.", 1, 0, "e8" },
 	{ "SJMP a", "80.g0.", 1, 0, "r8" },
-	{ "SUBB A,b", "98c0.", 1, 0 },
-	{ "SUBB A,@c", "96c0.", 1, 0 },
-	{ "SUBB A,#a", "94.d0.", 1, 0, "e8" },
-	{ "SUBB A,a", "95.d0.", 1, 0, "e8" },
+	// { "SUBB A,b", "98c0.", 1, 0 },
+	// { "SUBB A,@c", "96c0.", 1, 0 },
+	// { "SUBB A,a", "95.d0.", 1, 0, "e8" },
 	{ "SWAP A", "C4.", 1, 0 },
-	{ "XCH A,b", "C8c0.", 1, 0 },
-	{ "XCH A,@c", "C6c0.", 1, 0 },
-	{ "XCH A,a", "C5.d0.", 1, 0, "e8" },
+	// { "XCH A,b", "C8c0.", 1, 0 },
+	// { "XCH A,@c", "C6c0.", 1, 0 },
+	// { "XCH A,a", "C5.d0.", 1, 0, "e8" },
 	{ "XCHD A,@c", "D6c0.", 1, 0 },
-	{ "XRL A,b", "68c0.", 1, 0 },
-	{ "XRL A,@c", "66c0.", 1, 0 },
-	{ "XRL A,#a", "64.d0.", 1, 0, "e8" },
-	{ "XRL A,a", "65.d0.", 1, 0, "e8" },
+	// { "XRL A,b", "68c0.", 1, 0 },
+	// { "XRL A,@c", "66c0.", 1, 0 },
+	// { "XRL A,a", "65.d0.", 1, 0, "e8" },
 	{ "XRL a,A", "62.d0.", 1, 0, "e8" },
 	{ "XRL a,#a", "63.d0.d1.", 1, 0, "e8e8" },
 	{ NULL, NULL },
@@ -153,15 +158,20 @@ static const char *const cval[] = {
 "R0", "R1",
 NULL };
 
+static const char *const dval[] = {
+"", "", "ADD", "ADDC", "ORL", "ANL", "XRL", "",
+"", "SUBB", "", "", "XCH", "", "MOV",
+NULL };
+
 static const char *const *const valtab[] = { 
-	bval, cval
+	bval, cval, dval
 };
 
 static int match_i8051(char c, const char *p, const char **q)
 {
 	int v;
 
-	if (c <= 'c') {
+	if (c <= 'd') {
 		v = mreg(p, valtab[(int) (c - 'b')], q);
 	} else {
 		v = -1;
@@ -187,6 +197,7 @@ static int gen_i8051(int *eb, char p, const int *vs, int i, int savepc)
 	case 'i': genb(vs[i] >> 8, s_pline_ep);
 		  genb(vs[i], s_pline_ep);
 		  break;
+	case 'j': b += (vs[i] << 4); break;
 	default:
 		  return -1;
 	}
@@ -208,7 +219,7 @@ static const char *pat_next_str_i8051(void)
 {
 	const char *s;
 
-	if (s_pat_char >= 'b' && s_pat_char <= 'c') {
+	if (s_pat_char >= 'b' && s_pat_char <= 'd') {
 		s = valtab[(int) (s_pat_char - 'b')][s_pat_index];
 		if (s != NULL) {
 			s_pat_index++;
