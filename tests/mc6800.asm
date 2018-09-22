@@ -319,6 +319,48 @@ nn:	equ $1234
 	LDX nn
 	STX nn
 
+#ifdef UZ80AS
+
+; Bx >
+
+	SUBA >n
+	CMPA >n
+	SBCA >n
+	; 3
+	ANDA >n
+	BITA >n
+	LDAA >n
+	STAA >n
+	EORA >n
+	ADCA >n
+	ORAA >n
+	ADDA >n
+	CPX >n
+	JSR nn
+	LDS >n
+	STS >n
+
+; Fx >
+
+	SUBB >n
+	CMPB >n
+	SBCB >n
+	; 3
+	ANDB >n
+	BITB >n
+	LDAB >n
+	STAB >n
+	EORB >n
+	ADCB >n
+	ORAB >n
+	ADDB >n
+	; C
+	; D
+	LDX >n
+	STX >n
+
+#endif
+
 	.DW $1234
 
 	end

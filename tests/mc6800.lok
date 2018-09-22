@@ -319,6 +319,48 @@
 0319   0177 FE 12 34    	LDX nn
 0320   017A FF 12 34    	STX nn
 0321   017D             
-0322   017D 12 34       	.DW $1234
-0323   017F             
-0324   017F             	end
+0322   017D             #ifdef UZ80AS
+0323   017D             
+0324   017D             ; Bx >
+0325   017D             
+0326   017D B0 00 4D    	SUBA >n
+0327   0180 B1 00 4D    	CMPA >n
+0328   0183 B2 00 4D    	SBCA >n
+0329   0186             	; 3
+0330   0186 B4 00 4D    	ANDA >n
+0331   0189 B5 00 4D    	BITA >n
+0332   018C B6 00 4D    	LDAA >n
+0333   018F B7 00 4D    	STAA >n
+0334   0192 B8 00 4D    	EORA >n
+0335   0195 B9 00 4D    	ADCA >n
+0336   0198 BA 00 4D    	ORAA >n
+0337   019B BB 00 4D    	ADDA >n
+0338   019E BC 00 4D    	CPX >n
+0339   01A1 BD 12 34    	JSR nn
+0340   01A4 BE 00 4D    	LDS >n
+0341   01A7 BF 00 4D    	STS >n
+0342   01AA             
+0343   01AA             ; Fx >
+0344   01AA             
+0345   01AA F0 00 4D    	SUBB >n
+0346   01AD F1 00 4D    	CMPB >n
+0347   01B0 F2 00 4D    	SBCB >n
+0348   01B3             	; 3
+0349   01B3 F4 00 4D    	ANDB >n
+0350   01B6 F5 00 4D    	BITB >n
+0351   01B9 F6 00 4D    	LDAB >n
+0352   01BC F7 00 4D    	STAB >n
+0353   01BF F8 00 4D    	EORB >n
+0354   01C2 F9 00 4D    	ADCB >n
+0355   01C5 FA 00 4D    	ORAB >n
+0356   01C8 FB 00 4D    	ADDB >n
+0357   01CB             	; C
+0358   01CB             	; D
+0359   01CB FE 00 4D    	LDX >n
+0360   01CE FF 00 4D    	STX >n
+0361   01D1             
+0362   01D1             #endif
+0363   01D1             
+0364   01D1 12 34       	.DW $1234
+0365   01D3             
+0366   01D3             	end
