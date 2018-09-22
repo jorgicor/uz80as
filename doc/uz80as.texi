@@ -101,7 +101,7 @@ Currently, uz80as can assemble for these microprocessors:
 @end itemize
 @item Datapoint 2200 (versions I & II)
 @item Intel 4004, 4040, 8008, 8021, 8022, 8041, 8048, 8051, 8080, 8085
-@item Motorola 6800
+@item Motorola 6800, 6801
 @end itemize
 
 @command{uz80as} is free software.
@@ -1237,6 +1237,7 @@ For every instruction accepted for every target:
 * r65c29 target::		Rockewll R65C29.
 * w65c02s target::		Western Design Center W65C02S.
 * mc6800 target::		Motorola 6800.
+* mc6801 target::		Motorola 6801.
 @end menu
 
 @node z80 target
@@ -1557,6 +1558,16 @@ The @code{mc6800} target selects the Motorola 6800.
 These are the instructions accepted:
 
 @include mc6800tb.texi
+
+Where @code{>} forces the use of a 16 bit address.
+
+@node mc6801 target
+@section mc6801 target
+
+The @code{mc6801} target selects the Motorola 6801.
+The instruction set accepted is the same as for the @code{mc6800} target, plus these new instructions:
+
+@include mc6801tb.texi
 
 @node Source guide
 @chapter Source guide

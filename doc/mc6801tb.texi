@@ -1,0 +1,31 @@
+@multitable @columnfractions .25 .25 .25 .25
+@item JSR >e16
+@tab JSR e
+@tab ABX
+@tab ADDD #e16
+@item ADDD >e16
+@tab ADDD e8,X
+@tab ADDD e
+@tab ASLD
+@item LSLD
+@tab BHS r8
+@tab BLO r8
+@tab BRN r8
+@item LDD #e16
+@tab LDD >e16
+@tab LDD e8,X
+@tab LDD e
+@item LSL e8,X
+@tab LSL e16
+@tab LSRD
+@tab MUL
+@item PSHX
+@tab PULX
+@tab STD >e16
+@tab STD e8,X
+@item STD e
+@tab SUBD #e16
+@tab SUBD >e16
+@tab SUBD e8,X
+@item SUBD e
+@end multitable

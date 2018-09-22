@@ -1,4 +1,17 @@
-1.06	2018-09-15
+1.08	2018-09-23
+
+	* New targets added:
+	  - Intel 8021, 8022, 8041, 8048, 8051.
+	  - Motorola 6800, 6801.
+
+	Source changes
+	--------------
+
+	* Changed the substitution algorithm of print_inst(). Now it allows for
+	  multiple digits after a character code (permits e16 in tables).
+	  Duplicating @ if found. Changed targets' tables accordingly.
+
+1.07	2018-09-15
 
 	* New targets added:
 	  - i4004: Intel 4004.
