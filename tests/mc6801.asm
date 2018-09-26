@@ -299,8 +299,8 @@ nn:	equ $1234
 	ADCB n,X
 	ORAB n,X
 	ADDB n,X
-	LDD n ; *
-	STD n ; *
+	LDD n,X ; *
+	STD n,X ; *
 	LDX n,X
 	STX n,X
 

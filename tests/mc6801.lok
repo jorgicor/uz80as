@@ -299,8 +299,8 @@
 0299   0178 E9 77       	ADCB n,X
 0300   017A EA 77       	ORAB n,X
 0301   017C EB 77       	ADDB n,X
-0302   017E DC 77       	LDD n ; *
-0303   0180 DD 77       	STD n ; *
+0302   017E EC 77       	LDD n,X ; *
+0303   0180 ED 77       	STD n,X ; *
 0304   0182 EE 77       	LDX n,X
 0305   0184 EF 77       	STX n,X
 0306   0186             
