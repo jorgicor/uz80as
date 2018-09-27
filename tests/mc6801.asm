@@ -147,7 +147,7 @@ nn:	equ $1234
 	; B
 	INC n,X
 	TST n,X
-	; E
+	JMP n,X
 	CLR n,X
 
 ; 7x
@@ -167,7 +167,7 @@ nn:	equ $1234
 	; B
 	INC nn
 	TST nn
-	; E
+	JMP nn
 	CLR nn
 
 ; 8x
