@@ -1,0 +1,469 @@
+0001   0000             ; ===========================================================================
+0002   0000             ; uz80as, an assembler for the Zilog Z80 and several other microprocessors.
+0003   0000             ;
+0004   0000             ; Motorola 68HC11.
+0005   0000             ; ===========================================================================
+0006   0000             
+0007   0000             
+0008   0000             #define equ .equ
+0009   0000             #define end .end
+0010   0000             
+0011   0000             .MSFIRST
+0012   0000             
+0013   0000             n:	equ $77
+0014   0000             nn:	equ $1234
+0015   0000             
+0016   0000             ; 0x
+0017   0000             
+0018   0000 00          	TEST ; **
+0019   0001 01          	NOP
+0020   0002 02          	IDIV ; **
+0021   0003 03          	FDIV ; **
+0022   0004 04          	LSRD ; *
+0023   0005 05          	ASLD ; *
+0024   0006 05          	LSLD ; * = ASLD
+0025   0007 06          	TAP
+0026   0008 07          	TPA
+0027   0009 08          	INX
+0028   000A 09          	DEX
+0029   000B 0A          	CLV
+0030   000C 0B          	SEV
+0031   000D 0C          	CLC
+0032   000E 0D          	SEC
+0033   000F 0E          	CLI
+0034   0010 0F          	SEI
+0035   0011             	
+0036   0011             ; 1x
+0037   0011             
+0038   0011 10          	SBA
+0039   0012 11          	CBA
+0040   0013 12 77 77 FC 	BRSET n,n,* ; **
+0041   0017 13 77 77 FC 	BRCLR n,n,* ; **
+0042   001B 14 77 77    	BSET n,n ; **
+0043   001E 15 77 77    	BCLR n,n ; **
+0044   0021 16          	TAB
+0045   0022 17          	TBA
+0046   0023             	; 8
+0047   0023 19          	DAA
+0048   0024             	; A
+0049   0024 1B          	ABA
+0050   0025 1C 77 77    	BSET n,X,n ; **
+0051   0028 1D 77 77    	BCLR n,X,n ; **
+0052   002B 1E 77 77 FC 	BRSET n,X,n,* ; **
+0053   002F 1F 77 77 FC 	BRCLR n,X,n,* ; **
+0054   0033             
+0055   0033             ; 2x
+0056   0033             
+0057   0033 20 FE       	BRA *
+0058   0035 21 FE       	BRN * ; *
+0059   0037 22 FE       	BHI *
+0060   0039 23 FE       	BLS *
+0061   003B 24 FE       	BCC *
+0062   003D 24 FE       	BHS * ; * = BCC
+0063   003F 25 FE       	BCS *
+0064   0041 25 FE       	BLO * ; * = BCS
+0065   0043 26 FE       	BNE *
+0066   0045 27 FE       	BEQ *
+0067   0047 28 FE       	BVC *
+0068   0049 29 FE       	BVS *
+0069   004B 2A FE       	BPL *
+0070   004D 2B FE       	BMI *
+0071   004F 2C FE       	BGE *
+0072   0051 2D FE       	BLT *
+0073   0053 2E FE       	BGT *
+0074   0055 2F FE       	BLE *
+0075   0057             
+0076   0057             ; 3x
+0077   0057             
+0078   0057 30          	TSX
+0079   0058 31          	INS
+0080   0059 32          	PULA
+0081   005A 33          	PULB
+0082   005B 34          	DES
+0083   005C 35          	TXS
+0084   005D 36          	PSHA
+0085   005E 37          	PSHB
+0086   005F 38          	PULX ; *
+0087   0060 39          	RTS
+0088   0061 3A          	ABX ; *
+0089   0062 3B          	RTI
+0090   0063 3C          	PSHX ; *
+0091   0064 3D          	MUL ; *
+0092   0065 3E          	WAI
+0093   0066 3F          	SWI
+0094   0067             
+0095   0067             ; 4x
+0096   0067             
+0097   0067 40          	NEGA
+0098   0068             	; 1
+0099   0068             	; 2
+0100   0068 43          	COMA
+0101   0069 44          	LSRA
+0102   006A             	; 5
+0103   006A 46          	RORA
+0104   006B 47          	ASRA
+0105   006C 48          	ASLA
+0106   006D 48          	LSLA ; ** = ASLA
+0107   006E 49          	ROLA
+0108   006F 4A          	DECA
+0109   0070             	; B
+0110   0070 4C          	INCA
+0111   0071 4D          	TSTA
+0112   0072             	; E
+0113   0072 4F          	CLRA
+0114   0073             
+0115   0073             ; 5x
+0116   0073             
+0117   0073 50          	NEGB
+0118   0074             	; 1
+0119   0074             	; 2
+0120   0074 53          	COMB
+0121   0075 54          	LSRB
+0122   0076             	; 5
+0123   0076 56          	RORB
+0124   0077 57          	ASRB
+0125   0078 58          	ASLB
+0126   0079 58          	LSLB ; ** = ASLB
+0127   007A 59          	ROLB
+0128   007B 5A          	DECB
+0129   007C             	; B
+0130   007C 5C          	INCB
+0131   007D 5D          	TSTB
+0132   007E             	; E
+0133   007E 5F          	CLRB
+0134   007F             
+0135   007F             ; 6x
+0136   007F             
+0137   007F 60 77       	NEG n,X
+0138   0081             	; 1
+0139   0081             	; 2
+0140   0081 63 77       	COM n,X
+0141   0083 64 77       	LSR n,X
+0142   0085             	; 5
+0143   0085 66 77       	ROR n,X
+0144   0087 67 77       	ASR n,X
+0145   0089 68 77       	ASL n,X
+0146   008B 68 77       	LSL n,X ; * = ASL
+0147   008D 69 77       	ROL n,X
+0148   008F 6A 77       	DEC n,X
+0149   0091             	; B
+0150   0091 6C 77       	INC n,X
+0151   0093 6D 77       	TST n,X
+0152   0095 6E 77       	JMP n,X
+0153   0097 6F 77       	CLR n,X
+0154   0099             
+0155   0099             ; 7x
+0156   0099             
+0157   0099 70 12 34    	NEG nn
+0158   009C             	; 1
+0159   009C             	; 2
+0160   009C 73 12 34    	COM nn
+0161   009F 74 12 34    	LSR nn
+0162   00A2             	; 5
+0163   00A2 76 12 34    	ROR nn
+0164   00A5 77 12 34    	ASR nn
+0165   00A8 78 12 34    	ASL nn
+0166   00AB 78 12 34    	LSL nn ; * = ASL
+0167   00AE 79 12 34    	ROL nn
+0168   00B1 7A 12 34    	DEC nn
+0169   00B4             	; B
+0170   00B4 7C 12 34    	INC nn
+0171   00B7 7D 12 34    	TST nn
+0172   00BA 7E 12 34    	JMP nn
+0173   00BD 7F 12 34    	CLR nn
+0174   00C0             
+0175   00C0             ; 8x
+0176   00C0             
+0177   00C0 80 77       	SUBA #n
+0178   00C2 81 77       	CMPA #n
+0179   00C4 82 77       	SBCA #n
+0180   00C6 83 12 34    	SUBD #nn ; *
+0181   00C9 84 77       	ANDA #n
+0182   00CB 85 77       	BITA #n
+0183   00CD 86 77       	LDAA #n
+0184   00CF             	; 7
+0185   00CF 88 77       	EORA #n
+0186   00D1 89 77       	ADCA #n
+0187   00D3 8A 77       	ORAA #n
+0188   00D5 8B 77       	ADDA #n
+0189   00D7 8C 12 34    	CPX #nn
+0190   00DA 8D FE       	BSR *
+0191   00DC 8E 12 34    	LDS #nn
+0192   00DF 8F          	XGDX ; **
+0193   00E0             
+0194   00E0             ; 9x
+0195   00E0             
+0196   00E0 90 77       	SUBA n
+0197   00E2 91 77       	CMPA n
+0198   00E4 92 77       	SBCA n
+0199   00E6 93 77       	SUBD n ; *
+0200   00E8 94 77       	ANDA n
+0201   00EA 95 77       	BITA n
+0202   00EC 96 77       	LDAA n
+0203   00EE 97 77       	STAA n
+0204   00F0 98 77       	EORA n
+0205   00F2 99 77       	ADCA n
+0206   00F4 9A 77       	ORAA n
+0207   00F6 9B 77       	ADDA n
+0208   00F8 9C 77       	CPX n
+0209   00FA 9D 77       	JSR n ; *
+0210   00FC 9E 77       	LDS n
+0211   00FE 9F 77       	STS n
+0212   0100             
+0213   0100             ; Ax
+0214   0100             
+0215   0100 A0 77       	SUBA n,X
+0216   0102 A1 77       	CMPA n,X
+0217   0104 A2 77       	SBCA n,X
+0218   0106 A3 77       	SUBD n,X ; *
+0219   0108 A4 77       	ANDA n,X
+0220   010A A5 77       	BITA n,X
+0221   010C A6 77       	LDAA n,X
+0222   010E A7 77       	STAA n,X
+0223   0110 A8 77       	EORA n,X
+0224   0112 A9 77       	ADCA n,X
+0225   0114 AA 77       	ORAA n,X
+0226   0116 AB 77       	ADDA n,X
+0227   0118 AC 77       	CPX n,X
+0228   011A AD 77       	JSR n,X
+0229   011C AE 77       	LDS n,X
+0230   011E AF 77       	STS n,X
+0231   0120             
+0232   0120             
+0233   0120             ; Bx
+0234   0120             
+0235   0120 B0 12 34    	SUBA nn
+0236   0123 B1 12 34    	CMPA nn
+0237   0126 B2 12 34    	SBCA nn
+0238   0129 B3 12 34    	SUBD nn ; *
+0239   012C B4 12 34    	ANDA nn
+0240   012F B5 12 34    	BITA nn
+0241   0132 B6 12 34    	LDAA nn
+0242   0135 B7 12 34    	STAA nn
+0243   0138 B8 12 34    	EORA nn
+0244   013B B9 12 34    	ADCA nn
+0245   013E BA 12 34    	ORAA nn
+0246   0141 BB 12 34    	ADDA nn
+0247   0144 BC 12 34    	CPX nn
+0248   0147 BD 12 34    	JSR nn
+0249   014A BE 12 34    	LDS nn
+0250   014D BF 12 34    	STS nn
+0251   0150             
+0252   0150             ; Cx
+0253   0150             
+0254   0150 C0 77       	SUBB #n
+0255   0152 C1 77       	CMPB #n
+0256   0154 C2 77       	SBCB #n
+0257   0156 C3 12 34    	ADDD #nn ; *
+0258   0159 C4 77       	ANDB #n
+0259   015B C5 77       	BITB #n
+0260   015D C6 77       	LDAB #n
+0261   015F             	; 7
+0262   015F C8 77       	EORB #n
+0263   0161 C9 77       	ADCB #n
+0264   0163 CA 77       	ORAB #n
+0265   0165 CB 77       	ADDB #n
+0266   0167 CC 12 34    	LDD #nn ; *
+0267   016A             	; D
+0268   016A CE 12 34    	LDX #nn
+0269   016D CF          	STOP ; **
+0270   016E             
+0271   016E             ; Dx
+0272   016E             
+0273   016E D0 77       	SUBB n
+0274   0170 D1 77       	CMPB n
+0275   0172 D2 77       	SBCB n
+0276   0174 D3 77       	ADDD n ; *
+0277   0176 D4 77       	ANDB n
+0278   0178 D5 77       	BITB n
+0279   017A D6 77       	LDAB n
+0280   017C D7 77       	STAB n
+0281   017E D8 77       	EORB n
+0282   0180 D9 77       	ADCB n
+0283   0182 DA 77       	ORAB n
+0284   0184 DB 77       	ADDB n
+0285   0186 DC 77       	LDD n ; *
+0286   0188 DD 77       	STD n ; *
+0287   018A DE 77       	LDX n
+0288   018C DF 77       	STX n
+0289   018E             
+0290   018E             ; Ex
+0291   018E             
+0292   018E E0 77       	SUBB n,X
+0293   0190 E1 77       	CMPB n,X
+0294   0192 E2 77       	SBCB n,X
+0295   0194 E3 77       	ADDD n,X ; *
+0296   0196 E4 77       	ANDB n,X
+0297   0198 E5 77       	BITB n,X
+0298   019A E6 77       	LDAB n,X
+0299   019C E7 77       	STAB n,X
+0300   019E E8 77       	EORB n,X
+0301   01A0 E9 77       	ADCB n,X
+0302   01A2 EA 77       	ORAB n,X
+0303   01A4 EB 77       	ADDB n,X
+0304   01A6 EC 77       	LDD n,X ; *
+0305   01A8 ED 77       	STD n,X ; *
+0306   01AA EE 77       	LDX n,X
+0307   01AC EF 77       	STX n,X
+0308   01AE             
+0309   01AE             
+0310   01AE             ; Fx
+0311   01AE             
+0312   01AE F0 12 34    	SUBB nn
+0313   01B1 F1 12 34    	CMPB nn
+0314   01B4 F2 12 34    	SBCB nn
+0315   01B7 F3 12 34    	ADDD nn ; *
+0316   01BA F4 12 34    	ANDB nn
+0317   01BD F5 12 34    	BITB nn
+0318   01C0 F6 12 34    	LDAB nn
+0319   01C3 F7 12 34    	STAB nn
+0320   01C6 F8 12 34    	EORB nn
+0321   01C9 F9 12 34    	ADCB nn
+0322   01CC FA 12 34    	ORAB nn
+0323   01CF FB 12 34    	ADDB nn
+0324   01D2 FC 12 34    	LDD nn ; *
+0325   01D5 FD 12 34    	STD nn ; *
+0326   01D8 FE 12 34    	LDX nn
+0327   01DB FF 12 34    	STX nn
+0328   01DE             
+0329   01DE             #ifdef UZ80AS
+0330   01DE             
+0331   01DE             ; Bx >
+0332   01DE             
+0333   01DE B0 00 77    	SUBA >n
+0334   01E1 B1 00 77    	CMPA >n
+0335   01E4 B2 00 77    	SBCA >n
+0336   01E7 B3 00 77    	SUBD >n ; *
+0337   01EA B4 00 77    	ANDA >n
+0338   01ED B5 00 77    	BITA >n
+0339   01F0 B6 00 77    	LDAA >n
+0340   01F3 B7 00 77    	STAA >n
+0341   01F6 B8 00 77    	EORA >n
+0342   01F9 B9 00 77    	ADCA >n
+0343   01FC BA 00 77    	ORAA >n
+0344   01FF BB 00 77    	ADDA >n
+0345   0202 BC 00 77    	CPX >n
+0346   0205 BD 00 77    	JSR >n ; *
+0347   0208 BE 00 77    	LDS >n
+0348   020B BF 00 77    	STS >n
+0349   020E             
+0350   020E             ; Fx >
+0351   020E             
+0352   020E F0 00 77    	SUBB >n
+0353   0211 F1 00 77    	CMPB >n
+0354   0214 F2 00 77    	SBCB >n
+0355   0217 F3 00 77    	ADDD >n ; *
+0356   021A F4 00 77    	ANDB >n
+0357   021D F5 00 77    	BITB >n
+0358   0220 F6 00 77    	LDAB >n
+0359   0223 F7 00 77    	STAB >n
+0360   0226 F8 00 77    	EORB >n
+0361   0229 F9 00 77    	ADCB >n
+0362   022C FA 00 77    	ORAB >n
+0363   022F FB 00 77    	ADDB >n
+0364   0232 FC 00 77    	LDD >n ; *
+0365   0235 FD 00 77    	STD >n ; *
+0366   0238 FE 00 77    	LDX >n
+0367   023B FF 00 77    	STX >n
+0368   023E             
+0369   023E             #endif
+0370   023E             
+0371   023E 12 34       	.DW $1234
+0372   0240             
+0373   0240             ; 18xx
+0374   0240             
+0375   0240 18 3A       	ABY ; 3A
+0376   0242 18 A9 77    	ADCA n,Y ; A9
+0377   0245 18 E9 77    	ADCB n,Y ; E9
+0378   0248 18 AB 77    	ADDA n,Y ; AB
+0379   024B 18 EB 77    	ADDB n,Y ; EB
+0380   024E 18 E3 77    	ADDD n,Y ; E3
+0381   0251 18 A4 77    	ANDA n,Y ; A4
+0382   0254 18 E4 77    	ANDB n,Y ; E4
+0383   0257 18 68 77    	ASL n,Y ; 68
+0384   025A 18 67 77    	ASR n,Y ; 67
+0385   025D 18 1D 77 77 	BCLR n,Y,n ; 1D
+0386   0261 18 A5 77    	BITA n,Y ; A5
+0387   0264 18 E5 77    	BITB n,Y ; E5
+0388   0267 18 1F 77 77 	BRCLR n,Y,n,* ; 1F
+0388   026B FB 
+0389   026C 18 1E 77 77 	BRSET n,Y,n,* ; 1E
+0389   0270 FB 
+0390   0271 18 1C 77 77 	BSET n,Y,n ; 1C
+0391   0275 18 6F 77    	CLR n,Y ; 6F
+0392   0278 18 A1 77    	CMPA n,Y ; A1
+0393   027B 18 E1 77    	CMPB n,Y ; E1
+0394   027E 18 63 77    	COM n,Y ; 63
+0395   0281 18 8C 00 77 	CPY #n ; 8C
+0396   0285 18 9C 77    	CPY n ; 9C
+0397   0288 18 BC 12 34 	CPY nn ; BC
+0398   028C 18 AC 77    	CPY n,Y ; AC
+0399   028F 18 6A 77    	DEC n,Y ; 6A
+0400   0292 18 09       	DEY ; 09
+0401   0294 18 A8 77    	EORA n,Y ; A8
+0402   0297 18 E8 77    	EORB n,Y ; E8
+0403   029A 18 6C 77    	INC n,Y ; 6C
+0404   029D 18 08       	INY ; 08
+0405   029F 18 6E 77    	JMP n,Y ; 6E
+0406   02A2 18 AD 77    	JSR n,Y ; AD
+0407   02A5 18 A6 77    	LDAA n,Y ; A6
+0408   02A8 18 E6 77    	LDAB n,Y ; E6
+0409   02AB 18 EC 77    	LDD n,Y ; EC
+0410   02AE 18 AE 77    	LDS n,Y ; AE
+0411   02B1 18 CE 00 77 	LDY #n ; CE
+0412   02B5 18 DE 77    	LDY n ; DE
+0413   02B8 18 FE 12 34 	LDY nn ; FE
+0414   02BC 18 EE 77    	LDY n,Y ; EE
+0415   02BF 18 68 77    	LSL n,Y ; 68
+0416   02C2 18 64 77    	LSR n,Y ; 64
+0417   02C5 18 60 77    	NEG n,Y ; 60
+0418   02C8 18 AA 77    	ORAA n,Y ; AA
+0419   02CB 18 EA 77    	ORAB n,Y ; EA
+0420   02CE 18 3C       	PSHY ; 3C
+0421   02D0 18 38       	PULY ; 38
+0422   02D2 18 69 77    	ROL n,Y ; 69
+0423   02D5 18 66 77    	ROR n,Y ; 66
+0424   02D8 18 A2 77    	SBCA n,Y ; A2
+0425   02DB 18 E2 77    	SBCB n,Y ; E2
+0426   02DE 18 A7 77    	STAA n,Y ; A7
+0427   02E1 18 E7 77    	STAB n,Y ; E7
+0428   02E4 18 ED 77    	STD n,Y ; ED
+0429   02E7 18 AF 77    	STS n,Y ; AF
+0430   02EA 18 DF 77    	STY n ; DF
+0431   02ED 18 FF 12 34 	STY nn ; FF
+0432   02F1 18 FF 00 77 	STY >n ; FF
+0433   02F5 18 EF 77    	STY n,Y ; EF
+0434   02F8 18 A0 77    	SUBA n,Y ; A0
+0435   02FB 18 E0 77    	SUBB n,Y ; E0
+0436   02FE 18 A3 77    	SUBD n,Y ; A3
+0437   0301 18 6D 77    	TST n,Y ; 6D
+0438   0304 18 30       	TSY ; 30
+0439   0306 18 35       	TYS ; 35
+0440   0308 18 8F       	XGDY ; 8F
+0441   030A             
+0442   030A             ; 1Axx
+0443   030A             
+0444   030A 1A 83 12 34 	CPD #nn ; 83
+0445   030E 1A 93 77    	CPD n ; 93
+0446   0311 1A B3 12 34 	CPD nn ; B3
+0447   0315 1A A3 77    	CPD n,X ; A3
+0448   0318 1A AC 77    	CPY n,X ; AC
+0449   031B 1A EE 77    	LDY n,X ; EE
+0450   031E 1A EF 77    	STY n,X ; EF
+0451   0321             
+0452   0321             ; CDxx
+0453   0321             
+0454   0321 CD A3 77    	CPD n,Y ; A3
+0455   0324 CD AC 77    	CPX n,Y ; AC
+0456   0327 CD EE 77    	LDX n,Y ; EE
+0457   032A CD EF 77    	STX n,Y ; EF
+0458   032D             
+0459   032D             #ifdef UZ80AS
+0460   032D             
+0461   032D             ; 1Axx
+0462   032D             
+0463   032D 1A B3 00 77 	CPD >n ; B3
+0464   0331             
+0465   0331             #endif
+0466   0331             
+0467   0331             	end

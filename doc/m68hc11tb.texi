@@ -1,0 +1,93 @@
+@multitable @columnfractions .25 .25 .25 .25
+@item NEG e8,Y
+@tab COM e8,Y
+@tab LSR e8,Y
+@tab ROR e8,Y
+@item ASR e8,Y
+@tab ASL e8,Y
+@tab ROL e8,Y
+@tab DEC e8,Y
+@item INC e8,Y
+@tab TST e8,Y
+@tab JMP e8,Y
+@tab CLR e8,Y
+@item SUBA e8,Y
+@tab CMPA e8,Y
+@tab SBCA e8,Y
+@tab ANDA e8,Y
+@item BITA e8,Y
+@tab LDAA e8,Y
+@tab EORA e8,Y
+@tab ADCA e8,Y
+@item ORAA e8,Y
+@tab ADDA e8,Y
+@tab SUBB e8,Y
+@tab CMPB e8,Y
+@item SBCB e8,Y
+@tab ANDB e8,Y
+@tab BITB e8,Y
+@tab LDAB e8,Y
+@item EORB e8,Y
+@tab ADCB e8,Y
+@tab ORAB e8,Y
+@tab ADDB e8,Y
+@item STAA e8,Y
+@tab STAB e8,Y
+@tab CPX e8,Y
+@tab LDS e8,Y
+@item STS e8,Y
+@tab LDX e8,Y
+@tab STX e8,Y
+@tab JSR e8,Y
+@item ADDD e8,Y
+@tab LDD e8,Y
+@tab LSL e8,Y
+@tab PSHY
+@item PULY
+@tab STD e8,Y
+@tab SUBD e8,Y
+@tab TEST
+@item IDIV
+@tab FDIV
+@tab BRSET e8,X,e8,r8
+@tab BRSET e8,Y,e8,r8
+@item BRSET e8,e8,r8
+@tab BRCLR e8,X,e8,r8
+@tab BRCLR e8,Y,e8,r8
+@tab BRCLR e8,e8,r8
+@item BSET e8,X,e8
+@tab BSET e8,Y,e8
+@tab BSET e8,e8
+@tab BCLR e8,X,e8
+@item BCLR e8,Y,e8
+@tab BCLR e8,e8
+@tab LSLA
+@tab LSLB
+@item XGDX
+@tab STOP
+@tab ABY
+@tab CPY #e16
+@item CPY >e16
+@tab CPY e8,X
+@tab CPY e8,Y
+@tab CPY e
+@item DEY
+@tab INY
+@tab LDY #e16
+@tab LDY >e16
+@item LDY e8,X
+@tab LDY e8,Y
+@tab LDY e
+@tab STY >e16
+@item STY e8,X
+@tab STY e8,Y
+@tab STY e
+@tab TSY
+@item TYS
+@tab XGDY
+@tab CPD #e16
+@tab CPD >e16
+@item CPD e8,X
+@tab CPD e8,Y
+@tab CPD e
+@end multitable

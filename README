@@ -17,7 +17,7 @@ Currently, uz80as can assemble for these microprocessors:
     - Western Design Center W65C02S
   - Datapoint 2200 (versions I & II)
   - Intel 4004, 4040, 8008, 8021, 8022, 8041, 8048, 8051, 8080, 8085
-  - Motorola 6800, 6801
+  - Motorola 6800, 6801, 68HC11
 
 uz80as is free software. See the file `COPYING` for copying conditions.
 

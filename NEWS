@@ -1,3 +1,8 @@
+1.09	2018-09-29
+
+	* New target added: Motorola 68HC11.
+	* Fixes tests for 6800 and 6801.
+
 1.08	2018-09-23
 
 	* New targets added:

@@ -54,6 +54,7 @@ ugen r65c29 -tr65c29
 ugen w65c02s -tw65c02s
 ugen mc6800 -dUZ80AS -tmc6800
 ugen mc6801 -dUZ80AS -tmc6801
+ugen m68hc11 -dUZ80AS -tm68hc11
 ugen tasmfail
 ugen longlabel
 ugen orgbelow
