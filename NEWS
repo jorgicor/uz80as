@@ -2,6 +2,8 @@
 
 	* New target added: Motorola 68HC11.
 	* Fixes tests for 6800 and 6801.
+	* The instructions in the documentation for each target now are listed
+          in alphabetical order.
 
 1.08	2018-09-23
 
