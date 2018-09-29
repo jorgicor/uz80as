@@ -1,160 +1,96 @@
 @multitable @columnfractions .25 .25 .25 .25
-@item RET
-@tab RLC
-@tab RRC
-@tab RAL
-@item RAR
-@tab RFC
-@tab RFZ
-@tab RFS
-@item RFP
-@tab RTC
-@tab RTZ
-@tab RTS
-@item RTP
-@tab LAI e8
-@tab LBI e8
-@tab LCI e8
-@item LDI e8
-@tab LEI e8
-@tab LHI e8
-@tab LLI e8
-@item LMI e8
-@tab ADI e8
+@item ACA
+@tab ACB
+@tab ACC
+@tab ACD
+@item ACE
+@tab ACH
 @tab ACI e8
-@tab SUI e8
-@item SBI e8
-@tab NDI e8
-@tab XRI e8
-@tab ORI e8
-@item CPI e8
-@tab INB
-@tab INC
-@tab IND
-@item INE
-@tab INH
-@tab INL
-@tab DCB
-@item DCC
-@tab DCD
-@tab DCE
-@tab DCH
-@item DCL
-@tab RST b3
-@tab JFC e
-@tab CFC e
-@item JMP e
-@tab CAL e
-@tab JFZ e
-@tab CFZ e
-@item JFS e
-@tab CFS e
-@tab JFP e
-@tab CFP e
-@item JTC e
-@tab CTC e
-@tab JTZ e
-@tab CTZ e
-@item JTS e
-@tab CTS e
-@tab JTP e
-@tab CTP e
-@item INP b3
-@tab OUT k
+@tab ACL
+@item ACM
 @tab ADA
 @tab ADB
-@item ADC
-@tab ADD
+@tab ADC
+@item ADD
 @tab ADE
 @tab ADH
+@tab ADI e8
 @item ADL
 @tab ADM
-@tab ACA
-@tab ACB
-@item ACC
-@tab ACD
-@tab ACE
-@tab ACH
-@item ACL
-@tab ACM
-@tab SUA
-@tab SUB
-@item SUC
-@tab SUD
-@tab SUE
-@tab SUH
-@item SUL
-@tab SUM
-@tab SBA
-@tab SBB
-@item SBC
-@tab SBD
-@tab SBE
-@tab SBH
-@item SBL
-@tab SBM
-@tab NDA
-@tab NDB
-@item NDC
-@tab NDD
-@tab NDE
-@tab NDH
-@item NDL
-@tab NDM
-@tab XRA
-@tab XRB
-@item XRC
-@tab XRD
-@tab XRE
-@tab XRH
-@item XRL
-@tab XRM
-@tab ORA
-@tab ORB
-@item ORC
-@tab ORD
-@tab ORE
-@tab ORH
-@item ORL
-@tab ORM
+@tab CAL e
+@tab CFC e
+@item CFP e
+@tab CFS e
+@tab CFZ e
 @tab CPA
-@tab CPB
-@item CPC
+@item CPB
+@tab CPC
 @tab CPD
 @tab CPE
-@tab CPH
-@item CPL
+@item CPH
+@tab CPI e8
+@tab CPL
 @tab CPM
-@tab NOP
+@item CTC e
+@tab CTP e
+@tab CTS e
+@tab CTZ e
+@item DCB
+@tab DCC
+@tab DCD
+@tab DCE
+@item DCH
+@tab DCL
+@tab HLT
+@tab INB
+@item INC
+@tab IND
+@tab INE
+@tab INH
+@item INL
+@tab INP b3
+@tab JFC e
+@tab JFP e
+@item JFS e
+@tab JFZ e
+@tab JMP e
+@tab JTC e
+@item JTP e
+@tab JTS e
+@tab JTZ e
 @tab LAB
 @item LAC
 @tab LAD
 @tab LAE
 @tab LAH
-@item LAL
+@item LAI e8
+@tab LAL
 @tab LAM
 @tab LBA
-@tab LBB
-@item LBC
+@item LBB
+@tab LBC
 @tab LBD
 @tab LBE
-@tab LBH
-@item LBL
+@item LBH
+@tab LBI e8
+@tab LBL
 @tab LBM
-@tab LCA
+@item LCA
 @tab LCB
-@item LCC
+@tab LCC
 @tab LCD
-@tab LCE
+@item LCE
 @tab LCH
-@item LCL
-@tab LCM
+@tab LCI e8
+@tab LCL
+@item LCM
 @tab LDA
 @tab LDB
-@item LDC
-@tab LDD
+@tab LDC
+@item LDD
 @tab LDE
 @tab LDH
+@tab LDI e8
 @item LDL
 @tab LDM
 @tab LEA
@@ -163,30 +99,94 @@
 @tab LED
 @tab LEE
 @tab LEH
-@item LEL
+@item LEI e8
+@tab LEL
 @tab LEM
 @tab LHA
-@tab LHB
-@item LHC
+@item LHB
+@tab LHC
 @tab LHD
 @tab LHE
-@tab LHH
-@item LHL
+@item LHH
+@tab LHI e8
+@tab LHL
 @tab LHM
-@tab LLA
+@item LLA
 @tab LLB
-@item LLC
+@tab LLC
 @tab LLD
-@tab LLE
+@item LLE
 @tab LLH
-@item LLL
-@tab LLM
+@tab LLI e8
+@tab LLL
+@item LLM
 @tab LMA
 @tab LMB
-@item LMC
-@tab LMD
+@tab LMC
+@item LMD
 @tab LME
 @tab LMH
+@tab LMI e8
 @item LML
-@tab HLT
+@tab NDA
+@tab NDB
+@tab NDC
+@item NDD
+@tab NDE
+@tab NDH
+@tab NDI e8
+@item NDL
+@tab NDM
+@tab NOP
+@tab ORA
+@item ORB
+@tab ORC
+@tab ORD
+@tab ORE
+@item ORH
+@tab ORI e8
+@tab ORL
+@tab ORM
+@item OUT k
+@tab RAL
+@tab RAR
+@tab RET
+@item RFC
+@tab RFP
+@tab RFS
+@tab RFZ
+@item RLC
+@tab RRC
+@tab RST b3
+@tab RTC
+@item RTP
+@tab RTS
+@tab RTZ
+@tab SBA
+@item SBB
+@tab SBC
+@tab SBD
+@tab SBE
+@item SBH
+@tab SBI e8
+@tab SBL
+@tab SBM
+@item SUA
+@tab SUB
+@tab SUC
+@tab SUD
+@item SUE
+@tab SUH
+@tab SUI e8
+@tab SUL
+@item SUM
+@tab XRA
+@tab XRB
+@tab XRC
+@item XRD
+@tab XRE
+@tab XRH
+@tab XRI e8
+@item XRL
+@tab XRM
 @end multitable

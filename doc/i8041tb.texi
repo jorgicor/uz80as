@@ -1,8 +1,8 @@
 @multitable @columnfractions .25 .25 .25 .25
 @item ANL P1,#e8
 @tab ANL P2,#e8
-@tab CLR F1
 @tab CLR F0
+@tab CLR F1
 @item CPL F0
 @tab CPL F1
 @tab DEC R0

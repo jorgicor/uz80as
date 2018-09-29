@@ -1,4 +1,4 @@
 @multitable @columnfractions .25 .25 .25 .25
-@item WAI
-@tab STP
+@item STP
+@tab WAI
 @end multitable

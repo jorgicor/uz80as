@@ -1,24 +1,24 @@
 @multitable @columnfractions .25 .25 .25 .25
-@item ORA (e8)
+@item ADC (e8)
 @tab AND (e8)
-@tab EOR (e8)
-@tab ADC (e8)
-@item STA (e8)
-@tab LDA (e8)
-@tab CMP (e8)
-@tab SBC (e8)
-@item INC A
-@tab DEC A
 @tab BIT #e8
 @tab BIT e,X
-@item JMP (e,X)
-@tab TSB e
-@tab TRB e
+@item BRA r8
+@tab CMP (e8)
+@tab DEC A
+@tab EOR (e8)
+@item INC A
+@tab JMP (e,X)
+@tab LDA (e8)
+@tab ORA (e8)
+@item PHX
 @tab PHY
-@item PLY
-@tab PHX
 @tab PLX
-@tab BRA r8
-@item STZ e,X
+@tab PLY
+@item SBC (e8)
+@tab STA (e8)
 @tab STZ e
+@tab STZ e,X
+@item TRB e
+@tab TSB e
 @end multitable

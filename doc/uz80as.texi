@@ -1461,13 +1461,13 @@ The @code{i8048} target selects the Intel 8048 instruction set.
 The instruction set accepted is the same as for the @code{i8041} target, except that these instructions are removed:
 
 @multitable @columnfractions .25 .25 .25 .25
-@item IN A,DBB
-@tab OUT DBB,A
-@tab JOBF e8
-@tab JNIBF e8
-@item MOV STS,A
+@item EN FLAGS
 @tab EN DMA
-@tab EN FLAGS
+@tab IN A,DBB
+@tab JNIBF e8
+@item JOBF e8
+@tab MOV STS,A
+@tab OUT DBB,A
 @end multitable
 
 And these instructions are added:
@@ -1477,7 +1477,7 @@ And these instructions are added:
 @node i8051 target
 @section i8051 target
 
-The @code{i8051} target selects the Intel 8021 instruction set.
+The @code{i8051} target selects the Intel 8051 instruction set.
 
 These are the instructions accepted:
 
@@ -1628,6 +1628,8 @@ The instruction set accepted is the same as for the @code{mc6801} target, plus t
 @file{target/*.c}: the different targets.
 @item
 @file{targets.c}: enumeration of the different targets available.
+@item
+@file{prtable.c}: to print the instruction sets of the targets.
 @item
 @file{main.c}: the entry point.
 @end itemize

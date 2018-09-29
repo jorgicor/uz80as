@@ -3,10 +3,10 @@
 @tab ENT0 CLK
 @tab INS A,BUS
 @tab JNI e8
-@item MOVX A,@@R0
-@tab MOVX A,@@R1
-@tab MOVX @@R0,A
+@item MOVX @@R0,A
 @tab MOVX @@R1,A
+@tab MOVX A,@@R0
+@tab MOVX A,@@R1
 @item ORL BUS,#e8
 @tab OUTL BUS,A
 @tab SEL MB0

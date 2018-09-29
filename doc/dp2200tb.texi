@@ -1,64 +1,28 @@
 @multitable @columnfractions .25 .25 .25 .25
-@item SLC
-@tab SRC
-@tab RETURN
-@tab INPUT
-@item ADA
-@tab ADB
-@tab ADC
-@tab ADD
-@item ADE
-@tab ADH
-@tab ADL
-@tab ADM
-@item ACA
+@item AC e8
+@tab ACA
 @tab ACB
 @tab ACC
-@tab ACD
-@item ACE
+@item ACD
+@tab ACE
 @tab ACH
 @tab ACL
-@tab ACM
-@item SUA
-@tab SUB
-@tab SUC
-@tab SUD
-@item SUE
-@tab SUH
-@tab SUL
-@tab SUM
-@item SBA
-@tab SBB
-@tab SBC
-@tab SBD
-@item SBE
-@tab SBH
-@tab SBL
-@tab SBM
-@item NDA
-@tab NDB
-@tab NDC
-@tab NDD
-@item NDE
-@tab NDH
-@tab NDL
-@tab NDM
-@item XRA
-@tab XRB
-@tab XRC
-@tab XRD
-@item XRE
-@tab XRH
-@tab XRL
-@tab XRM
-@item ORA
-@tab ORB
-@tab ORC
-@tab ORD
-@item ORE
-@tab ORH
-@tab ORL
-@tab ORM
+@item ACM
+@tab AD e8
+@tab ADA
+@tab ADB
+@item ADC
+@tab ADD
+@tab ADE
+@tab ADH
+@item ADL
+@tab ADM
+@tab CALL e
+@tab CFC e
+@item CFP e
+@tab CFS e
+@tab CFZ e
+@tab CP e8
 @item CPA
 @tab CPB
 @tab CPC
@@ -67,21 +31,57 @@
 @tab CPH
 @tab CPL
 @tab CPM
-@item NOP
+@item CTC e
+@tab CTP e
+@tab CTS e
+@tab CTZ e
+@item EX ADR
+@tab EX BEEP
+@tab EX BSP
+@tab EX CLICK
+@item EX COM1
+@tab EX COM2
+@tab EX COM3
+@tab EX COM4
+@item EX DATA
+@tab EX DECK1
+@tab EX DECK2
+@tab EX RBK
+@item EX REWND
+@tab EX SB
+@tab EX SF
+@tab EX STATUS
+@item EX TSTOP
+@tab EX WBK
+@tab EX WRITE
+@tab HALT
+@item INPUT
+@tab JFC e
+@tab JFP e
+@tab JFS e
+@item JFZ e
+@tab JMP e
+@tab JTC e
+@tab JTP e
+@item JTS e
+@tab JTZ e
+@tab LA e8
 @tab LAB
-@tab LAC
+@item LAC
 @tab LAD
-@item LAE
+@tab LAE
 @tab LAH
-@tab LAL
+@item LAL
 @tab LAM
-@item LBA
-@tab LBC
+@tab LB e8
+@tab LBA
+@item LBC
 @tab LBD
 @tab LBE
-@item LBH
-@tab LBL
+@tab LBH
+@item LBL
 @tab LBM
+@tab LC e8
 @tab LCA
 @item LCB
 @tab LCD
@@ -89,27 +89,31 @@
 @tab LCH
 @item LCL
 @tab LCM
+@tab LD e8
 @tab LDA
-@tab LDB
-@item LDC
+@item LDB
+@tab LDC
 @tab LDE
 @tab LDH
-@tab LDL
-@item LDM
+@item LDL
+@tab LDM
+@tab LE e8
 @tab LEA
-@tab LEB
+@item LEB
 @tab LEC
-@item LED
+@tab LED
 @tab LEH
-@tab LEL
+@item LEL
 @tab LEM
-@item LHA
-@tab LHB
+@tab LH e8
+@tab LHA
+@item LHB
 @tab LHC
 @tab LHD
-@item LHE
-@tab LHL
+@tab LHE
+@item LHL
 @tab LHM
+@tab LL e8
 @tab LLA
 @item LLB
 @tab LLC
@@ -124,65 +128,61 @@
 @tab LME
 @tab LMH
 @item LML
-@tab HALT
-@tab EX ADR
-@tab EX STATUS
-@item EX DATA
-@tab EX WRITE
-@tab EX COM1
-@tab EX COM2
-@item EX COM3
-@tab EX COM4
-@tab EX BEEP
-@tab EX CLICK
-@item EX DECK1
-@tab EX DECK2
-@tab EX RBK
-@tab EX WBK
-@item EX BSP
-@tab EX SF
-@tab EX SB
-@tab EX REWND
-@item EX TSTOP
-@tab RFC
-@tab RFZ
-@tab RFS
-@item RFP
-@tab RTC
-@tab RTZ
-@tab RTS
-@item RTP
-@tab AD e8
-@tab AC e8
-@tab SU e8
-@item SB e8
 @tab ND e8
-@tab XR e8
+@tab NDA
+@tab NDB
+@item NDC
+@tab NDD
+@tab NDE
+@tab NDH
+@item NDL
+@tab NDM
+@tab NOP
 @tab OR e8
-@item CP e8
-@tab LA e8
-@tab LB e8
-@tab LC e8
-@item LD e8
-@tab LE e8
-@tab LH e8
-@tab LL e8
-@item JFC e
-@tab JFZ e
-@tab JFS e
-@tab JFP e
-@item JTC e
-@tab JTZ e
-@tab JTS e
-@tab JTP e
-@item CFC e
-@tab CFZ e
-@tab CFS e
-@tab CFP e
-@item CTC e
-@tab CTZ e
-@tab CTS e
-@tab CTP e
-@item JMP e
-@tab CALL e
+@item ORA
+@tab ORB
+@tab ORC
+@tab ORD
+@item ORE
+@tab ORH
+@tab ORL
+@tab ORM
+@item RETURN
+@tab RFC
+@tab RFP
+@tab RFS
+@item RFZ
+@tab RTC
+@tab RTP
+@tab RTS
+@item RTZ
+@tab SB e8
+@tab SBA
+@tab SBB
+@item SBC
+@tab SBD
+@tab SBE
+@tab SBH
+@item SBL
+@tab SBM
+@tab SLC
+@tab SRC
+@item SU e8
+@tab SUA
+@tab SUB
+@tab SUC
+@item SUD
+@tab SUE
+@tab SUH
+@tab SUL
+@item SUM
+@tab XR e8
+@tab XRA
+@tab XRB
+@item XRC
+@tab XRD
+@tab XRE
+@tab XRH
+@item XRL
+@tab XRM
 @end multitable

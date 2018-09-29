@@ -1,16 +1,16 @@
 @multitable @columnfractions .25 .25 .25 .25
-@item HLT
-@tab BBS
-@tab LCR
-@tab OR4
-@item OR5
-@tab AN6
+@item AN6
 @tab AN7
+@tab BBS
 @tab DB0
 @item DB1
-@tab SB0
-@tab SB1
+@tab DIN
 @tab EIN
-@item DIN
+@tab HLT
+@item LCR
+@tab OR4
+@tab OR5
 @tab RPM
+@item SB0
+@tab SB1
 @end multitable

@@ -11,6 +11,7 @@
 #include "utils.h"
 #include "err.h"
 #include "uz80as.h"
+#include "prtable.h"
 #include "targets.h"
 
 #ifndef STDIO_H
@@ -197,159 +198,6 @@ static void list_targets(FILE *f)
 	}
 }
 
-/*
- * Finds 'a' in instruction and takes character c1 in pr:
- * - If no char in pr, substitutes 'a' for 'e'.
- * - If is a valid char, takes next char c2 in pr:
- *   - If it is a digit, output 'e' + c2 + any digit following c2 in pr
- *   - If c1 == c2, output c1
- *   - Else output c1c2.
- * - Else outputs 'e'.
- */
-static void print_inst(FILE *f, const struct target *t, int *col,
-		       unsigned char undoc,
-		       const char *p, char *buf, size_t bufsz, size_t bufi,
-		       const char *pr)
-{
-	const char *s;
-
-	while (*p) {
-		if (!islower(*p)) {
-			if (*p == '@') {
-				buf[bufi++] = '@';
-			}
-			buf[bufi++] = *p++;
-		} else if (*p == 'a') {
-			if (pr == NULL) {
-				buf[bufi++] = 'e';
-			} else if (pr[0] && pr[1]) {
-				if (pr[0] == pr[1]) {
-					buf[bufi++] = pr[0];
-					pr += 2;
-				} else if (isdigit(pr[1])) {
-					buf[bufi++] = *pr++;
-					while (isdigit(*pr)) {
-						buf[bufi++] = *pr++;
-					}
-				} else {
-					buf[bufi++] = pr[0];
-					buf[bufi++] = pr[1];
-					pr += 2;
-				}
-			} else {
-				buf[bufi++] = 'e';
-			}
-			p++;
-		} else {
-			break;
-		}
-	}
-
-	if (*p == '\0') {
-		buf[bufi] = '\0';
-		if (*col == 0) {
-			fputs("@item ", f);
-		} else {
-			fputs("@tab ", f);
-		}
-		if (t->mask & undoc) {
-			fputs("* ", f);
-		}
-		fprintf(f, "%s\n", buf);
-		(*col)++;
-		if (*col >= 4) {
-			*col = 0;
-		}
-	} else {
-		t->pat_char_rewind(*p);
-		while ((s = t->pat_next_str()) != NULL) {
-			if (s[0] != '\0') {
-				buf[bufi] = '\0';
-				strcat(buf, s);
-				print_inst(f, t, col, undoc, p + 1, buf,
-					   bufsz, bufi + strlen(s), pr);
-			}
-		}
-	}
-}
-
-static void print_table(FILE *f, const char *target_id, int delta)
-{
-	const struct target *t, *t2;
-	const struct matchtab *mt;
-	int i, col, pr;
-	size_t len;
-	char buf[64];
-	char target1[64];
-	const char *target2;
-	unsigned char mask2;
-
-	if ((target2 = strchr(target_id, ',')) != NULL) {
-		len = target2 - target_id;
-		if (len > sizeof(target1) - 1) {
-			len = sizeof(target1) - 1;
-		}
-		memmove(target1, target_id, len); 	
-		target1[len] = '\0';
-		target2++;
-	} else {
-		snprintf(target1, sizeof(target1), "%s", target_id);
-		target2 = NULL;
-	}
-
-	t = find_target(target1);
-	if (t == NULL) {
-		eprogname();
-		fprintf(stderr, _("invalid target '%s'\n"), target1);
-		exit(EXIT_FAILURE);
-	}
-
-	if (target2) {
-		t2 = find_target(target2);
-		if (t2 == NULL) {
-			eprogname();
-			fprintf(stderr, _("invalid target '%s'\n"), target2);
-			exit(EXIT_FAILURE);
-		}
-		if (t->matcht != t2->matcht) {
-			eprogname();
-			fprintf(stderr, _("unrelated targets %s,%s\n"),
-				target1, target2);
-			exit(EXIT_FAILURE);
-		}
-		mask2 = t2->mask;
-	} else {
-		mask2 = 1;
-	}
-
-	col = 0;
-	mt = t->matcht;
-	fputs("@multitable @columnfractions .25 .25 .25 .25\n", f);
-	// fputs("@itemize @bullet\n", f);
-	i = 0;
-	while (mt[i].pat != NULL) {
-		pr = 0;
-		if (t->mask == 1 && (mt[i].mask & 1)) {
-			pr = 1;
-		} else if (delta) {
-			if ((mt[i].mask & t->mask) &&
-				!(mt[i].mask & mask2))
-			{
-				pr = 1;
-			}
-		} else if (t->mask & mt[i].mask) {
-			pr = 1;
-		}
-		if (pr) { 
-			print_inst(f, t, &col, mt[i].undoc, mt[i].pat,
-				   buf, sizeof(buf), 0, mt[i].pr);
-		}
-		i++;
-	}
-	// fputs("@end itemize\n", f);
-	fputs("@end multitable\n", f);
-}
-
 int main(int argc, char *argv[])
 {
 	int c;
@@ -422,10 +270,7 @@ int main(int argc, char *argv[])
 			exit(EXIT_FAILURE);
 		case 0:
 			if (strcmp(ngo.optstr, "print-table") == 0) {
-				print_table(stdout, ngo.optarg, 0);
-				exit(EXIT_SUCCESS);
-			} else if (strcmp(ngo.optstr, "print-delta") == 0) {
-				print_table(stdout, ngo.optarg, 1);
+				print_table(stdout, ngo.optarg);
 				exit(EXIT_SUCCESS);
 			}
 		}

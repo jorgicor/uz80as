@@ -22,6 +22,7 @@ uz80as_SOURCES = \
 	exprint.c exprint.h \
 	pp.c pp.h \
 	list.c list.h \
+	prtable.c prtable.h \
 	uz80as.c uz80as.h \
 	targets.c targets.h \
 	target/z80.c \

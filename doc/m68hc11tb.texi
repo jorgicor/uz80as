@@ -1,93 +1,93 @@
 @multitable @columnfractions .25 .25 .25 .25
-@item NEG e8,Y
-@tab COM e8,Y
-@tab LSR e8,Y
-@tab ROR e8,Y
-@item ASR e8,Y
-@tab ASL e8,Y
-@tab ROL e8,Y
-@tab DEC e8,Y
-@item INC e8,Y
-@tab TST e8,Y
-@tab JMP e8,Y
-@tab CLR e8,Y
-@item SUBA e8,Y
-@tab CMPA e8,Y
-@tab SBCA e8,Y
-@tab ANDA e8,Y
-@item BITA e8,Y
-@tab LDAA e8,Y
-@tab EORA e8,Y
+@item ABY
 @tab ADCA e8,Y
-@item ORAA e8,Y
-@tab ADDA e8,Y
-@tab SUBB e8,Y
-@tab CMPB e8,Y
-@item SBCB e8,Y
-@tab ANDB e8,Y
-@tab BITB e8,Y
-@tab LDAB e8,Y
-@item EORB e8,Y
 @tab ADCB e8,Y
-@tab ORAB e8,Y
-@tab ADDB e8,Y
-@item STAA e8,Y
-@tab STAB e8,Y
-@tab CPX e8,Y
-@tab LDS e8,Y
-@item STS e8,Y
-@tab LDX e8,Y
-@tab STX e8,Y
-@tab JSR e8,Y
-@item ADDD e8,Y
-@tab LDD e8,Y
-@tab LSL e8,Y
-@tab PSHY
-@item PULY
-@tab STD e8,Y
-@tab SUBD e8,Y
-@tab TEST
-@item IDIV
-@tab FDIV
+@tab ADDA e8,Y
+@item ADDB e8,Y
+@tab ADDD e8,Y
+@tab ANDA e8,Y
+@tab ANDB e8,Y
+@item ASL e8,Y
+@tab ASR e8,Y
+@tab BCLR e8,X,e8
+@tab BCLR e8,Y,e8
+@item BCLR e8,e8
+@tab BITA e8,Y
+@tab BITB e8,Y
+@tab BRCLR e8,X,e8,r8
+@item BRCLR e8,Y,e8,r8
+@tab BRCLR e8,e8,r8
 @tab BRSET e8,X,e8,r8
 @tab BRSET e8,Y,e8,r8
 @item BRSET e8,e8,r8
-@tab BRCLR e8,X,e8,r8
-@tab BRCLR e8,Y,e8,r8
-@tab BRCLR e8,e8,r8
-@item BSET e8,X,e8
+@tab BSET e8,X,e8
 @tab BSET e8,Y,e8
 @tab BSET e8,e8
-@tab BCLR e8,X,e8
-@item BCLR e8,Y,e8
-@tab BCLR e8,e8
-@tab LSLA
-@tab LSLB
-@item XGDX
-@tab STOP
-@tab ABY
+@item CLR e8,Y
+@tab CMPA e8,Y
+@tab CMPB e8,Y
+@tab COM e8,Y
+@item CPD #e16
+@tab CPD >e16
+@tab CPD e
+@tab CPD e8,X
+@item CPD e8,Y
+@tab CPX e8,Y
 @tab CPY #e16
-@item CPY >e16
+@tab CPY >e16
+@item CPY e
 @tab CPY e8,X
 @tab CPY e8,Y
-@tab CPY e
+@tab DEC e8,Y
 @item DEY
+@tab EORA e8,Y
+@tab EORB e8,Y
+@tab FDIV
+@item IDIV
+@tab INC e8,Y
 @tab INY
+@tab JMP e8,Y
+@item JSR e8,Y
+@tab LDAA e8,Y
+@tab LDAB e8,Y
+@tab LDD e8,Y
+@item LDS e8,Y
+@tab LDX e8,Y
 @tab LDY #e16
 @tab LDY >e16
-@item LDY e8,X
+@item LDY e
+@tab LDY e8,X
 @tab LDY e8,Y
-@tab LDY e
+@tab LSL e8,Y
+@item LSLA
+@tab LSLB
+@tab LSR e8,Y
+@tab NEG e8,Y
+@item ORAA e8,Y
+@tab ORAB e8,Y
+@tab PSHY
+@tab PULY
+@item ROL e8,Y
+@tab ROR e8,Y
+@tab SBCA e8,Y
+@tab SBCB e8,Y
+@item STAA e8,Y
+@tab STAB e8,Y
+@tab STD e8,Y
+@tab STOP
+@item STS e8,Y
+@tab STX e8,Y
 @tab STY >e16
+@tab STY e
 @item STY e8,X
 @tab STY e8,Y
-@tab STY e
+@tab SUBA e8,Y
+@tab SUBB e8,Y
+@item SUBD e8,Y
+@tab TEST
+@tab TST e8,Y
 @tab TSY
 @item TYS
+@tab XGDX
 @tab XGDY
-@tab CPD #e16
-@tab CPD >e16
-@item CPD e8,X
-@tab CPD e8,Y
-@tab CPD e
 @end multitable
