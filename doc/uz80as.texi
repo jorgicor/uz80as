@@ -106,7 +106,7 @@ Currently, uz80as can assemble for these microprocessors:
 
 @command{uz80as} is free software.
 
-The latest version of the program, source code and documentation can be found at @uref{http://jorgicor.sdfeu.org/uz80as}.
+The latest version of the program, source code and documentation can be found at @uref{https://jorgicor.niobe.org/uz80as}.
 
 For bug reports and suggestions, you can write to Jorge Giner at @email{jorge.giner@@hotmail.com} .
 
