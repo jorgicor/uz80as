@@ -33,7 +33,7 @@ show_menu () {
 download_src () {
 	if [ ! -f $uz80as_targz ]
 	then
-		wget -c http://jorgicor.sdfeu.org/uz80as/$uz80as_targz
+		wget -c https://jorgicor.niobe.org/uz80as/$uz80as_targz
 		if [ $? -ne 0 ]
 		then
 			echo "Error downloading $uz80as_targz"

@@ -21,7 +21,7 @@ Currently, uz80as can assemble for these microprocessors:
 
 uz80as is free software. See the file `COPYING` for copying conditions.
 
-Home page: http://jorgicor.sdfeu.org/uz80as  
+Home page: https://jorgicor.niobe.org/uz80as  
 GitHub: https://github.com/jorgicor/uz80as
 Send bug reports to: jorge.giner@hotmail.com
 
@@ -29,7 +29,7 @@ Windows precompiled binaries
 ============================
 
 A precompiled distribution for *Microsoft Windows* is provided in a ZIP file.
-It can be found at http://jorgicor.sdfeu.org/uz80as . After decompressing it,
+It can be found at https://jorgicor.niobe.org/uz80as . After decompressing it,
 you will have these files:
 
 ~~~
@@ -61,7 +61,7 @@ Compiling from the source distribution
 If you have the official source package, and you are building on a Unix-like
 environment (this includes *Cygwin* on *Windows*), you can find detailed
 instructions in the file `INSTALL`. The complete source distribution can always
-be found at http://jorgicor.sdfeu.org/uz80as .  
+be found at https://jorgicor.niobe.org/uz80as .  
 
 After installing, you can type `man uz80as` to see a brief explanation on how
 to use the `uz80as` program. More detailed documentation can be found using the

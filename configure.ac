@@ -6,10 +6,10 @@
 # ===========================================================================
 
 AC_INIT([uz80as],
-	[1.09],
+	[1.10],
 	[jorge.giner@hotmail.com],
 	uz80as,
-	[http://jorgicor.sdfeu.org/uz80as])
+	[https://jorgicor.niobe.org/uz80as])
 
 AC_CONFIG_MACRO_DIR([m4])
 

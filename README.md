@@ -21,6 +21,6 @@ Currently, uz80as can assemble for these microprocessors:
 
 uz80as is free software. See the file `COPYING` for copying conditions.
 
-Home page: http://jorgicor.sdfeu.org/uz80as  
+Home page: https://jorgicor.niobe.org/uz80as  
 Send bug reports to: jorge.giner@hotmail.com
 
