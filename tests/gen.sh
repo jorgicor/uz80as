@@ -79,3 +79,4 @@ ugen unoffok -x
 ugen div
 ugen mod
 ugen fillcmdln -fab
+ugen unary

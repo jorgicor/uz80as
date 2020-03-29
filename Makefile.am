@@ -7,5 +7,5 @@
 SUBDIRS = src doc . tests
 
 dist_doc_DATA = AUTHORS README NEWS COPYING
-dist_noinst_DATA = README.md
+dist_noinst_DATA = README.md THANKS
 dist_noinst_SCRIPTS = mkwin bootstrap

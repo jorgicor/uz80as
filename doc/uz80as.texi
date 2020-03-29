@@ -1065,6 +1065,8 @@ Maximum number of nested include files: 127.
 Maximum number of macros: 1000.
 @item
 Maximum number of macro arguments: 10.
+@item
+Maximum number of nested expressions: 32.
 
 @end itemize
 

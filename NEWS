@@ -1,3 +1,23 @@
+1.11	2020-03-29
+
+	* Fixed an important bug with unary operators and nested expressions.
+          For instance, ~(1|2) resulted in 0xFE generated (it was parsed as
+          if ~1|2), instead of the correct 0xFC (~3).
+          Thank you very much to Curt Meyer (https://github.com/cm68) for
+          the bug report and providing a simple and clever fix.
+	  This was a severe bug that didn't show with any of my tests.
+
+	Source changes
+	--------------
+
+	* expr.c: Fixed the expression parser and multiplied the stack size
+          by 3 since we now always push 3 elements, to avoid overflow.
+
+	* Added a new test 'unary' for testing unary operators with nested
+          expressions.
+
+	* Added THANKS file.
+
 1.10	2018-10-14
 
 	* Changed project site to https://jorgicor.niobe.org/uz80as .

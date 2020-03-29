@@ -113,7 +113,7 @@ int hexval(char c)
 		return hexvalu(c);
 }
 
-int int_precission(void)
+int int_precision(void)
 {
 	static int bits = 0;
 	unsigned int i;

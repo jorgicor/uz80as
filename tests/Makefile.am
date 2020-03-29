@@ -56,7 +56,8 @@ dist_check_SCRIPTS = main.test \
 		     unoffok.test \
 		     div.test \
 		     mod.test \
-		     fillcmdln.test
+		     fillcmdln.test \
+		     unary.test
 
 TESTS = $(dist_check_SCRIPTS)
 
@@ -240,5 +241,9 @@ EXTRA_DIST = igen.sh \
 	     fillcmdln.asm \
 	     fillcmdln.bok \
 	     fillcmdln.lok \
-	     fillcmdln.eok
+	     fillcmdln.eok \
+	     unary.asm \
+	     unary.bok \
+	     unary.lok \
+	     unary.eok
 
