@@ -1,3 +1,14 @@
+1.12	2021-08-01
+
+	* Added DS directive (just another name for the BLOCK directive). It
+	  existed in TASM but not in the official documentation. Thank you
+	  Nathan Poysti to point this out.
+
+	* Allow trailing commas (in DB and DW lists, for example).
+
+	* Added > operator to force 6502 16 bit addresses when a zero page is
+	  used, following the same syntax of the mc6800 target.
+
 1.11	2020-03-29
 
 	* Fixed an important bug with unary operators and nested expressions.

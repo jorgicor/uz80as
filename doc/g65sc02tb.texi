@@ -2,23 +2,28 @@
 @item ADC (e8)
 @tab AND (e8)
 @tab BIT #e8
-@tab BIT e,X
-@item BRA r8
+@tab BIT >e16,X
+@item BIT e,X
+@tab BRA r8
 @tab CMP (e8)
 @tab DEC A
-@tab EOR (e8)
-@item INC A
+@item EOR (e8)
+@tab INC A
 @tab JMP (e,X)
 @tab LDA (e8)
-@tab ORA (e8)
-@item PHX
+@item ORA (e8)
+@tab PHX
 @tab PHY
 @tab PLX
-@tab PLY
-@item SBC (e8)
+@item PLY
+@tab SBC (e8)
 @tab STA (e8)
+@tab STZ >e16
+@item STZ >e16,X
 @tab STZ e
 @tab STZ e,X
+@tab TRB >e16
 @item TRB e
+@tab TSB >e16
 @tab TSB e
 @end multitable

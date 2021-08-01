@@ -126,6 +126,7 @@
 	.db 2
 	.block -2
 	.block 2
+	.ds 2	; ds is equal to block
 
 ; BYTE
 
@@ -265,6 +266,13 @@ labelb		= 11
 ; This gives a different result in TASM.
 
 ;	.dw "\377"
+
+; Trailing commas.
+
+	.db 1, 2,
+	.db "ab", "cd",
+	.db 1, 2 ; comment
+	.db "ab", "cd", ;comment
 
 ; Mixed case directives.
 

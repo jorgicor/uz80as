@@ -1,0 +1,3 @@
+#!/bin/sh
+nom=zx48k
+. "$srcdir"/chkep0.inc

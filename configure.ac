@@ -18,8 +18,8 @@ AM_INIT_AUTOMAKE(-Wall -Werror -Wportability subdir-objects
 		 color-tests parallel-tests)
 AC_CONFIG_HEADERS([config.h])
 
-AC_DEFINE([COPYRIGHT_YEARS], ["2020"], [Years of copyright])
-AC_SUBST(COPYRIGHT_YEARS, [2020])
+AC_DEFINE([COPYRIGHT_YEARS], ["2021"], [Years of copyright])
+AC_SUBST(COPYRIGHT_YEARS, [2021])
 
 # Checks for programs.
 AC_PROG_CC

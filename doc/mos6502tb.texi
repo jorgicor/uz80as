@@ -2,115 +2,152 @@
 @item ADC #e8
 @tab ADC (e8),Y
 @tab ADC (e8,X)
+@tab ADC >e16
+@item ADC >e16,X
 @tab ADC e
-@item ADC e,X
+@tab ADC e,X
 @tab ADC e,Y
-@tab AND #e8
+@item AND #e8
 @tab AND (e8),Y
-@item AND (e8,X)
+@tab AND (e8,X)
+@tab AND >e16
+@item AND >e16,X
 @tab AND e
 @tab AND e,X
 @tab AND e,Y
-@item ASL A
+@item ASL >e16
+@tab ASL >e16,X
+@tab ASL A
 @tab ASL e
-@tab ASL e,X
+@item ASL e,X
 @tab BCC r8
-@item BCS r8
+@tab BCS r8
 @tab BEQ r8
+@item BIT >e16
 @tab BIT e
 @tab BMI r8
-@item BNE r8
-@tab BPL r8
+@tab BNE r8
+@item BPL r8
 @tab BRK
 @tab BVC r8
-@item BVS r8
-@tab CLC
+@tab BVS r8
+@item CLC
 @tab CLD
 @tab CLI
-@item CLV
-@tab CMP #e8
+@tab CLV
+@item CMP #e8
 @tab CMP (e8),Y
 @tab CMP (e8,X)
-@item CMP e
+@tab CMP >e16
+@item CMP >e16,X
+@tab CMP e
 @tab CMP e,X
 @tab CMP e,Y
-@tab CPX #e8
-@item CPX e
+@item CPX #e8
+@tab CPX >e16
+@tab CPX e
 @tab CPY #e8
+@item CPY >e16
 @tab CPY e
-@tab DEC e
-@item DEC e,X
+@tab DEC >e16
+@tab DEC >e16,X
+@item DEC e
+@tab DEC e,X
 @tab DEX
 @tab DEY
-@tab EOR #e8
-@item EOR (e8),Y
+@item EOR #e8
+@tab EOR (e8),Y
 @tab EOR (e8,X)
+@tab EOR >e16
+@item EOR >e16,X
 @tab EOR e
 @tab EOR e,X
-@item EOR e,Y
+@tab EOR e,Y
+@item INC >e16
+@tab INC >e16,X
 @tab INC e
 @tab INC e,X
-@tab INX
-@item INY
+@item INX
+@tab INY
 @tab JMP (e)
 @tab JMP e
-@tab JSR e
-@item LDA #e8
+@item JSR e
+@tab LDA #e8
 @tab LDA (e8),Y
 @tab LDA (e8,X)
+@item LDA >e16
+@tab LDA >e16,X
 @tab LDA e
-@item LDA e,X
-@tab LDA e,Y
+@tab LDA e,X
+@item LDA e,Y
 @tab LDX #e8
-@tab LDX e
-@item LDX e,Y
+@tab LDX >e16
+@tab LDX >e16,Y
+@item LDX e
+@tab LDX e,Y
 @tab LDY #e8
+@tab LDY >e16
+@item LDY >e16,X
 @tab LDY e
 @tab LDY e,X
-@item LSR A
+@tab LSR >e16
+@item LSR >e16,X
+@tab LSR A
 @tab LSR e
 @tab LSR e,X
-@tab NOP
-@item ORA #e8
+@item NOP
+@tab ORA #e8
 @tab ORA (e8),Y
 @tab ORA (e8,X)
+@item ORA >e16
+@tab ORA >e16,X
 @tab ORA e
-@item ORA e,X
-@tab ORA e,Y
+@tab ORA e,X
+@item ORA e,Y
 @tab PHA
 @tab PHP
-@item PLA
-@tab PLP
+@tab PLA
+@item PLP
+@tab ROL >e16
+@tab ROL >e16,X
 @tab ROL A
-@tab ROL e
-@item ROL e,X
-@tab ROR A
+@item ROL e
+@tab ROL e,X
+@tab ROR >e16
+@tab ROR >e16,X
+@item ROR A
 @tab ROR e
 @tab ROR e,X
-@item RTI
-@tab RTS
+@tab RTI
+@item RTS
 @tab SBC #e8
 @tab SBC (e8),Y
-@item SBC (e8,X)
+@tab SBC (e8,X)
+@item SBC >e16
+@tab SBC >e16,X
 @tab SBC e
 @tab SBC e,X
-@tab SBC e,Y
-@item SEC
+@item SBC e,Y
+@tab SEC
 @tab SED
 @tab SEI
-@tab STA (e8),Y
-@item STA (e8,X)
-@tab STA e
+@item STA (e8),Y
+@tab STA (e8,X)
+@tab STA >e16
+@tab STA >e16,X
+@item STA e
 @tab STA e,X
 @tab STA e,Y
+@tab STX >e16
 @item STX e
 @tab STX e8,Y
+@tab STY >e16
 @tab STY e
-@tab STY e8,X
-@item TAX
+@item STY e8,X
+@tab TAX
 @tab TAY
 @tab TSX
-@tab TXA
-@item TXS
+@item TXA
+@tab TXS
 @tab TYA
 @end multitable

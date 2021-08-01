@@ -399,6 +399,7 @@ They are commands to control the assembly process.
 * CHK::		.CHK directive.
 * CODES::	.CODES directive.
 * DB::		.DB directive.
+* DS::		.DS directive.
 * DW::		.DW directive.
 * ECHO::	.ECHO directive.
 * EJECT::	.EJECT directive.
@@ -478,6 +479,11 @@ This is enabled by default, but can be disabled using the @code{.NOCODES} direct
 @subsection DB
 
 @code{.DB} is an alternate name for @code{.BYTE}.
+
+@node DS
+@subsection DS
+
+@code{.DS} is an alternate name for @code{.BLOCK}.
 
 @node DW
 @subsection DW
@@ -1188,19 +1194,6 @@ We always require the double quotes:
 #include "file.asm"
 @end example
 
-@item
-@command{TASM} allows a trailing comma in @code{.BYTE} directives:
-
-@example
-.BYTE   1, 2, 3,
-@end example
-
-We do not allow for trailing commas, you should write:
-
-@example
-.BYTE   1, 2, 3
-@end example
-
 @end itemize
 
 @node Targets
@@ -1516,6 +1509,8 @@ These are the instructions accepted:
 
 @include mos6502tb.texi
 
+Where @code{>} forces the use of a 16 bit address.
+
 @node r6501 target
 @section r6501 target
 
@@ -1531,6 +1526,8 @@ The @code{g65sc02} target selects the California Micro Devices G65SC02.
 The instruction set accepted is the same as for the @code{mos6502} target, plus these new instructions:
 
 @include g65sc02tb.texi
+
+Where @code{>} forces the use of a 16 bit address.
 
 @node r65c02 target
 @section r65c02 target

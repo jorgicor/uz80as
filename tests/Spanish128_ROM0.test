@@ -1,3 +1,0 @@
-#!/bin/sh
-nom=Spanish128_ROM0
-. "$srcdir"/tasmchk.inc

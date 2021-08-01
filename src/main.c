@@ -215,7 +215,6 @@ int main(int argc, char *argv[])
 		{ "undocumented", 0, 'u' },
 		{ "version", 0, 'v' },
 		{ "print-table", 1, 0 },
-		{ "print-delta", 1, 0 },
 		{ NULL, 0, 0 },
 	};
 

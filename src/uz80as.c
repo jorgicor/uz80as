@@ -43,6 +43,7 @@ static const char *d_block(const char *);
 static const char *d_byte(const char *);
 static const char *d_chk(const char *);
 static const char *d_codes(const char *);
+static const char *d_ds(const char *);
 static const char *d_echo(const char *);
 static const char *d_eject(const char *);
 static const char *d_export(const char *);
@@ -72,6 +73,7 @@ static struct direc {
 	{ "CHK", d_chk },
 	{ "CODES", d_codes },
 	{ "DB", d_byte },
+	{ "DS", d_ds },
 	{ "DW", d_word },
 	{ "ECHO", d_echo },
 	{ "EJECT", d_eject },
@@ -669,16 +671,20 @@ dnlst:
 			newerr();
 			return NULL;
 		}
-		if (w)
+		if (w) {
 			genw(n, eps);
-		else
+		} else {
 			genb(n, eps);
+		}
 	}
 	p = skipws(p);
 	if (*p == ',') {
 		p++;
 		p = skipws(p);
-		goto dnlst;
+		/* allow for trailing comma */
+	        if (*p != '\0' && *p != '\\') {
+			goto dnlst;
+		}
 	}
 	return p;
 }
@@ -717,7 +723,7 @@ static const char *d_title(const char *p)
 	return NULL;
 }
 
-static const char *d_block(const char *p)
+static const char *d_block_ds(const char *p, const char *cmd)
 {
 	int n;
 	enum expr_ecode ecode;
@@ -733,13 +739,23 @@ static const char *d_block(const char *p)
 
 	s_pc += n;
 	if (s_pc < 0 || s_pc > 65536) {
-		eprint(_("address (%d) set by .BLOCK is not in range "
-			 "[0, 65536]\n"), s_pc);
+		eprint(_("address (%d) set by .%s is not in range "
+			 "[0, 65536]\n"), s_pc, cmd);
 		eprcol(s_pline, eps);
 		exit(EXIT_FAILURE);
 	}
 
 	return p;
+}
+
+static const char *d_block(const char *p)
+{
+	return d_block_ds(p, "BLOCK");
+}
+
+static const char *d_ds(const char *p)
+{
+	return d_block_ds(p, "DS");
 }
 
 /* a must be < b. */

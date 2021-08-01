@@ -19,7 +19,7 @@ function check {
 top_builddir=..
 export top_builddir
 
-tests='Spanish128_ROM0'
+tests='zx48k'
 
 for t in $tests; do
 	check ./${t}.test

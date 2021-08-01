@@ -135,14 +135,15 @@
 0126   00DF 02          	.db 2
 0127   00E0             	.block -2
 0128   00DE             	.block 2
-0129   00E0             
-0130   00E0             ; BYTE
-0131   00E0             
-0132   00E0 00 01 FF 00 	.byte 0, 1, 255, 256
-0133   00E4 FF 80       	.byte -1, -128
-0134   00E6             
-0135   00E6             ; CODES, NOCODES
-0136   00E6             
+0129   00E0             	.ds 2	; ds is equal to block
+0130   00E2             
+0131   00E2             ; BYTE
+0132   00E2             
+0133   00E2 00 01 FF 00 	.byte 0, 1, 255, 256
+0134   00E6 FF 80       	.byte -1, -128
+0135   00E8             
+0136   00E8             ; CODES, NOCODES
+0137   00E8             
 	.nocodes
 
 ; Printed as is --------
@@ -153,337 +154,344 @@
 
 ; ----------------------
 
-0147   00EA             	.codes
-0148   00EA             
-0149   00EA             ; Printed after line number, etc.
-0150   00EA             
-0151   00EA             ; ECHO accepted.
-0152   00EA             
-0153   00EA             	.echo "This is a string "
-0154   00EA             	.echo 127+1
-0155   00EA             	.echo " concatenated.\n"
-0156   00EA             
-0157   00EA             ; FILL .
-0158   00EA             
-0159   00EA             	.fill 0, 1
-0160   00EA             	.fill 0, -1
-0161   00EA             	.fill 0
-0162   00EA 01          	.fill 1, 1
-0163   00EB FF          	.fill 1, -1
-0164   00EC FF          	.fill 1
-0165   00ED FF FF       	.fill 2
-0166   00EF FF FF FF    	.fill 3
-0167   00F2 FF FF FF FF 	.fill 4
-0168   00F6 FF FF FF FF 	.fill 5
-0168   00FA FF 
-0169   00FB FF FF FF FF 	.fill 6
-0169   00FF FF FF 
-0170   0101 FF FF FF FF 	.fill 7
-0170   0105 FF FF FF 
-0171   0108 FF FF FF FF 	.fill 8
-0171   010C FF FF FF FF 
-0172   0110 FF FF FF FF 	.fill 9
-0172   0114 FF FF FF FF 
-0172   0118 FF 
-0173   0119             
-0174   0119             ; LIST, NOLIST
-0175   0119             
-0180   0119             	.list
-0181   0119             
-0182   0119             ; This appears.
-0183   0119             
-0184   0119             ; LSFIRST, MSFIRST
-0185   0119             
-0186   0119 34 12       	.word $1234
-0187   011B             	.msfirst
-0188   011B 12 34       	.word $1234
-0189   011D             	.lsfirst
-0190   011D 34 12       	.word $1234
-0191   011F             
-0192   011F             ; ORG simple.
-0193   011F             
-0194   011F             	.org $
-0195   0120             	.org $+1
-0196   011F             	.org $-1
-0197   0120             	.org *+1
-0198   011F             	.org *-1
-0199   011F             
-0200   011F             ; ORG forms.
-0201   011F             
-0202   0120             *=$+1
-0203   0121             $=*+1
-0204   0122             	*=*+1
-0205   0123             	$=$+1
-0206   0124             	$= $+1
-0207   0125             	*= *+1
-0208   0125             
-0209   0125 80          	.db 128
-0210   0126             
-0211   0126             ; Testing * (current program counter) and multiply operator
-0212   0126             
-0213   0126 4C          	.db **2
-0214   0127             
-0215   0127             ; Not correctly parsed by TASM.
-0216   0127             
-0217   0127             ;	.db ***
-0218   0127             ;	.db 2**
-0219   0127             
-0220   0127             ; Test label in org: must take value after the org.
-0221   0127             
-0222   0127             orglab
-0223   01A6             orglab1	.org $+127
-0224   01A6 A6 01       orglab2	.dw orglab1
-0225   01A8             orglab3
-0226   01A9             orglab4 .org $+1
-0227   01A9 27 01       	.dw orglab
-0228   01AB A8 01       	.dw orglab3
-0229   01AD A9 01       	.dw orglab4
-0230   01AF             
-0231   01AF             ; EQU
-0232   01AF             
-0233   01AF             label1		.equ 1
-0234   01AF             label2:		.equ 2
-0235   01AF             label3_		.equ 3
-0236   01AF             label4_:	.equ 4
-0237   01AF             label5		=5
-0238   01AF             label6:		=6
-0239   01AF             label7_		=7
-0240   01AF             label8_:	=8
-0241   01AF             label9.		=9
-0242   01AF             labela.:	=10
-0243   01AF             labelb		= 11
-0244   01AF             
-0245   01AF             ; PAGE/NOPAGE
-0246   01AF             
-0247   01AF             ; TEXT
-0248   01AF             
-0249   01AF 0A 0D 08 09 	.text "\n\r\b\t\f\\\""
-0249   01B3 0C 5C 22 
-0250   01B6 61 7A 41 5A 	.text "azAZ09"
-0250   01BA 30 39 
-0251   01BC 00 FF 5D    	.text "\000\377\135"
-0252   01BF             
-0253   01BF             ; DB, DW with text.
-0254   01BF             
-0255   01BF             	
-0256   01BF 0A 0D 08 09 	.db "\n\r\b\t\f\\\""
-0256   01C3 0C 5C 22 
-0257   01C6 61 7A 41 5A 	.db "azAZ09"
-0257   01CA 30 39 
-0258   01CC 00 FF 5D    	.db "\000\377\135"
-0259   01CF 0A 00 0D 00 	.dw "\n\r\b\t\f\\\""
-0259   01D3 08 00 09 00 
-0259   01D7 0C 00 5C 00 
-0259   01DB 22 00 
-0260   01DD 61 00 7A 00 	.dw "azAZ09"
-0260   01E1 41 00 5A 00 
-0260   01E5 30 00 39 00 
-0261   01E9 00 00 5D 00 	.dw "\000\135"
-0262   01ED 48 69 01 02 	.db "Hi", 1, 2, "Bye"
-0262   01F1 42 79 65 
-0263   01F4 48 00 69 00 	.dw "Hi", 1, 2, "Bye"
-0263   01F8 01 00 02 00 
-0263   01FC 42 00 79 00 
-0263   0200 65 00 
-0264   0202             
-0265   0202             ; This gives a different result in TASM.
-0266   0202             
-0267   0202             ;	.dw "\377"
-0268   0202             
-0269   0202             ; Mixed case directives.
-0270   0202             
-0271   0202 00          	.dB 0
-0272   0203 01          	.Db 1
-0273   0204             
-0274   0204             ; Directives in column 0.
-0275   0204             
-0276   0204 02          .db 2
-0277   0205 03          .dB 3
-0278   0206 04          .DB 4
-0279   0207             
-0280   0207             ; Label names.
-0281   0207             
-0282   0207             _
-0283   0207             L
-0284   0207             _L9._
-0285   0207             LL9._
-0286   0207             la9._
-0287   0207             l
-0288   0207             
-0289   0207             ; Line configurations.
-0290   0207             
-0291   0207             ; comment
-0292   0207             	; comment
-0293   0207             ;
-0294   0207             	;
-0295   0207             L10
-0296   0207 00          L11	.db 0
-0297   0208             L12	;comment
-0298   0208 00          L13.db	.db 0
-0299   0209             L14
-0300   0209 00          L15	.db 0	; comment
-0301   020A 00          L16	.db 0;comment
-0302   020B             P10:
-0303   020B 00          P11:	.db 0
-0304   020C             P12:	;comment
-0305   020C 00          P13.db:	.db 0
-0306   020D             P14:
-0307   020D 00          P15:	.db 0	; comment
-0308   020E 00          P16:	.db 0;comment
-0309   020F             
-0310   020F             ; This should fail if uncommented.
-0311   020F             
-0312   020F             ;label12;comment
-0313   020F             
-0314   020F             ; Multiline scapes
-0315   020F             
-0316   020F 05          	.DB 5\ .DB 6\.DB 7
-0316   0210 06          
-0316   0211 07          
-0317   0212             ML1	\ML2 .DB 1
-0317   0212 01          
-0318   0213             
-0319   0213             ; Preprocessor
-0320   0213             
-0321   0213             #define Mm9._
-0322   0213             #define _Mm9._
-0323   0213             	#define MAC
-0324   0213             ; #define MOC
-0325   0213             #define ONE	1
-0326   0213             #define TWO	(1+1)
-0327   0213             
-0328   0213             ; TASM allows for this
-0329   0213             ; #define BAD%	3
-0330   0213             ;	.db BAD%
-0331   0213             
-0332   0213             #define SUM1(n)	(n+ONE)
-0333   0213             
-0334   0213 06          	.db SUM1(5)
-0335   0214             
-0336   0214             #define MUL(a,b)	a * b
-0337   0214             
-0338   0214 1E          	.db MUL(5,6)
-0339   0215             
-0340   0215             #define VOID(a,b)
-0341   0215             
-0342   0215             VOID
-0343   0215             VOID(5)
-0344   0215             VOID(5,6)
-0345   0215             
-0346   0215             #define	ARG1(a,b,c)	a
-0347   0215             
-0348   0215 07          	.db ARG1(7)
-0349   0216             
-0350   0216             #define	ARG2(a,b,c)	b
-0351   0216             
-0352   0216 08          	.db ARG2(1,8)
-0353   0217             
-0354   0217             ; TASM doesn't allow _a, _7 _. for arguments
-0355   0217             ; #define ALLOW(a,ab,_a,_7,_.)	a+ab+_a+_7+_.
-0356   0217             ;	.db ALLOW(1,2,3,4,5)
-0357   0217             
-0358   0217             #define ALLOW(a,a7,a7b7)	a+a7+a7b7
-0359   0217             
-0360   0217 06          	.db ALLOW(1,2,3)
-0361   0218 06          	.db ALLOW( 1 , 2 , 3 )
-0362   0219             
-0363   0219             #define CONT	5+
-0364   0219             #defcont	6+
-0365   0219             #defcont	7
-0366   0219             
-0367   0219 12          	.db CONT
-0368   021A             
-0369   021A             #define	MULTILINE	.DB 1\ .DB 2\
-0370   021A             #defcont		.DB 3\
-0371   021A             #defcont		.DB 4
-0372   021A             
-0373   021A 01          	MULTILINE
-0373   021B 02          
-0373   021C 03          
-0373   021D 04          
-0374   021E             
-0375   021E             #define INCL
-0376   021E             
-0377   021E             #ifdef INCL
-0378   021E 01          	.db 1
-0379   021F             #endif
-0380   021F~            #ifndef INCL
-0381   021F~            	.db 2
-0382   021F             #endif
-0383   021F             #ifdef INCL
-0384   021F 08          	.db 8
-0385   0220~            #else
-0386   0220~            	.db 16
-0387   0220             #endif
-0388   0220~            #ifndef INCL
-0389   0220~            	.db 32
-0390   0220             #else
-0391   0220 40          	.db 64
-0392   0221             #endif
-0393   0221             
-0394   0221~            #ifdef NINCL
-0395   0221~            	.db 1
-0396   0221             #endif
-0397   0221             #ifndef NINCL
-0398   0221 02          	.db 2
-0399   0222             #endif
-0400   0222~            #ifdef NINCL
-0401   0222~            	.db 8
-0402   0222             #else
-0403   0222 10          	.db 16
-0404   0223             #endif
-0405   0223             #ifndef NINCL
-0406   0223 20          	.db 32
-0407   0224~            #else
-0408   0224~            	.db 64
-0409   0224             #endif
-0410   0224             
-0411   0224             #ifdef INCL
-0412   0224~            	#ifdef NINCL
-0413   0224~            		.db 1
-0414   0224             	#else
-0415   0224 02          		.db 2
-0416   0225             	#endif
-0417   0225             	#ifndef NINCL
-0418   0225 04          		.db 4
-0419   0226~            	#else
-0420   0226~            		.db 8
-0421   0226             	#endif
-0422   0226~            #else
-0423   0226~            	#ifdef NINCL
-0424   0226~            		.db 16
-0425   0226~            	#else
-0426   0226~            		.db 32
-0427   0226~            	#endif
-0428   0226~            	#ifndef NINCL
-0429   0226~            		.db 64
-0430   0226~            	#else
-0431   0226~            		.db 128
-0432   0226~            	#endif
-0433   0226             #endif
-0434   0226             
-0435   0226~            #ifndef INCL
-0436   0226~            	#ifdef NINCL
-0437   0226~            		.db 1
-0438   0226~            	#else
-0439   0226~            		.db 2
-0440   0226~            	#endif
-0441   0226~            	#ifndef NINCL
-0442   0226~            		.db 4
-0443   0226~            	#else
-0444   0226~            		.db 8
-0445   0226~            	#endif
-0446   0226             #else
-0447   0226~            	#ifdef NINCL
-0448   0226~            		.db 16
-0449   0226             	#else
-0450   0226 20          		.db 32
-0451   0227             	#endif
-0452   0227             	#ifndef NINCL
-0453   0227 40          		.db 64
-0454   0228~            	#else
-0455   0228~            		.db 128
-0456   0228             	#endif
-0457   0228             #endif
-0458   0228             
-0459   0228             prgend	.end	prgend
+0148   00EC             	.codes
+0149   00EC             
+0150   00EC             ; Printed after line number, etc.
+0151   00EC             
+0152   00EC             ; ECHO accepted.
+0153   00EC             
+0154   00EC             	.echo "This is a string "
+0155   00EC             	.echo 127+1
+0156   00EC             	.echo " concatenated.\n"
+0157   00EC             
+0158   00EC             ; FILL .
+0159   00EC             
+0160   00EC             	.fill 0, 1
+0161   00EC             	.fill 0, -1
+0162   00EC             	.fill 0
+0163   00EC 01          	.fill 1, 1
+0164   00ED FF          	.fill 1, -1
+0165   00EE FF          	.fill 1
+0166   00EF FF FF       	.fill 2
+0167   00F1 FF FF FF    	.fill 3
+0168   00F4 FF FF FF FF 	.fill 4
+0169   00F8 FF FF FF FF 	.fill 5
+0169   00FC FF 
+0170   00FD FF FF FF FF 	.fill 6
+0170   0101 FF FF 
+0171   0103 FF FF FF FF 	.fill 7
+0171   0107 FF FF FF 
+0172   010A FF FF FF FF 	.fill 8
+0172   010E FF FF FF FF 
+0173   0112 FF FF FF FF 	.fill 9
+0173   0116 FF FF FF FF 
+0173   011A FF 
+0174   011B             
+0175   011B             ; LIST, NOLIST
+0176   011B             
+0181   011B             	.list
+0182   011B             
+0183   011B             ; This appears.
+0184   011B             
+0185   011B             ; LSFIRST, MSFIRST
+0186   011B             
+0187   011B 34 12       	.word $1234
+0188   011D             	.msfirst
+0189   011D 12 34       	.word $1234
+0190   011F             	.lsfirst
+0191   011F 34 12       	.word $1234
+0192   0121             
+0193   0121             ; ORG simple.
+0194   0121             
+0195   0121             	.org $
+0196   0122             	.org $+1
+0197   0121             	.org $-1
+0198   0122             	.org *+1
+0199   0121             	.org *-1
+0200   0121             
+0201   0121             ; ORG forms.
+0202   0121             
+0203   0122             *=$+1
+0204   0123             $=*+1
+0205   0124             	*=*+1
+0206   0125             	$=$+1
+0207   0126             	$= $+1
+0208   0127             	*= *+1
+0209   0127             
+0210   0127 80          	.db 128
+0211   0128             
+0212   0128             ; Testing * (current program counter) and multiply operator
+0213   0128             
+0214   0128 50          	.db **2
+0215   0129             
+0216   0129             ; Not correctly parsed by TASM.
+0217   0129             
+0218   0129             ;	.db ***
+0219   0129             ;	.db 2**
+0220   0129             
+0221   0129             ; Test label in org: must take value after the org.
+0222   0129             
+0223   0129             orglab
+0224   01A8             orglab1	.org $+127
+0225   01A8 A8 01       orglab2	.dw orglab1
+0226   01AA             orglab3
+0227   01AB             orglab4 .org $+1
+0228   01AB 29 01       	.dw orglab
+0229   01AD AA 01       	.dw orglab3
+0230   01AF AB 01       	.dw orglab4
+0231   01B1             
+0232   01B1             ; EQU
+0233   01B1             
+0234   01B1             label1		.equ 1
+0235   01B1             label2:		.equ 2
+0236   01B1             label3_		.equ 3
+0237   01B1             label4_:	.equ 4
+0238   01B1             label5		=5
+0239   01B1             label6:		=6
+0240   01B1             label7_		=7
+0241   01B1             label8_:	=8
+0242   01B1             label9.		=9
+0243   01B1             labela.:	=10
+0244   01B1             labelb		= 11
+0245   01B1             
+0246   01B1             ; PAGE/NOPAGE
+0247   01B1             
+0248   01B1             ; TEXT
+0249   01B1             
+0250   01B1 0A 0D 08 09 	.text "\n\r\b\t\f\\\""
+0250   01B5 0C 5C 22 
+0251   01B8 61 7A 41 5A 	.text "azAZ09"
+0251   01BC 30 39 
+0252   01BE 00 FF 5D    	.text "\000\377\135"
+0253   01C1             
+0254   01C1             ; DB, DW with text.
+0255   01C1             
+0256   01C1             	
+0257   01C1 0A 0D 08 09 	.db "\n\r\b\t\f\\\""
+0257   01C5 0C 5C 22 
+0258   01C8 61 7A 41 5A 	.db "azAZ09"
+0258   01CC 30 39 
+0259   01CE 00 FF 5D    	.db "\000\377\135"
+0260   01D1 0A 00 0D 00 	.dw "\n\r\b\t\f\\\""
+0260   01D5 08 00 09 00 
+0260   01D9 0C 00 5C 00 
+0260   01DD 22 00 
+0261   01DF 61 00 7A 00 	.dw "azAZ09"
+0261   01E3 41 00 5A 00 
+0261   01E7 30 00 39 00 
+0262   01EB 00 00 5D 00 	.dw "\000\135"
+0263   01EF 48 69 01 02 	.db "Hi", 1, 2, "Bye"
+0263   01F3 42 79 65 
+0264   01F6 48 00 69 00 	.dw "Hi", 1, 2, "Bye"
+0264   01FA 01 00 02 00 
+0264   01FE 42 00 79 00 
+0264   0202 65 00 
+0265   0204             
+0266   0204             ; This gives a different result in TASM.
+0267   0204             
+0268   0204             ;	.dw "\377"
+0269   0204             
+0270   0204             ; Trailing commas.
+0271   0204             
+0272   0204 01 02       	.db 1, 2,
+0273   0206 61 62 63 64 	.db "ab", "cd",
+0274   020A 01 02       	.db 1, 2 ; comment
+0275   020C 61 62 63 64 	.db "ab", "cd", ;comment
+0276   0210             
+0277   0210             ; Mixed case directives.
+0278   0210             
+0279   0210 00          	.dB 0
+0280   0211 01          	.Db 1
+0281   0212             
+0282   0212             ; Directives in column 0.
+0283   0212             
+0284   0212 02          .db 2
+0285   0213 03          .dB 3
+0286   0214 04          .DB 4
+0287   0215             
+0288   0215             ; Label names.
+0289   0215             
+0290   0215             _
+0291   0215             L
+0292   0215             _L9._
+0293   0215             LL9._
+0294   0215             la9._
+0295   0215             l
+0296   0215             
+0297   0215             ; Line configurations.
+0298   0215             
+0299   0215             ; comment
+0300   0215             	; comment
+0301   0215             ;
+0302   0215             	;
+0303   0215             L10
+0304   0215 00          L11	.db 0
+0305   0216             L12	;comment
+0306   0216 00          L13.db	.db 0
+0307   0217             L14
+0308   0217 00          L15	.db 0	; comment
+0309   0218 00          L16	.db 0;comment
+0310   0219             P10:
+0311   0219 00          P11:	.db 0
+0312   021A             P12:	;comment
+0313   021A 00          P13.db:	.db 0
+0314   021B             P14:
+0315   021B 00          P15:	.db 0	; comment
+0316   021C 00          P16:	.db 0;comment
+0317   021D             
+0318   021D             ; This should fail if uncommented.
+0319   021D             
+0320   021D             ;label12;comment
+0321   021D             
+0322   021D             ; Multiline scapes
+0323   021D             
+0324   021D 05          	.DB 5\ .DB 6\.DB 7
+0324   021E 06          
+0324   021F 07          
+0325   0220             ML1	\ML2 .DB 1
+0325   0220 01          
+0326   0221             
+0327   0221             ; Preprocessor
+0328   0221             
+0329   0221             #define Mm9._
+0330   0221             #define _Mm9._
+0331   0221             	#define MAC
+0332   0221             ; #define MOC
+0333   0221             #define ONE	1
+0334   0221             #define TWO	(1+1)
+0335   0221             
+0336   0221             ; TASM allows for this
+0337   0221             ; #define BAD%	3
+0338   0221             ;	.db BAD%
+0339   0221             
+0340   0221             #define SUM1(n)	(n+ONE)
+0341   0221             
+0342   0221 06          	.db SUM1(5)
+0343   0222             
+0344   0222             #define MUL(a,b)	a * b
+0345   0222             
+0346   0222 1E          	.db MUL(5,6)
+0347   0223             
+0348   0223             #define VOID(a,b)
+0349   0223             
+0350   0223             VOID
+0351   0223             VOID(5)
+0352   0223             VOID(5,6)
+0353   0223             
+0354   0223             #define	ARG1(a,b,c)	a
+0355   0223             
+0356   0223 07          	.db ARG1(7)
+0357   0224             
+0358   0224             #define	ARG2(a,b,c)	b
+0359   0224             
+0360   0224 08          	.db ARG2(1,8)
+0361   0225             
+0362   0225             ; TASM doesn't allow _a, _7 _. for arguments
+0363   0225             ; #define ALLOW(a,ab,_a,_7,_.)	a+ab+_a+_7+_.
+0364   0225             ;	.db ALLOW(1,2,3,4,5)
+0365   0225             
+0366   0225             #define ALLOW(a,a7,a7b7)	a+a7+a7b7
+0367   0225             
+0368   0225 06          	.db ALLOW(1,2,3)
+0369   0226 06          	.db ALLOW( 1 , 2 , 3 )
+0370   0227             
+0371   0227             #define CONT	5+
+0372   0227             #defcont	6+
+0373   0227             #defcont	7
+0374   0227             
+0375   0227 12          	.db CONT
+0376   0228             
+0377   0228             #define	MULTILINE	.DB 1\ .DB 2\
+0378   0228             #defcont		.DB 3\
+0379   0228             #defcont		.DB 4
+0380   0228             
+0381   0228 01          	MULTILINE
+0381   0229 02          
+0381   022A 03          
+0381   022B 04          
+0382   022C             
+0383   022C             #define INCL
+0384   022C             
+0385   022C             #ifdef INCL
+0386   022C 01          	.db 1
+0387   022D             #endif
+0388   022D~            #ifndef INCL
+0389   022D~            	.db 2
+0390   022D             #endif
+0391   022D             #ifdef INCL
+0392   022D 08          	.db 8
+0393   022E~            #else
+0394   022E~            	.db 16
+0395   022E             #endif
+0396   022E~            #ifndef INCL
+0397   022E~            	.db 32
+0398   022E             #else
+0399   022E 40          	.db 64
+0400   022F             #endif
+0401   022F             
+0402   022F~            #ifdef NINCL
+0403   022F~            	.db 1
+0404   022F             #endif
+0405   022F             #ifndef NINCL
+0406   022F 02          	.db 2
+0407   0230             #endif
+0408   0230~            #ifdef NINCL
+0409   0230~            	.db 8
+0410   0230             #else
+0411   0230 10          	.db 16
+0412   0231             #endif
+0413   0231             #ifndef NINCL
+0414   0231 20          	.db 32
+0415   0232~            #else
+0416   0232~            	.db 64
+0417   0232             #endif
+0418   0232             
+0419   0232             #ifdef INCL
+0420   0232~            	#ifdef NINCL
+0421   0232~            		.db 1
+0422   0232             	#else
+0423   0232 02          		.db 2
+0424   0233             	#endif
+0425   0233             	#ifndef NINCL
+0426   0233 04          		.db 4
+0427   0234~            	#else
+0428   0234~            		.db 8
+0429   0234             	#endif
+0430   0234~            #else
+0431   0234~            	#ifdef NINCL
+0432   0234~            		.db 16
+0433   0234~            	#else
+0434   0234~            		.db 32
+0435   0234~            	#endif
+0436   0234~            	#ifndef NINCL
+0437   0234~            		.db 64
+0438   0234~            	#else
+0439   0234~            		.db 128
+0440   0234~            	#endif
+0441   0234             #endif
+0442   0234             
+0443   0234~            #ifndef INCL
+0444   0234~            	#ifdef NINCL
+0445   0234~            		.db 1
+0446   0234~            	#else
+0447   0234~            		.db 2
+0448   0234~            	#endif
+0449   0234~            	#ifndef NINCL
+0450   0234~            		.db 4
+0451   0234~            	#else
+0452   0234~            		.db 8
+0453   0234~            	#endif
+0454   0234             #else
+0455   0234~            	#ifdef NINCL
+0456   0234~            		.db 16
+0457   0234             	#else
+0458   0234 20          		.db 32
+0459   0235             	#endif
+0460   0235             	#ifndef NINCL
+0461   0235 40          		.db 64
+0462   0236~            	#else
+0463   0236~            		.db 128
+0464   0236             	#endif
+0465   0236             #endif
+0466   0236             
+0467   0236             prgend	.end	prgend

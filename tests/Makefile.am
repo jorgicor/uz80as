@@ -61,13 +61,13 @@ dist_check_SCRIPTS = main.test \
 
 TESTS = $(dist_check_SCRIPTS)
 
-EXTRA_DIST = igen.sh \
-	     icheck.sh \
+EXTRA_DIST = icheck.sh \
 	     gen.sh \
 	     tasmchk.inc \
 	     chkall.inc \
 	     chkep0.inc \
 	     chkep1.inc \
+             zx48k.test \
 	     main.asm \
 	     main.bok \
 	     main.lok \

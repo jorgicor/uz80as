@@ -6,7 +6,7 @@
 # Generates the test files.
 # ===========================================================================
 
-uz80as=../src/uz80as
+uz80as=../build/src/uz80as
 tasm=../../tasm/tasm
 
 function ugen ()
@@ -27,7 +27,7 @@ function tgen ()
 }
 
 # tgen tasm
-# tgen Spanish128_ROM0
+# tgen zx48k
 tgen main
 ugen z80
 ugen z80u -u
