@@ -1,0 +1,89 @@
+@multitable @columnfractions .25 .25 .25 .25
+@item ADC
+@tab ADCI e8
+@tab ADD
+@tab ADI e8
+@item AND
+@tab ANI e8
+@tab B1 e8
+@tab B2 e8
+@item B3 e8
+@tab B4 e8
+@tab BDF e8
+@tab BGE e8
+@item BL e8
+@tab BM e8
+@tab BN1 e8
+@tab BN2 e8
+@item BN3 e8
+@tab BN4 e8
+@tab BNF e8
+@tab BNQ e8
+@item BNZ e8
+@tab BPZ e8
+@tab BQ e8
+@tab BR e8
+@item BZ e8
+@tab DEC b4
+@tab DIS
+@tab GHI b4
+@item GLO b4
+@tab IDL
+@tab INC b4
+@tab INP p
+@item IRX
+@tab LBDF e
+@tab LBNF e
+@tab LBNQ e
+@item LBNZ e
+@tab LBQ e
+@tab LBR e
+@tab LBZ e
+@item LDA b4
+@tab LDI e8
+@tab LDN m
+@tab LDX
+@item LDXA
+@tab LSDF
+@tab LSIE
+@tab LSKP
+@item LSNF
+@tab LSNQ
+@tab LSNZ
+@tab LSQ
+@item LSZ
+@tab MARK
+@tab NBR e8
+@tab NLBR e
+@item NOP
+@tab OR
+@tab ORI e8
+@tab OUT p
+@item PHI b4
+@tab PLO b4
+@tab REQ
+@tab RET
+@item RSHL
+@tab RSHR
+@tab SAV
+@tab SD
+@item SDB
+@tab SDBI e8
+@tab SDI e8
+@tab SEP b4
+@item SEQ
+@tab SEX b4
+@tab SHL
+@tab SHLC
+@item SHR
+@tab SHRC
+@tab SKP
+@tab SM
+@item SMB
+@tab SMBI e8
+@tab SMI e8
+@tab STR b4
+@item STXD
+@tab XOR
+@tab XRI e8
+@end multitable

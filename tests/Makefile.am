@@ -33,6 +33,7 @@ dist_check_SCRIPTS = main.test \
 		     mc6800.test \
 		     mc6801.test \
 		     m68hc11.test \
+		     rca1802.test \
 		     tasmfail.test \
 		     longlabel.test \
 		     orgbelow.test \
@@ -175,6 +176,10 @@ EXTRA_DIST = icheck.sh \
 	     m68hc11.bok \
 	     m68hc11.lok \
 	     m68hc11.eok \
+	     rca1802.asm \
+	     rca1802.bok \
+	     rca1802.lok \
+	     rca1802.eok \
 	     tasmfail.asm \
 	     tasmfail.bok \
 	     tasmfail.lok \
