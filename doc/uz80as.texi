@@ -459,7 +459,7 @@ You can use @code{.DB} as an alternative name for @code{.BYTE}.
 [label] .CHK expr
 @end example
 
-The checksum directive, takes all the bytes from the address @code{expr} up to the current address, and combines them using an exclusive or operation (XOR).
+The checksum directive takes all the bytes from the address @code{expr} up to the current address, and combines them using an exclusive OR operation (XOR).
 The result (a byte) is output to the object file.
 The address defined by @code{expr} must be in the range @code{[0, current program counter[}.
 
@@ -1579,8 +1579,8 @@ These are the instructions accepted:
 Where:
 
 @itemize @bullet
-@item @code{mm} is an expression wich must evaluate to a value between 1 and 15.
-@item @code{pp} is an expression which must evaluate to a value between 1 and 7.
+@item @code{m} is an expression wich must evaluate to a value between 1 and 15.
+@item @code{p} is an expression which must evaluate to a value between 1 and 7.
 @end itemize
 
 @node Source guide

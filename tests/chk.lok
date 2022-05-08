@@ -2,11 +2,11 @@
 0002   0000 01          START1	.DB 1
 0003   0001 01          	.CHK START1
 0004   0002 02          	.DB 2
-0005   0003 04          	.CHK START1
+0005   0003 02          	.CHK START1
 0006   0004 03          	.DB 3
-0007   0005 0B          	.CHK START1
+0007   0005 03          	.CHK START1
 0008   0006 04          	.DB 4
-0009   0007 1A          	.CHK START1
-0010   0008 CC          	.DB 204
-0011   0009 00          	.CHK START1
+0009   0007 04          	.CHK START1
+0010   0008 FF          	.DB 255
+0011   0009 FF          	.CHK START1
 0012   000A             	.END

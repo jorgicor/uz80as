@@ -766,8 +766,9 @@ static int checksum(int a, int b)
 	assert(a < b);
 
 	n = 0;
-	while (a < b)
+	while (a < b) {
 		n ^= s_mem[a++];
+	}
 
 	return n;
 }
