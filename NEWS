@@ -1,4 +1,4 @@
-2.00	2022-05-08
+2.01	2022-05-11
 
 	* CHK directive behaviour: changed to follow how TASM calculated
 	  checksums (with an XOR of all bytes). This implies that programs
