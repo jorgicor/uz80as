@@ -49,6 +49,7 @@ static const char *d_eject(const char *);
 static const char *d_export(const char *);
 static const char *d_end(const char *);
 static const char *d_equ(const char *);
+static const char *d_set(const char *);
 static const char *d_fill(const char *);
 static const char *d_list(const char *);
 static const char *d_lsfirst(const char *);
@@ -89,6 +90,7 @@ static struct direc {
 	{ "NOPAGE", d_null },
 	{ "ORG", d_org },
 	{ "PAGE", d_null },
+	{ "SET", d_set },
 	{ "TEXT", d_text },
 	{ "TITLE", d_title },
 	{ "WORD", d_word },
@@ -121,13 +123,10 @@ static int s_gen_after_end;
 /* The empty line, to pass to listing, for compatibility with TASM. */
 static const char *s_empty_line = "";
 
-/* Pointer in s_pline for error reporting. */
-const char *s_pline_ep;
-
-/* We skip characters until endline or backslash or comment. */
+/* Skip characters until endline or backslash. */
 static const char *sync(const char *p)
 {
-	while (*p != '\0' && *p != '\\' && *p != ';')
+	while (*p != '\0' && *p != '\\')
 		p++;
 	return p;
 }
@@ -543,6 +542,31 @@ static const char *d_equ(const char *p)
 	return p;
 }
 
+static const char *d_set(const char *p)
+{
+	int n;
+	enum expr_ecode ecode;
+	const char *ep;
+
+	p = expr(p, &n, s_pc, 0, &ecode, &ep);
+	if (p == NULL) {
+		exprint(ecode, s_pline, ep);
+		newerr();
+		return NULL;
+	}
+
+	if (s_lastsym == NULL) {
+		eprint(_(".SET without label\n"));
+		eprcol(s_pline, s_pline_ep);
+		newerr();
+	} else {
+		/* TODO: check label misalign? */
+		s_lastsym->val = n;
+		s_lastsym->isequ = 1;
+	}
+	return p;
+}
+
 static const char *d_export(const char *p)
 {
 	/* TODO */
@@ -850,8 +874,13 @@ start:	s_lastsym = NULL;
 	alloweq = 0;
 	col0 = 1;	
 loop:
-	if (*cp == '\0' || *cp == ';') {
+	if (*cp == '\0') {
 		return;
+	} else if (isspace(*cp)) {
+		col0 = 0;
+		while (isspace(*cp))
+			cp++;
+		goto loop;
 	} else if (*cp == '\\') {
 		if (s_pass == 1) {
 			list_endln();
@@ -859,7 +888,17 @@ loop:
 				nfiles());
 		}
 		cp++;
-		goto start;
+	} else if (*cp == '#') {
+		s_pline_ep = cp;
+		cp++;
+		q = pp_parse_ppdirec(cp);
+		if (q == NULL) {
+			cp = sync(cp);
+		} else {
+			cp = d_null(q);
+		}
+	} else if (s_skipon) {
+		cp = sync(cp);
 	} else if (*cp == '.') {
 		s_pline_ep = cp;
 		cp++;
@@ -914,8 +953,9 @@ loop:
 				eprcol(s_pline, s_pline_ep);
 				newerr();
 			}
+			goto loop;
 		} else {
-			cp = skipws(cp);
+			// cp = skipws(cp);
 			s_pline_ep = cp;
 			q = match(cp);
 			if (q == NULL) {
@@ -926,17 +966,13 @@ loop:
 				cp = d_null(q);
 			}
 		}
-	} else if (isspace(*cp)) {
-		col0 = 0;
-		while (isspace(*cp))
-			cp++;
 	} else {
 		eprint(_("unexpected character (%c)\n"), *cp);
 		eprcol(s_pline, cp);
 		newerr();
 		cp = sync(cp + 1);
 	}
-	goto loop;
+	goto start;
 }
 
 /*
@@ -977,7 +1013,7 @@ static void install_predefs(void)
 	struct predef *pdef;
 
 	for (pdef = s_predefs; pdef != NULL; pdef = pdef->next)
-		pp_define(pdef->name);
+		pp_predefine(pdef->text);
 }
 
 /* Do a pass through the source. */
@@ -1010,10 +1046,10 @@ static void dopass(const char *fname)
 				list_startln(s_line, curfile()->linenum, s_pc,
 					nfiles());
 			}
-			pp_line(s_line);
+			pp_expand(s_line);
+			parselin(s_pline);
 			if (s_pass == 1)
 				list_skip(s_skipon);
-			parselin(s_pline);
 			if (s_pass == 1)
 				list_endln();
 		} else {

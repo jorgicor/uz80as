@@ -51,8 +51,6 @@ struct target {
 	unsigned char mask;
 };
 
-extern const char *s_pline_ep;
-
 void genb(int b, const char *ep);
 int mreg(const char *p, const char *const list[], const char **r);
 

@@ -11,7 +11,7 @@
 /* Predefined macro at the command line. */
 struct predef {
 	struct predef *next;
-	const char *name;
+	const char *text;
 };
 
 extern const char *s_asmfname;
@@ -24,6 +24,6 @@ extern int s_undocumented_op;
 extern int s_mem_fillval;
 extern struct predef *s_predefs;
 
-void predefine(const char *name);
+void predefine(const char *text);
 
 #endif

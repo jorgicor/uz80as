@@ -27,7 +27,7 @@ void predefine(const char *text)
 	struct predef *pdef;
 
 	pdef = emalloc(sizeof(*pdef));
-	pdef->name = text;
+	pdef->text = text;
 	pdef->next = s_predefs;
 	s_predefs = pdef;
 }
