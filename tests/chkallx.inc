@@ -27,4 +27,4 @@ tr -d '\r' <$exp >$xtp
 mv -f $xtp $exp
 rm -f $xtp
 
-cmp $obj $bok && diff $lst $lok && diff $eok $err && diff $xok $exp && rm -f $obj $lst $err
+cmp $obj $bok && diff $lst $lok && diff $eok $err && diff $xok $exp && rm -f $obj $lst $err $exp
