@@ -84,11 +84,13 @@ static void print_version(FILE *f)
 static void print_help(const char *argv0)
 {
 	static const char *help =
-"Usage: %s [OPTION]... ASM_FILE [OBJ_FILE [LST_FILE]]\n"
+"Usage: %s [OPTION]... ASM_FILE [OBJ_FILE [LST_FILE [EXP_FILE]]]\n"
 "\n"
-"Assemble ASM_FILE into OBJ_FILE and generate the listing LST_FILE.\n"
+"Assemble ASM_FILE into OBJ_FILE and generate the listing LST_FILE and\n"
+"exported symbols in EXP_FILE.\n"
 "If not specified, OBJ_FILE is ASM_FILE with the extension changed to .obj.\n"
 "If not specified, LST_FILE is ASM_FILE with the extension changed to .lst.\n"
+"If not specified, EXP_FILE is ASM_FILE with the extension changed to .exp.\n"
 "\n"
 "Options:\n"
 "  -h, --help           Display this help and exit.\n"
@@ -291,6 +293,13 @@ int main(int argc, char *argv[])
 		s_lstfname = argv[ngo.optind + 2];
 	else
 		s_lstfname = mkfname(s_asmfname, "lst");
+
+	if (argc - ngo.optind > 3) {
+		s_force_export = 1;
+		s_expfname = argv[ngo.optind + 3];
+	} else {
+		s_expfname = mkfname(s_asmfname, "exp");
+	}
 
 	uz80as();
 	return 0;

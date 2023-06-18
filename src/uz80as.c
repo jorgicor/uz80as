@@ -538,15 +538,39 @@ static const char *d_equ(const char *p)
 	} else {
 		/* TODO: check label misalign? */
 		s_lastsym->val = n;
-		s_lastsym->isequ = 1;
+		s_lastsym->flags |= SYM_FLAG_EQU;
 	}
 	return p;
 }
 
 static const char *d_export(const char *p)
 {
-	/* TODO */
-	return NULL;
+	const char *q;
+	struct sym *sym;
+
+again:	if (isidc0(*p)) {
+		q = p;
+		while (isidc(*p))
+			p++;
+		sym = lookup(q, p, 0, 0);
+		if (s_pass > 0) {
+			if (sym == NULL) {
+				eprint(_("undefined label"));
+				epchars(q, p);
+				enl();
+				newerr();
+			} else {
+				sym->flags |= SYM_FLAG_EXPORT;
+			}
+		}
+		p = skipws(p);
+		if (*p == ',') {
+			p = skipws(p + 1);
+			goto again;
+		}
+	}
+
+	return p;
 }
 
 static const char *d_fill(const char *p)
@@ -635,7 +659,7 @@ static const char *d_org(const char *p)
 	if (s_lastsym != NULL) {
 		/* TODO: check label misalign? */
 		s_lastsym->val = s_pc;
-		s_lastsym->isequ = 1;
+		s_lastsym->flags |= SYM_FLAG_EQU;
 	}
 
 	return p;
@@ -903,8 +927,8 @@ loop:
 			} else if (*cp == '=') {
 				alloweq = 1;
 			}
-			if (s_pass == 1 && !s_lastsym->isequ &&
-				s_lastsym->val != s_pc)
+			if (s_pass == 1 && !(s_lastsym->flags & SYM_FLAG_EQU)
+				&& s_lastsym->val != s_pc)
 			{
 				eprint(_("misaligned label %s\n"),
 					s_lastsym->name);
@@ -1025,7 +1049,7 @@ static void dopass(const char *fname)
 }
 
 /* Write the object file. */
-static void output ()
+static void output(void)
 {
 	FILE *fout;
 
@@ -1070,4 +1094,8 @@ void uz80as(void)
 	}
 
 	output();
+
+	if (s_force_export || anything_to_export()) {			
+		write_export_file(s_expfname);
+	}
 }

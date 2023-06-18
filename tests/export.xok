@@ -1,0 +1,2 @@
+label1		.EQU  $4000
+label2		.EQU  $4001

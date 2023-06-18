@@ -99,3 +99,33 @@ struct sym *lookup(const char *p, const char *q, int insert, int pc)
 
 	return NULL;
 }
+
+int anything_to_export(void)
+{
+	int i;
+
+	for (i = 1; i < s_nsyms; i++) {
+		if (s_symlist[i].flags & SYM_FLAG_EXPORT)
+			return 1;
+	}
+
+	return 0;
+}
+
+void write_export_file(const char *fname)
+{
+	FILE *fout;
+	int i;
+
+	fout = efopen(fname, "w");
+	for (i = 1; i < s_nsyms; i++) {
+		if (s_symlist[i].flags & SYM_FLAG_EXPORT) {
+			fprintf(fout, "%s\t\t.EQU  $%.4X\n",
+				s_symlist[i].name, s_symlist[i].val);
+		}
+	}
+
+	if (fclose(fout) == EOF) {
+		eprint(_("cannot close file %s\n"), fname);
+	}
+}

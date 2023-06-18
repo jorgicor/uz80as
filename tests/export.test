@@ -1,0 +1,3 @@
+#!/bin/sh
+nom=export
+. "$srcdir"/chkallx.inc
