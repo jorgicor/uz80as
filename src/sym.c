@@ -18,6 +18,10 @@
 #include <stdlib.h>
 #endif
 
+#ifndef STRING_H
+#include <string.h>
+#endif
+
 /*
  * Maximum number of symbols (labels) allowed.
  * Must not be more than 64K.
@@ -98,4 +102,39 @@ struct sym *lookup(const char *p, const char *q, int insert, int pc)
 	}
 
 	return NULL;
+}
+
+/* Returns non zero if anyhting to export. */
+int anything_to_export(void)
+{
+	int i;
+
+	for (i = 1; i < s_nsyms; i++) {
+		if (s_symlist[i].flags & SYM_FLAG_EXPORT)
+			return 1;
+	}
+
+	return 0;
+}
+
+void write_export_file(const char *fname)
+{
+	FILE *fout;
+	int i;
+	size_t len, j;
+
+	fout = efopen(fname, "w");
+	for (i = 1; i < s_nsyms; i++) {
+		if (s_symlist[i].flags & SYM_FLAG_EXPORT) {
+			len = strlen(s_symlist[i].name);
+			fputs(s_symlist[i].name, fout);
+			for (j = len; j < 16; j++)
+				fputc(' ', fout);
+			fprintf(fout, " .EQU  $%.4X\n", s_symlist[i].val);
+		}
+	}
+
+	if (fclose(fout) == EOF) {
+		eprint(_("cannot close file %s\n"), fname);
+	}
 }

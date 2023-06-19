@@ -1,0 +1,3 @@
+#!/bin/sh
+nom=endpar
+. "$srcdir"/chkep0.inc

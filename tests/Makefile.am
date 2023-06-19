@@ -58,7 +58,9 @@ dist_check_SCRIPTS = main.test \
 		     div.test \
 		     mod.test \
 		     fillcmdln.test \
-		     unary.test
+		     unary.test \
+		     export.test \
+		     endpar.test
 
 TESTS = $(dist_check_SCRIPTS)
 
@@ -66,6 +68,7 @@ EXTRA_DIST = icheck.sh \
 	     gen.sh \
 	     tasmchk.inc \
 	     chkall.inc \
+	     chkallx.inc \
 	     chkep0.inc \
 	     chkep1.inc \
              zx48k.test \
@@ -250,5 +253,12 @@ EXTRA_DIST = icheck.sh \
 	     unary.asm \
 	     unary.bok \
 	     unary.lok \
-	     unary.eok
+	     unary.eok \
+	     export.asm \
+	     export.bok \
+	     export.lok \
+	     export.eok \
+	     export.xok \
+	     endpar.asm \
+	     endpar.eok
 

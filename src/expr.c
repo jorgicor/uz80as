@@ -379,7 +379,12 @@ loop:
 		ec = EXPR_E_SYNTAX;
 		goto esyntax;
 	} else {
-end:		if (v != NULL)
+end:		if (si > 0) {
+			err = 1;
+			eprint(_("missing )\n"));
+			newerr();
+		}
+		if (v != NULL)
 			*v = r;
 		return p;
 	}
