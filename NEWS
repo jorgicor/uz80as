@@ -1,13 +1,13 @@
 2.02	2023-06-19
 
+	* The .EXPORT directive is implemented.
+
 	* Fixed expression parser: check for matching parenthesis. This was
 	  accepted without errors:
 
 		LD HL,(TABLE
 
 	  Thanks to Kenny Maytum for the bug report.
-
-	* The .EXPORT directive is implemented.
 
 2.01	2022-05-11
 

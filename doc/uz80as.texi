@@ -18,7 +18,7 @@
 
 @dircategory Software development
 @direntry
-* uz80as: (uz80as)Invoking uz80as.
+* uz80as: (uz80as).	Micro Z80 assembler.
 @end direntry
 
 @copying

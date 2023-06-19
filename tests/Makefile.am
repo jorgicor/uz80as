@@ -260,7 +260,5 @@ EXTRA_DIST = icheck.sh \
 	     export.eok \
 	     export.xok \
 	     endpar.asm \
-	     endpar.bok \
-	     endpar.lok \
 	     endpar.eok
 
