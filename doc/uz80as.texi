@@ -553,10 +553,23 @@ label = 25
 @subsection EXPORT
 
 @example
-[label] .EXPORT label [,label ...]
+[label] .EXPORT label [, label...]
 @end example
 
-The @code{.EXPORT} directive is accepted but not implemented.
+With the @code{.EXPORT} directive you can specify a list of labels that will be exported to a symbol export file.
+The symbol export file will contain the labels and their values as equates.
+For example:
+
+@example
+	.EXPORT start, func1
+@end example
+
+could produce in the symbol export file this equates:
+
+@example
+start	.EQU  $4000
+func1	.EQU  $4008
+@end example
 
 @node FILL
 @subsection FILL
@@ -997,10 +1010,23 @@ Used to end a section that began with an @code{#IF}, @code{#IFDEF}, @code{IFNDEF
 @section Invoking uz80as
 
 @example
-uz80as [OPTION]... ASM_FILE [OBJ_FILE [LST_FILE]]
+uz80as [OPTION]... ASM_FILE [OBJ_FILE [LST_FILE [EXP_FILE]]]
 @end example
 
-To assemble @file{program.asm} you can use:
+Where: 
+
+@table @code
+@item ASM_FILE
+Source file.
+@item OBJ_FILE
+Generated file with the compiled machine code.
+@item LST_FILE
+Generated listing file.
+@item EXP_FILE
+Generated symbol export file.
+@end table
+
+For example, to assemble @file{program.asm} you can use:
 
 @example
 uz80as program.asm
@@ -1009,11 +1035,15 @@ uz80as program.asm
 If there are no errors, this will generate the file @file{program.obj} with the binary machine code of the program.
 Also, the file @file{program.lst} will be generated with the listing of the source program, plus more info like line numbers, the value of the program counter at each line, the generated machine code in hexadecimal, etc.
 
-You can give another names to the object and listing files by specifying their names after the name of the source file. For example, this will generate the object file with the name @file{program.bin} and the listing file with the name @file{list.txt}:
+Also, if the source program contains any @code{.EXPORT} directive, then the file @file{program.exp} will be generated.
+
+You can give different names for these files by specifying their names after the name of the source file. For example, this will generate the object file with the name @file{program.bin}, the listing file with the name @file{list.txt} and the symbol export file with the name @file{api.asm}:
 
 @example
-uz80as program.asm program.bin list.txt
+uz80as program.asm program.bin list.txt api.asm
 @end example
+
+If the symbol export file is explicitly given in the command line, then a symbol export file will be generated even if there are no @code{.EXPORT} directives in the source file.
 
 Additional command line options can be used before the these arguments. They are:
 
