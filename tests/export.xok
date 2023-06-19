@@ -1,3 +1,4 @@
 label1           .EQU  $4000
 label2           .EQU  $4001
-label6789012345678 .EQU  $4002
+label3           .EQU  $4002
+label6789012345678 .EQU  $4003
