@@ -150,7 +150,7 @@ static void print_ilist(struct ilist *ilist, FILE *f)
 }
 #endif
 
-static void bufset(int i, char c)
+static void bufset(size_t i, char c)
 {
 	if (i >= STRSZ) {
 		eprogname();
