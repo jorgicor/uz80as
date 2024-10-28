@@ -70,6 +70,20 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+
+  <!-- Documentation Build Properties -->
+  <PropertyGroup>
+    <DocumentationDir>$(ProjectDir)doc\</DocumentationDir>
+    <DocumentationOutput>$(OutDir)documentation\</DocumentationOutput>
+    <MSYS2Base>C:\msys64</MSYS2Base>
+    <MSYS2Bash>$(MSYS2Base)\usr\bin\bash.exe</MSYS2Bash>
+    <PackageVersion>1.0</PackageVersion>
+    <PackageDate>$([System.DateTime]::Now.ToString("MMMM yyyy"))</PackageDate>
+    <CopyrightYears>2024</CopyrightYears>
+    <!-- Add flag for PDF generation -->
+    <BuildPDF>false</BuildPDF>
+  </PropertyGroup>
+
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -181,6 +195,36 @@
     <ClInclude Include="src\uz80as.h" />
     <ClInclude Include="windows\config.h" />
   </ItemGroup>
+
+  <!-- Documentation files -->
+  <ItemGroup>
+    <TeximainDoc Include="$(DocumentationDir)uz80as.texi" />
+    <!-- <TexiProcessorDocs Include="$(DocumentationDir)z80tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)hd64180tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)gbcputb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)dp2200tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)dp2200iitb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)i4004tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)i4040tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)i8008tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)i8021tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)i8022tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)i8041tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)i8048tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)i8051tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)i8080tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)i8085tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)mos6502tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)r6501tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)g65sc02tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)r65c29tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)w65c02stb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)mc6800tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)mc6801tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)m68hc11tb.texi" />
+    <TexiProcessorDocs Include="$(DocumentationDir)rca1802tb.texi" /> -->
+ </ItemGroup>
+
   <ItemGroup>
     <None Include="AUTHORS" />
     <None Include="bootstrap" />
@@ -190,6 +234,122 @@
     <None Include="m4\m4_ax_check_compile_flag.m4" />
     <None Include="mkwin" />
   </ItemGroup>
+
+    <!-- Verify MSYS2 and display debug info -->
+    <Target Name="VerifyMSYS2" BeforeTargets="BuildMainDoc">
+      <Error 
+        Text="MSYS2 bash not found at $(MSYS2Bash). Please install MSYS2 or update MSYS2Base in the project file if installed elsewhere."
+        Condition="!Exists('$(MSYS2Bash)')" />
+      
+      <!-- Debug Messages -->
+      <Message Text="MSYS2 Path: $(MSYS2Base)" Importance="high" />
+      <Message Text="Documentation Dir: $(DocumentationDir)" Importance="high" />
+      <Message Text="Documentation Output: $(DocumentationOutput)" Importance="high" />
+      
+      <!-- Test makeinfo availability -->
+      <Exec 
+        Command="&quot;$(MSYS2Bash)&quot; -l -c &quot;which makeinfo&quot;"
+        StandardOutputImportance="high"
+        StandardErrorImportance="high"
+        IgnoreExitCode="true" />
+    </Target>
+
+  <Target Name="GenerateTexiFiles" BeforeTargets="BuildMainDoc">
+    <MakeDir Directories="$(DocumentationDir)" />
+    
+    <!-- Generate version.texi with proper line endings -->
+    <PropertyGroup>
+      <VersionContent>
+@set VERSION $(PackageVersion)
+@set UPDATED $(PackageDate)
+      </VersionContent>
+      <CopyrightContent>
+@set COPYRIGHT_YEARS $(CopyrightYears)
+      </CopyrightContent>
+    </PropertyGroup>
+    
+    <WriteLinesToFile
+      File="$(DocumentationDir)version.texi"
+      Lines="$(VersionContent)"
+      Overwrite="true"
+      Encoding="UTF-8"/>
+    
+    <!-- Generate copyright.texi with proper line endings -->
+    <WriteLinesToFile
+      File="$(DocumentationDir)copyright.texi"
+      Lines="$(CopyrightContent)"
+      Overwrite="true"
+      Encoding="UTF-8"/>
+      
+    <Message Text="Generated version.texi and copyright.texi" Importance="high" />
+  </Target>
+
+    <!-- Main documentation build target -->
+  <Target Name="BuildMainDoc" 
+          BeforeTargets="Build" 
+          DependsOnTargets="GenerateTexiFiles"
+          Inputs="@(TeximainDoc);@(TexiProcessorDocs)" 
+          Outputs="$(DocumentationOutput)html\index.html;$(DocumentationOutput)pdf\uz80as.pdf">
+    
+    <MakeDir Directories="$(DocumentationOutput)html;$(DocumentationOutput)pdf" />
+    
+    <!-- Debug output -->
+    <Message Text="Building main documentation..." Importance="high" />
+    <Message Text="Source: %(TeximainDoc.FullPath)" Importance="high" />
+    <Message Text="Output: $(DocumentationOutput)html" Importance="high" />
+    
+    <!-- Install required MSYS2 packages -->
+    <Exec 
+      Command="&quot;$(MSYS2Bash)&quot; -l -c &quot;pacman -S --noconfirm texinfo texlive-core&quot;"
+      StandardOutputImportance="high"
+      StandardErrorImportance="high"
+      Condition="'$(BuildPDF)'=='true'"
+      ContinueOnError="true" />
+    
+    <!-- Build HTML documentation -->
+    <Exec 
+      Command="&quot;$(MSYS2Bash)&quot; -l -c &quot;cd '$(DocumentationDir)' &amp;&amp; makeinfo --html --output='$(DocumentationOutput)html' uz80as.texi 2&gt;&amp;1&quot;"
+      StandardOutputImportance="high"
+      StandardErrorImportance="high"
+      WorkingDirectory="$(DocumentationDir)" />
+    
+    <!-- Build PDF documentation only if BuildPDF is true -->
+    <Exec 
+      Command="&quot;$(MSYS2Bash)&quot; -l -c &quot;cd '$(DocumentationDir)' &amp;&amp; texi2pdf -o '$(DocumentationOutput)pdf/uz80as.pdf' uz80as.texi 2&gt;&amp;1&quot;"
+      StandardOutputImportance="high"
+      StandardErrorImportance="high"
+      WorkingDirectory="$(DocumentationDir)"
+      Condition="'$(BuildPDF)'=='true'" />
+  </Target>
+  
+    <!-- Processor documentation build target -->
+  <Target Name="BuildProcessorDocs" AfterTargets="BuildMainDoc"
+          Inputs="@(TexiProcessorDocs)" 
+          Outputs="@(TexiProcessorDocs->'$(DocumentationOutput)html\%(Filename)\index.html');@(TexiProcessorDocs->'$(DocumentationOutput)pdf\%(Filename).pdf')">
+    
+    <MakeDir Directories="@(TexiProcessorDocs->'$(DocumentationOutput)html\%(Filename)')" />
+    
+    <!-- Build HTML documentation -->
+    <Exec 
+      Command="&quot;$(MSYS2Bash)&quot; -l -c &quot;cd '$(DocumentationDir)' &amp;&amp; makeinfo --html --output='$(DocumentationOutput)html/%(Filename)' '%(TexiProcessorDocs.Filename).texi' 2&gt;&amp;1&quot;"
+      StandardOutputImportance="high"
+      StandardErrorImportance="high"
+      WorkingDirectory="$(DocumentationDir)" />
+    
+    <!-- Build PDF documentation only if BuildPDF is true -->
+    <Exec 
+      Command="&quot;$(MSYS2Bash)&quot; -l -c &quot;cd '$(DocumentationDir)' &amp;&amp; texi2pdf -o '$(DocumentationOutput)pdf/%(Filename).pdf' '%(TexiProcessorDocs.Filename).texi' 2&gt;&amp;1&quot;"
+      StandardOutputImportance="high"
+      StandardErrorImportance="high"
+      WorkingDirectory="$(DocumentationDir)"
+      Condition="'$(BuildPDF)'=='true'" />
+  </Target>
+
+    <!-- Clean target for documentation -->
+    <Target Name="CleanDocumentation" BeforeTargets="Clean">
+      <RemoveDir Directories="$(DocumentationOutput)" />
+    </Target>
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

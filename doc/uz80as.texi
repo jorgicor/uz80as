@@ -1079,6 +1079,13 @@ Selects the target microprocessor. The default is @code{z80}. See @code{--list-t
 
 @item -e, --list-targets
 Displays a list of the targets accepted and a brief description.
+
+@item -H, --hex
+Outputs an Intel HEX file.
+
+@item -S, --srec
+Outputs a Motorola S-Record file.
+
 @end table
 
 @node Implementation-defined features
@@ -1116,7 +1123,7 @@ The following directives do not allow to specify a label not already defined at 
 @itemize @minus
 
 @item
-@command{uz80as} only generates binary object files.
+@command{uz80as} can generate binary object files, Intel hex files and Motorola S-Record files.
 
 @item
 The places in where @command{uz80as} allows for forward references of labels in the first pass of the assembler can differ from @command{TASM}. @xref{Implementation-defined features}.
@@ -1653,6 +1660,10 @@ Where:
 @file{pp.c}: preprocessor, macro table.
 @item
 @file{list.c}: listing generation.
+@item
+@file{ihex.c}: outout generation for Intel HEX.
+@item
+@file{srec.c}: output generation for Motorola S-Record.
 @end itemize
 
 @item Layer 3: Assembler
