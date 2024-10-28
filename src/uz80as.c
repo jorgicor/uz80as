@@ -17,6 +17,8 @@
 #include "pp.h"
 #include "list.h"
 #include "targets.h"
+#include "ihex.h"
+#include "srec.h"
 
 #ifndef ASSERT_H
 #include <assert.h>
@@ -1048,25 +1050,37 @@ static void dopass(const char *fname)
 	list_close();
 }
 
-/* Write the object file. */
+/* Write the output file. */
 static void output(void)
 {
-	FILE *fout;
-
-	fout = efopen(s_objfname, "wb");
 	if (s_minpc < 0)
 		s_minpc = 0;
 	if (s_maxpc < 0)
 		s_maxpc = 0;
 
-	fwrite(s_mem + s_minpc, 1, s_maxpc - s_minpc, fout);
-	if (ferror(fout)) {
-		eprint(_("cannot write to file %s\n"), s_objfname);
-		clearerr(fout);
-	}
+	switch (s_output_format) {
+	case OUTPUT_FORMAT_IHEX:
+		output_hex(s_outfname, s_mem, s_minpc, s_maxpc);
+		break;
 
-	if (fclose(fout) == EOF) {
-		eprint(_("cannot close file %s\n"), s_objfname);
+	case OUTPUT_FORMAT_SREC:
+		output_srec(s_outfname, s_mem, s_minpc, s_maxpc);
+		break;
+
+	default: {
+		FILE* fout = efopen(s_outfname, "wb");
+		fwrite(s_mem + s_minpc, 1, s_maxpc - s_minpc, fout);
+
+		if (ferror(fout)) {
+			eprint(_("cannot write to file %s\n"), s_outfname);
+			clearerr(fout);
+		}
+
+		if (fclose(fout) == EOF) {
+			eprint(_("cannot close file %s\n"), s_outfname);
+		}
+		break;
+	}
 	}
 }
 
