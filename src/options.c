@@ -9,6 +9,10 @@
 #include "options.h"
 #include "err.h"
 
+int s_hex_output = 0;         /* Default to binary output */
+char *s_hexfname = NULL;      /* HEX filename */
+int s_output_format = OUTPUT_FORMAT_BINARY;  /* Default to binary output */
+char* s_outfname = NULL;                     /* Output filename */
 const char *s_asmfname;	/* Name of source file. */
 const char *s_objfname;	/* Name of generated binary file. */
 const char *s_lstfname;	/* Name of listing file. */

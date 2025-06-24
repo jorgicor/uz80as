@@ -103,6 +103,8 @@ static void print_help(const char *argv0)
 "  -u, --undocumented   Enable undocumented instructions.\n"
 "  -t, --target=NAME    Select the target micro. z80 is the default.\n" 
 "  -e, --list-targets   List the targets supported.\n" 
+"  -H, --hex            Output Intel HEX format.\n"
+"  -S, --srec           Output Motorola S-Record format.\n"
 "\n"
 "Examples:\n"
 "  " PACKAGE " p.asm                     Assemble p.asm into p.obj\n"
@@ -216,6 +218,8 @@ int main(int argc, char *argv[])
 		{ "target", 1, 't' },
 		{ "undocumented", 0, 'u' },
 		{ "version", 0, 'v' },
+		{ "hex", 0, 'H' },         /* Intel HEX output */
+		{ "srec", 0, 'S' },          /* Motorola S-Record output */
 		{ "print-table", 1, 0 },
 		{ NULL, 0, 0 },
 	};
@@ -257,6 +261,12 @@ int main(int argc, char *argv[])
 		case 'u':
 			s_undocumented_op = 1;
 			break;
+		case 'H':
+			s_output_format = OUTPUT_FORMAT_IHEX;
+			break;
+		case 'S':
+			s_output_format = OUTPUT_FORMAT_SREC;
+			break;
 		case '?':
 			eprint(_("unrecognized option %s\n"),
 				ngo.optarg);
@@ -279,15 +289,29 @@ int main(int argc, char *argv[])
 
 	if (argc == ngo.optind) {
 		eprint(_("wrong number of arguments\n"));
+		print_help(argv[0]);
+
 		exit(EXIT_FAILURE);
 	}
 
 	s_asmfname = argv[ngo.optind];
 
-	if (argc - ngo.optind > 1)
-		s_objfname = argv[ngo.optind + 1];
-	else
-		s_objfname = mkfname(s_asmfname, "obj");
+	if (argc - ngo.optind > 1) {
+		s_outfname = argv[ngo.optind + 1];
+	}
+	else {
+		switch (s_output_format) {
+		case OUTPUT_FORMAT_IHEX:
+			s_outfname = mkfname(s_asmfname, "hex");
+			break;
+		case OUTPUT_FORMAT_SREC:
+			s_outfname = mkfname(s_asmfname, "s19");
+			break;
+		default:
+			s_outfname = mkfname(s_asmfname, "obj");
+			break;
+		}
+	}
 
 	if (argc - ngo.optind > 2)
 		s_lstfname = argv[ngo.optind + 2];
